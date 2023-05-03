@@ -12,6 +12,15 @@
         android:theme="@style/Theme.PTFIRMANTOURTRAVELINGSOLUTION"
         tools:targetApi="31">
         <activity
+            android:name=".UserPaketWisata"
+            android:exported="false" />
+        <activity
+            android:name=".UserRentalMobil"
+            android:exported="false" />
+        <activity
+            android:name=".AdminPaketWisata"
+            android:exported="false" />
+        <activity
             android:name=".AdminRentalMobil"
             android:exported="false" />
         <activity

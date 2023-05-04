@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">PT FIRMAN TOUR TRAVELING SOLUTION</string>
+
+    <string-array name="status">
+        <item>Tersedia</item>
+        <item>Tidak Tersedia</item>
+    </string-array>
 </resources>

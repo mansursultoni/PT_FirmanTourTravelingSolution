@@ -54,6 +54,7 @@
             android:layout_height="match_parent"/>
         <Button
             android:id="@+id/btn_paketwisata"
+            android:textColor="@color/white"
             android:text="Paket Wisata"
             android:background="@color/grey"
             android:textAllCaps="false"

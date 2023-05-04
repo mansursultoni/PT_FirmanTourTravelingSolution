@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".AdminRentalMobil">
 
 
@@ -24,45 +25,25 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:text="ADMIN"
+            android:text="RENTAL MOBIL"
             android:textColor="@color/white"
             android:textSize="16sp"
             android:textStyle="bold"
             android:typeface="normal" />
 
+        <ImageButton
+            android:id="@+id/ib_menu"
+            android:src="@drawable/ic_menu"
+            android:background="@color/blue"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_width="40dp"
+            android:layout_height="50dp"
+            android:onClick="showPopup"/>
+
 
     </RelativeLayout>
 
-    <LinearLayout
-        android:layout_margin="8dp"
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:orientation="horizontal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layoutToolbar">
-
-        <Button
-            android:id="@+id/btn_rentalmobil"
-            android:text="Rental Mobil"
-            android:background="@color/grey"
-            android:textAllCaps="false"
-            android:enabled="false"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-        <Button
-            android:id="@+id/btn_paketwisata"
-            android:text="Paket Wisata"
-            android:background="@color/blue"
-            android:textColor="@color/white"
-            android:textAllCaps="false"
-            android:enabled="true"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-
-    </LinearLayout>
 
 
     <androidx.recyclerview.widget.RecyclerView
@@ -74,7 +55,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintTop_toBottomOf="@+id/layoutToolbar"
         app:layout_constraintVertical_bias="0.0" />
 
         <ProgressBar

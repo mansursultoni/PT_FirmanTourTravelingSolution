@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
@@ -28,57 +30,75 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        Window window = this.getWindow();
+        window.setStatusBarColor(this.getResources().getColor(R.color.blue));
+
         nomor = findViewById(R.id.etNomor);
         password = findViewById(R.id.etPassword);
         active = findViewById(R.id.active);
         daftar = findViewById(R.id.btnDaftar);
+        daftar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this,DaftarActivity.class));
+                finish();
+            }
+        });
 
         masuk = findViewById(R.id.btnLogin);
         masuk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-                databaseReference.child("login").addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        String input1 = nomor.getText().toString();
-                        String input2 = password.getText().toString();
+                if (TextUtils.isEmpty(nomor.getText().toString())){
+                    Toast.makeText(LoginActivity.this, "Masukkan Nomor Telepon.", Toast.LENGTH_SHORT).show();
+                }else if (TextUtils.isEmpty(password.getText().toString())){
+                    Toast.makeText(LoginActivity.this, "Masukkan Password.", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+                    databaseReference.child("login").addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            String input1 = nomor.getText().toString();
+                            String input2 = password.getText().toString();
 
-                        if (dataSnapshot.child(input1).exists()) {
-                            if (dataSnapshot.child(input1).child("password").getValue(String.class).equals(input2)) {
-                                if (active.isChecked()) {
-                                    if (dataSnapshot.child(input1).child("as").getValue(String.class).equals("admin")) {
-                                        preferences.setDataLogin(LoginActivity.this, true);
-                                        preferences.setDataAs(LoginActivity.this, "admin");
-                                        startActivity(new Intent(LoginActivity.this, AdminRentalMobil.class));
-                                    } else if (dataSnapshot.child(input1).child("as").getValue(String.class).equals("user")) {
-                                        preferences.setDataLogin(LoginActivity.this, true);
-                                        preferences.setDataAs(LoginActivity.this, "user");
-                                        startActivity(new Intent(LoginActivity.this, UserRentalMobil.class));
+                            if (dataSnapshot.child(input1).exists()) {
+                                if (dataSnapshot.child(input1).child("password").getValue(String.class).equals(input2)) {
+                                    if (active.isChecked()) {
+                                        if (dataSnapshot.child(input1).child("as").getValue(String.class).equals("admin")) {
+                                            preferences.setDataLogin(LoginActivity.this, true);
+                                            preferences.setDataAs(LoginActivity.this, "admin");
+                                            startActivity(new Intent(LoginActivity.this, AdminRentalMobil.class));
+                                        } else if (dataSnapshot.child(input1).child("as").getValue(String.class).equals("user")) {
+                                            preferences.setDataLogin(LoginActivity.this, true);
+                                            preferences.setDataAs(LoginActivity.this, "user");
+                                            startActivity(new Intent(LoginActivity.this, UserRentalMobil.class));
+                                        }
+                                    } else {
+                                        if (dataSnapshot.child(input1).child("as").getValue(String.class).equals("admin")) {
+                                            preferences.setDataLogin(LoginActivity.this, false);
+                                            startActivity(new Intent(LoginActivity.this, AdminRentalMobil.class));
+                                        } else if (dataSnapshot.child(input1).child("as").getValue(String.class).equals("user")) {
+                                            preferences.setDataLogin(LoginActivity.this, false);
+                                            startActivity(new Intent(LoginActivity.this, UserRentalMobil.class));
+                                        }
                                     }
+
                                 } else {
-                                    if (dataSnapshot.child(input1).child("as").getValue(String.class).equals("admin")) {
-                                        preferences.setDataLogin(LoginActivity.this, false);
-                                        startActivity(new Intent(LoginActivity.this, AdminRentalMobil.class));
-                                    } else if (dataSnapshot.child(input1).child("as").getValue(String.class).equals("user")) {
-                                        preferences.setDataLogin(LoginActivity.this, false);
-                                        startActivity(new Intent(LoginActivity.this, UserRentalMobil.class));
-                                    }
+                                    Toast.makeText(LoginActivity.this, "Kata sandi salah.", Toast.LENGTH_SHORT).show();
                                 }
-
                             } else {
-                                Toast.makeText(LoginActivity.this, "Kata sandi salah.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, "Data belum terdaftar.", Toast.LENGTH_SHORT).show();
                             }
-                        } else {
-                            Toast.makeText(LoginActivity.this, "Data belum terdaftar.", Toast.LENGTH_SHORT).show();
                         }
-                    }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
 
-                    }
-                });
+                        }
+                    });
+                }
+
             }
         });
 

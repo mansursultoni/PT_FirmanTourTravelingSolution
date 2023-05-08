@@ -3,9 +3,12 @@ package com.firmantour.travelingsolution;
 import static com.firmantour.travelingsolution.R.drawable.ic_user;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,20 +26,32 @@ import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.squareup.picasso.Picasso;
 
-public class UserRentalMobil extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener{
+public class UserRentalMobil extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private FirebaseFirestore firebaseFirestore;
     private FirestoreRecyclerAdapter adapter;
     RecyclerView recyclerView;
     ProgressBar progressBar;
+
+    ImageView imageView;
+
+    DrawerLayout drawerLayout;
+    NavigationView navigationView;
+    Toolbar toolbar;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +61,27 @@ public class UserRentalMobil extends AppCompatActivity implements PopupMenu.OnMe
 
         Window window = this.getWindow();
         window.setStatusBarColor(this.getResources().getColor(R.color.blue));
+
+        imageView = findViewById(R.id.ib_menu);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // --- To open Drawer ---
+                drawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
+
+        drawerLayout = findViewById(R.id.drawerLayout);
+        navigationView = findViewById(R.id.nav_view);
+
+        navigationView.bringToFront();
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout,R.string.open,R.string.close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+        navigationView.setNavigationItemSelectedListener(this);
+
+
 
 
         recyclerView = findViewById(R.id.recyclerView);
@@ -99,6 +135,20 @@ public class UserRentalMobil extends AppCompatActivity implements PopupMenu.OnMe
         recyclerView.setAdapter(adapter);
     }
 
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.item1:
+                Toast.makeText(this, "Item 1", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.item2:
+                Toast.makeText(this, "Item 2", Toast.LENGTH_SHORT).show();
+                return true;
+            default:
+                return false;
+         }
+    }
+
     public class ProdukHolder extends RecyclerView.ViewHolder {
         ImageView fotoProduk;
         TextView namaProduk, hargaProduk, statusProduk;
@@ -132,27 +182,26 @@ public class UserRentalMobil extends AppCompatActivity implements PopupMenu.OnMe
         adapter.stopListening();
     }
 
-    public void showPopup(View v){
-        PopupMenu popup = new PopupMenu(this, v);
-        popup.setOnMenuItemClickListener(this);
-        popup.inflate(R.menu.menu_item);
-        popup.show();
-    }
+//    public void showPopup(View v){
+//        PopupMenu popup = new PopupMenu(this, v);
+//        popup.setOnMenuItemClickListener(this);
+//        popup.inflate(R.menu.menu_item);
+//        popup.show();
+//    }
 
-    @Override
-    public boolean onMenuItemClick(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.item1:
-                closeOptionsMenu();
-                return true;
-            case R.id.item2:
-                startActivity(new Intent(UserRentalMobil.this, UserPaketWisata.class));
-                finish();
-                return true;
-            default:
-                return false;
-        }
-    }
+//    @Override
+//    public boolean onMenuItemClick(@NonNull MenuItem item) {
+//        switch (item.getItemId()){
+//            case R.id.item1:
+//                Toast.makeText(this, "Item 1", Toast.LENGTH_SHORT).show();
+//                return true;
+//            case R.id.item2:
+//                Toast.makeText(this, "Item 2", Toast.LENGTH_SHORT).show();
+//                return true;
+//            default:
+//                return false;
+//        }
+//    }
 
     @Override
     public void onBackPressed() {

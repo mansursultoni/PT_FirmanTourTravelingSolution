@@ -9,7 +9,7 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button btadmin,btuser;
+    Button btadmin,btuser, btdaftar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +29,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, UserRentalMobil.class));
+                finish();
+            }
+        });
+
+        btdaftar = findViewById(R.id.btnDaftar);
+        btdaftar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, DaftarActivity.class));
                 finish();
             }
         });

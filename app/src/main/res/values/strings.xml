@@ -6,6 +6,11 @@
         <item>Tidak Tersedia</item>
     </string-array>
 
+    <string-array name="jeniskelamin">
+        <item>Laki - laki</item>
+        <item>Perempuan</item>
+    </string-array>
+
     <string name="open"> Open Navigation Drawer</string>
     <string name="close"> Close Navigation Drawer</string>
     <string name="title_activity_login">LoginActivity</string>

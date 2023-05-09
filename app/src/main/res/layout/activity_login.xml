@@ -124,21 +124,21 @@
                 android:textSize="18sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <Switch
-            android:id="@+id/active"
+        <CheckBox
+            android:id="@+id/ingatsaya"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/textinputPassword"
-            android:layout_marginHorizontal="20dp"
+            android:layout_marginHorizontal="30dp"
             android:layout_marginTop="8dp"
-            android:gravity="end"
-            android:text="Ingat saya" />
+            android:text="Ingat saya"/>
+
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnLogin"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:layout_below="@id/active"
+            android:layout_below="@id/ingatsaya"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="8dp"
             android:background="@drawable/rounded_background_blue"

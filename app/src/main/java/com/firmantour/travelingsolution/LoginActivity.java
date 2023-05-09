@@ -1,14 +1,17 @@
 package com.firmantour.travelingsolution;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.Toast;
@@ -23,7 +26,9 @@ public class LoginActivity extends AppCompatActivity {
 
     EditText nomor, password;
     Button masuk, daftar;
-    Switch active;
+    CheckBox checkBox;
+
+    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://pt-firman-tour-default-rtdb.firebaseio.com/");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,12 +40,42 @@ public class LoginActivity extends AppCompatActivity {
 
         nomor = findViewById(R.id.etNomor);
         password = findViewById(R.id.etPassword);
-        active = findViewById(R.id.active);
+
+
+        SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
+        String checkbox = preferences.getString("ingat","");
+        if (checkbox.equals("true")){
+            startActivity(new Intent(LoginActivity.this, UserRentalMobil.class));
+            finish();
+        }else if (checkbox.equals("false")){
+
+        }
+
+        checkBox = findViewById(R.id.ingatsaya);
+        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if(compoundButton.isChecked()){
+                    SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("ingat","true");
+                    editor.apply();
+                    Toast.makeText(LoginActivity.this, "Check", Toast.LENGTH_SHORT).show();
+                }else {
+                    SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("ingat","false");
+                    editor.apply();
+                    Toast.makeText(LoginActivity.this, "Uncheck", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
         daftar = findViewById(R.id.btnDaftar);
         daftar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this,DaftarActivity.class));
+                startActivity(new Intent(LoginActivity.this, DaftarActivity.class));
                 finish();
             }
         });
@@ -49,46 +84,30 @@ public class LoginActivity extends AppCompatActivity {
         masuk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (TextUtils.isEmpty(nomor.getText().toString())){
+
+                String txtnomor = nomor.getText().toString();
+                String txtpassword = password.getText().toString();
+
+
+                if (txtnomor.isEmpty()) {
                     Toast.makeText(LoginActivity.this, "Masukkan Nomor Telepon.", Toast.LENGTH_SHORT).show();
-                }else if (TextUtils.isEmpty(password.getText().toString())){
+                } else if (txtpassword.isEmpty()) {
                     Toast.makeText(LoginActivity.this, "Masukkan Password.", Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-                    databaseReference.child("login").addValueEventListener(new ValueEventListener() {
+                } else {
+                    databaseReference.child("user").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            String input1 = nomor.getText().toString();
-                            String input2 = password.getText().toString();
-
-                            if (dataSnapshot.child(input1).exists()) {
-                                if (dataSnapshot.child(input1).child("password").getValue(String.class).equals(input2)) {
-                                    if (active.isChecked()) {
-                                        if (dataSnapshot.child(input1).child("as").getValue(String.class).equals("admin")) {
-                                            preferences.setDataLogin(LoginActivity.this, true);
-                                            preferences.setDataAs(LoginActivity.this, "admin");
-                                            startActivity(new Intent(LoginActivity.this, AdminRentalMobil.class));
-                                        } else if (dataSnapshot.child(input1).child("as").getValue(String.class).equals("user")) {
-                                            preferences.setDataLogin(LoginActivity.this, true);
-                                            preferences.setDataAs(LoginActivity.this, "user");
-                                            startActivity(new Intent(LoginActivity.this, UserRentalMobil.class));
-                                        }
-                                    } else {
-                                        if (dataSnapshot.child(input1).child("as").getValue(String.class).equals("admin")) {
-                                            preferences.setDataLogin(LoginActivity.this, false);
-                                            startActivity(new Intent(LoginActivity.this, AdminRentalMobil.class));
-                                        } else if (dataSnapshot.child(input1).child("as").getValue(String.class).equals("user")) {
-                                            preferences.setDataLogin(LoginActivity.this, false);
-                                            startActivity(new Intent(LoginActivity.this, UserRentalMobil.class));
-                                        }
-                                    }
-
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot.hasChild(txtnomor)) {
+                                final String getPassword = snapshot.child(txtnomor).child("password").getValue(String.class);
+                                if (getPassword.equals(txtpassword)) {
+                                    Toast.makeText(LoginActivity.this, "Login Berhasil.", Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(LoginActivity.this, UserRentalMobil.class));
+                                    finish();
                                 } else {
-                                    Toast.makeText(LoginActivity.this, "Kata sandi salah.", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(LoginActivity.this, "Password Salah.", Toast.LENGTH_SHORT).show();
                                 }
                             } else {
-                                Toast.makeText(LoginActivity.this, "Data belum terdaftar.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, "Nomor Telepon Salah.", Toast.LENGTH_SHORT).show();
                             }
                         }
 
@@ -98,27 +117,7 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     });
                 }
-
             }
         });
-
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if (preferences.getDataLogin(this)) {
-            if (preferences.getDataAs(this).equals("admin")) {
-                startActivity(new Intent(LoginActivity.this, AdminRentalMobil.class));
-                finish();
-            } else if (preferences.getDataAs(this).equals("user")) {
-                startActivity(new Intent(LoginActivity.this, UserRentalMobil.class));
-                finish();
-//                Cara logout kembali ke activity login
-//                startActivity(new Intent(---Darisini---.this, LoginActivity.class));
-//                preferences.clearData(this);
-//                finish();
-            }
-        }
     }
 }

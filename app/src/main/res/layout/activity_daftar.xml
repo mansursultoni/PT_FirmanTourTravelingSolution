@@ -23,6 +23,7 @@
             android:src="@drawable/ic_back" />
 
         <TextView
+            android:id="@+id/tv1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -32,6 +33,7 @@
             android:textColor="@color/white"
             android:textSize="25sp"
             android:textStyle="bold" />
+
 
     </RelativeLayout>
 
@@ -146,13 +148,24 @@
                     android:textSize="18sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/ibEditCalendar"
+                android:src="@drawable/ic_editcalendar"
+                android:background="@color/transparant"
+                android:layout_width="50dp"
+                android:layout_marginTop="8dp"
+                android:layout_height="50dp"
+                android:layout_alignTop="@id/textinputTanggalLahir"
+                android:layout_alignEnd="@id/textinputTanggalLahir"/>
+
             <Spinner
-                android:id="@+id/spinner"
+                android:id="@+id/spinnerJenisKelamin"
                 android:layout_width="50dp"
                 android:layout_marginTop="8dp"
                 android:layout_height="50dp"
                 android:layout_alignTop="@id/textinputJenisKelamin"
                 android:layout_alignEnd="@id/textinputJenisKelamin"/>
+
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textinputAlamat"

@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -143,6 +144,14 @@ public class UserRentalMobil extends AppCompatActivity implements NavigationView
                 return true;
             case R.id.item2:
                 Toast.makeText(this, "Item 2", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.item3:
+                SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("ingat","false");
+                editor.apply();
+                startActivity(new Intent(UserRentalMobil.this, LoginActivity.class));
+                finish();
                 return true;
             default:
                 return false;

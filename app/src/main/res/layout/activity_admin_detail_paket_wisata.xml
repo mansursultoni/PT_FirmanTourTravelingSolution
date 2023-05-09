@@ -116,7 +116,7 @@
                 android:textColorHint="@color/grey" />
 
             <Spinner
-                android:id="@+id/spinner"
+                android:id="@+id/spinner2"
                 android:layout_width="50dp"
                 android:layout_height="55dp"
                 android:layout_below="@id/txt2"

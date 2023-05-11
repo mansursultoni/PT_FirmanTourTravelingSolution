@@ -28,7 +28,8 @@ public class LoginActivity extends AppCompatActivity {
     Button masuk, daftar;
     CheckBox checkBox;
 
-    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://pt-firman-tour-default-rtdb.firebaseio.com/");
+    DatabaseReference databaseReference = FirebaseDatabase.getInstance().
+            getReferenceFromUrl("https://pt-firman-tour-default-rtdb.firebaseio.com/");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,34 +89,38 @@ public class LoginActivity extends AppCompatActivity {
                 String txtnomor = nomor.getText().toString();
                 String txtpassword = password.getText().toString();
 
-
-                if (txtnomor.isEmpty()) {
-                    Toast.makeText(LoginActivity.this, "Masukkan Nomor Telepon.", Toast.LENGTH_SHORT).show();
-                } else if (txtpassword.isEmpty()) {
-                    Toast.makeText(LoginActivity.this, "Masukkan Password.", Toast.LENGTH_SHORT).show();
-                } else {
-                    databaseReference.child("user").addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if (snapshot.hasChild(txtnomor)) {
-                                final String getPassword = snapshot.child(txtnomor).child("password").getValue(String.class);
-                                if (getPassword.equals(txtpassword)) {
-                                    Toast.makeText(LoginActivity.this, "Login Berhasil.", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(LoginActivity.this, UserRentalMobil.class));
-                                    finish();
+                if (txtnomor.equals("0123456") && txtpassword.equals("123")){
+                    startActivity(new Intent(LoginActivity.this, AdminRentalMobil.class));
+                    finish();
+                }else {
+                    if (txtnomor.isEmpty()) {
+                        Toast.makeText(LoginActivity.this, "Masukkan Nomor Telepon.", Toast.LENGTH_SHORT).show();
+                    } else if (txtpassword.isEmpty()) {
+                        Toast.makeText(LoginActivity.this, "Masukkan Password.", Toast.LENGTH_SHORT).show();
+                    } else {
+                        databaseReference.child("user").addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                if (snapshot.hasChild(txtnomor)) {
+                                    final String getPassword = snapshot.child(txtnomor).child("password").getValue(String.class);
+                                    if (getPassword.equals(txtpassword)) {
+                                        Toast.makeText(LoginActivity.this, "Login Berhasil.", Toast.LENGTH_SHORT).show();
+                                        startActivity(new Intent(LoginActivity.this, UserRentalMobil.class));
+                                        finish();
+                                    } else {
+                                        Toast.makeText(LoginActivity.this, "Password Salah.", Toast.LENGTH_SHORT).show();
+                                    }
                                 } else {
-                                    Toast.makeText(LoginActivity.this, "Password Salah.", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(LoginActivity.this, "Nomor Telepon Salah.", Toast.LENGTH_SHORT).show();
                                 }
-                            } else {
-                                Toast.makeText(LoginActivity.this, "Nomor Telepon Salah.", Toast.LENGTH_SHORT).show();
                             }
-                        }
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
 
-                        }
-                    });
+                            }
+                        });
+                    }
                 }
             }
         });

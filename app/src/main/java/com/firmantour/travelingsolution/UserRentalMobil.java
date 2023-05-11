@@ -150,7 +150,8 @@ public class UserRentalMobil extends AppCompatActivity implements NavigationView
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putString("ingat","false");
                 editor.apply();
-                startActivity(new Intent(UserRentalMobil.this, LoginActivity.class));
+                startActivity(new Intent(UserRentalMobil.this, LoginActivity.class
+                ));
                 finish();
                 return true;
             default:

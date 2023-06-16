@@ -94,21 +94,19 @@ public class LoginActivity extends AppCompatActivity {
                 } else if (txtpassword.isEmpty()) {
                     Toast.makeText(LoginActivity.this, "Masukkan Password.", Toast.LENGTH_SHORT).show();
                 } else {
-                    //langkah pertama cek user
-                    databaseReference.child("user").addListenerForSingleValueEvent(new ValueEventListener() {
+                    //langkah pertama cek admin
+                    databaseReference.child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             if (snapshot.hasChild(txtnomor)) {
                                 final String getPassword = snapshot.child(txtnomor).child("password").getValue(String.class);
                                 if (getPassword.equals(txtpassword)) {
                                     Toast.makeText(LoginActivity.this, "Login Berhasil.", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(LoginActivity.this, UserRentalMobil.class));
+                                    startActivity(new Intent(LoginActivity.this, Dashboard.class));
                                     finish();
-                                }  else {
-                                    //no action
+                                   return;
                                 }
-                            } else {
-                                //no action
+                                return;
                             }
                         }
                         @Override
@@ -117,15 +115,15 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     });
 
-                    //langkah kedua cek admin
-                    databaseReference.child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
+                    //langkah kedua cek user
+                    databaseReference.child("user").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             if (snapshot.hasChild(txtnomor)) {
                                 final String getPassword = snapshot.child(txtnomor).child("password").getValue(String.class);
                                 if (getPassword.equals(txtpassword)) {
                                     Toast.makeText(LoginActivity.this, "Login Berhasil.", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(LoginActivity.this, AdminRentalMobil.class));
+                                    startActivity(new Intent(LoginActivity.this, UserRentalMobil.class));
                                     finish();
                                 }  else {
                                     Toast.makeText(LoginActivity.this, "Password Salah.", Toast.LENGTH_SHORT).show();

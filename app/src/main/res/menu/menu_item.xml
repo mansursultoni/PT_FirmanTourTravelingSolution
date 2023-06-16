@@ -2,11 +2,38 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/item1"
-        android:title="Rental Mobil"/>
+        android:icon="@drawable/ic_home"
+        android:title="Dashboard"/>
     <item
         android:id="@+id/item2"
-        android:title="Paket Wisata"/>
+        android:icon="@drawable/ic_mobil"
+        android:title="Rental Mobil"/>
     <item
         android:id="@+id/item3"
+        android:icon="@drawable/ic_wisata"
+        android:title="Paket Wisata"/>
+    <item
+        android:id="@+id/item4"
+        android:icon="@drawable/ic_konfirmasi"
+        android:title="Menunggu Konfirmasi"/>
+    <item
+        android:id="@+id/item5"
+        android:icon="@drawable/ic_person"
+        android:title="Data Admin"/>
+    <item
+        android:id="@+id/item6"
+        android:icon="@drawable/ic_users"
+        android:title="Data User"/>
+    <item
+        android:id="@+id/item7"
+        android:icon="@drawable/ic_pengaturan"
+        android:title="Pengaturan"/>
+    <item
+        android:id="@+id/item8"
+        android:icon="@drawable/ic_laporan"
+        android:title="Laporan"/>
+    <item
+        android:id="@+id/item9"
+        android:icon="@drawable/ic_logout"
         android:title="Logout"/>
 </menu>

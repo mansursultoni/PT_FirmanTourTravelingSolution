@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/rentalMobil"
+        android:title="Rental Mobil"/>
+    <item android:id="@+id/paketWisata"
+        android:title="Paket Wisata"/>
+    <item android:id="@+id/pengaturan"
+        android:title="Pengaturan"/>
+</menu>

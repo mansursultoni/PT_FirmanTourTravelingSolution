@@ -1,9 +1,12 @@
 package com.firmantour.travelingsolution;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,7 +25,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
-import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +33,7 @@ import android.widget.Toolbar;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
@@ -38,12 +41,15 @@ import com.squareup.picasso.Picasso;
 
 import static com.firmantour.travelingsolution.R.drawable.ic_user;
 
-public class AdminRentalMobil extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
+public class AdminRentalMobil extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private FirebaseFirestore firebaseFirestore;
     private FirestoreRecyclerAdapter adapter;
     RecyclerView recyclerView;
-    ProgressBar progressBar;
+    ImageView imageView, btnTambah;
+    DrawerLayout drawerLayout;
+    NavigationView navigationView;
+
 
 
     @Override
@@ -55,22 +61,37 @@ public class AdminRentalMobil extends AppCompatActivity implements PopupMenu.OnM
         Window window = this.getWindow();
         window.setStatusBarColor(this.getResources().getColor(R.color.blue));
 
+        imageView = findViewById(R.id.imageButton);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // --- To open Drawer ---
+                drawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
 
-        recyclerView = findViewById(R.id.recyclerView);
-        progressBar = findViewById(R.id.progressBar);
-        firebaseFirestore = FirebaseFirestore.getInstance();
-
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-
-        getData();
-
-        FloatingActionButton fab = findViewById(R.id.floatingActionButton);
-        fab.setOnClickListener(new View.OnClickListener() {
+        btnTambah = findViewById(R.id.btn_tambah);
+        btnTambah.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(AdminRentalMobil.this, TambahRentalMobil.class));
             }
         });
+
+        drawerLayout = findViewById(R.id.drawerLayout);
+        navigationView = findViewById(R.id.nav_view);
+
+        navigationView.bringToFront();
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout,R.string.open,R.string.close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+        navigationView.setNavigationItemSelectedListener(this);
+
+        recyclerView = findViewById(R.id.recyclerView);
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 1));
+
+        getData();
     }
 
     private void getData() {
@@ -87,7 +108,6 @@ public class AdminRentalMobil extends AppCompatActivity implements PopupMenu.OnM
 
             @Override
             protected void onBindViewHolder(@NonNull ProdukHolder holder, int position, @NonNull final ClassProduk model) {
-                progressBar.setVisibility(View.GONE);
                 if (model.getFoto() != null) {
                     Picasso.get().load(model.getFoto()).fit().into(holder.fotoProduk);
                 } else {
@@ -149,27 +169,6 @@ public class AdminRentalMobil extends AppCompatActivity implements PopupMenu.OnM
         adapter.stopListening();
     }
 
-    public void showPopup(View v){
-        PopupMenu popup = new PopupMenu(this, v);
-        popup.setOnMenuItemClickListener(this);
-        popup.inflate(R.menu.menu_item);
-        popup.show();
-    }
-
-    @Override
-    public boolean onMenuItemClick(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.item1:
-                closeOptionsMenu();
-                return true;
-            case R.id.item2:
-                startActivity(new Intent(AdminRentalMobil.this, AdminPaketWisata.class));
-                finish();
-                return true;
-            default:
-                return false;
-        }
-    }
 
     @Override
     public void onBackPressed() {
@@ -188,5 +187,19 @@ public class AdminRentalMobil extends AppCompatActivity implements PopupMenu.OnM
             }
         });
         alertDialog.show();
+    }
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.item1:
+                startActivity(new Intent(AdminRentalMobil.this, Dashboard.class));
+                finish();
+                return true;
+            case R.id.item2:
+
+                return true;
+            default:
+                return false;
+        }
     }
 }

@@ -4,11 +4,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import org.checkerframework.checker.units.qual.C;
-
-public class preferences {
+public class LoginSesson {
     private static final String DATA_LOGIN = "status_login",
-                DATA_AS = "as";
+            DATA_AS = "as";
 
     private static SharedPreferences getSharedPreferences(Context context){
         return PreferenceManager.getDefaultSharedPreferences(context);
@@ -21,21 +19,21 @@ public class preferences {
     }
 
     public static String getDataAs(Context context){
-        return getSharedPreferences(context).getString(DATA_AS, "");
+        return getSharedPreferences(context).getString(DATA_AS,"");
     }
 
     public static void setDataLogin(Context context, boolean status){
         SharedPreferences.Editor editor = getSharedPreferences(context).edit();
-        editor.putBoolean(DATA_LOGIN, status);
+        editor.putBoolean(DATA_LOGIN,status);
         editor.apply();
     }
 
     public static boolean getDataLogin(Context context){
-        return getSharedPreferences(context).getBoolean(DATA_LOGIN, false);
+        return getSharedPreferences(context).getBoolean(DATA_LOGIN,false);
     }
 
     public static void clearData(Context context){
-        SharedPreferences.Editor editor =  getSharedPreferences(context).edit();
+        SharedPreferences.Editor editor = getSharedPreferences(context).edit();
         editor.remove(DATA_AS);
         editor.remove(DATA_LOGIN);
         editor.apply();

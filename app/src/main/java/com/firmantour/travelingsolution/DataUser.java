@@ -2,6 +2,7 @@ package com.firmantour.travelingsolution;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.view.GravityCompat;
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -97,8 +99,8 @@ public class DataUser extends AppCompatActivity implements NavigationView.OnNavi
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.dashboard:
-//                startActivity(new Intent(Dashboard.this, AdminRentalMobil.class));
-//                finish();
+                startActivity(new Intent(DataUser.this, Dashboard.class));
+                finish();
                 return true;
             case R.id.rentalmobil:
                 startActivity(new Intent(DataUser.this, AdminRentalMobil.class));
@@ -117,8 +119,8 @@ public class DataUser extends AppCompatActivity implements NavigationView.OnNavi
 //                finish();
                 return true;
             case R.id.datauser:
-                startActivity(new Intent(DataUser.this, DataUser.class));
-                finish();
+//                startActivity(new Intent(DataUser.this, DataUser.class));
+//                finish();
                 return true;
             case R.id.setting:
 //                startActivity(new Intent(Dashboard.this, PengaturanAdmin.class));
@@ -129,6 +131,21 @@ public class DataUser extends AppCompatActivity implements NavigationView.OnNavi
 //                finish();
                 return true;
             case R.id.logout:
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(DataUser.this);
+                alertDialog.setTitle("Keluar");
+                alertDialog.setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                });
+                alertDialog.setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                alertDialog.show();
 
                 return true;
             default:

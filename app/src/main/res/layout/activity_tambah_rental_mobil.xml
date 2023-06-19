@@ -39,42 +39,6 @@
             android:textSize="16sp"
             android:textStyle="bold"
             android:typeface="normal" />
-        <TextView
-            android:id="@+id/tv_jumlahMobil"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginHorizontal="8dp"
-            android:text="0"
-            android:textAllCaps="true"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:typeface="normal" />
-        <TextView
-            android:id="@+id/tv_jumlahMobil2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginHorizontal="8dp"
-            android:text="0"
-            android:textAllCaps="true"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:typeface="normal" />
-        <TextView
-            android:id="@+id/tv_jumlahMobil3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginHorizontal="8dp"
-            android:text="Jumlah"
-            android:textAllCaps="true"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:typeface="normal" />
 
 
     </LinearLayout>

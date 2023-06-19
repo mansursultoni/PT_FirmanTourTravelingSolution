@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.PostProcessor;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -13,7 +12,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -25,7 +23,6 @@ import com.google.firebase.database.ValueEventListener;
 public class LoginActivity extends AppCompatActivity {
 
     EditText ETNomor, ETPassword;
-    TextView Tv1, Tv2, Tv3;
     Button TombolMasuk, TombolDaftar, TombolTambah;
     CheckBox checkBox;
 
@@ -42,11 +39,6 @@ public class LoginActivity extends AppCompatActivity {
         ETNomor = findViewById(R.id.etNomor);
         ETPassword = findViewById(R.id.etPassword);
 
-        Tv1 = findViewById(R.id.tv1);
-        Tv2 = findViewById(R.id.tv2);
-        Tv3 = findViewById(R.id.tv3);
-        String text2 = "1";
-        Tv2.setText(text2);
 
 
         SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
@@ -78,49 +70,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        //Menampilkan total database
-        databaseReference.child("user").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()){
-                    String data = String.valueOf(snapshot.getChildrenCount());
-                    Tv1.setText(data);
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Tv1.setText("0");
-            }
-        });
-
-        TombolTambah = findViewById(R.id.btnTambah);
-        TombolTambah.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-//                String txtnama = ETNomor.getText().toString();
-//                String txt1 = Tv1.getText().toString();
-//                int txt2 = 1;
-//                if (!txtnama.isEmpty()){
-//                    Tv1.setText(txt1);
-//                    int pertama = Integer.parseInt(ETNomor.getText().toString());
-//                    int tambah = pertama + txt2;
-//                    String text = String.valueOf(tambah);
-//                    Tv3.setText(text);
-//                    return;
-//                }
-
-                String textNomor = ETNomor.getText().toString();
-                if (!textNomor.isEmpty()){
-                    int text1 = Integer.parseInt(Tv1.getText().toString());
-                    int text2 = Integer.parseInt(Tv2.getText().toString());
-                    int total = text1 + text2;
-                    String tambah = String.valueOf(total);
-                    Tv3.setText(tambah);
-                }
-            }
-        });
-
         TombolDaftar = findViewById(R.id.btnDaftar);
         TombolDaftar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,42 +92,45 @@ public class LoginActivity extends AppCompatActivity {
                 } else if (txtpassword.isEmpty()) {
                     Toast.makeText(LoginActivity.this, "Masukkan Password.", Toast.LENGTH_SHORT).show();
                 } else {
-                    //langkah pertama cek admin
-                    databaseReference.child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if (snapshot.hasChild(txtnomor)) {
-                                final String getPassword = snapshot.child(txtnomor).child("password").getValue(String.class);
-                                if (getPassword.equals(txtpassword)) {
-                                    Toast.makeText(LoginActivity.this, "Login Berhasil.", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(LoginActivity.this, Dashboard.class));
-                                    finish();
-                                   return;
-                                }
-                                return;
-                            }
-                        }
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
 
-                        }
-                    });
-
-                    //langkah kedua cek user
-                    databaseReference.child("user").addListenerForSingleValueEvent(new ValueEventListener() {
+                    databaseReference.child("user").addValueEventListener(new ValueEventListener() {
                         @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if (snapshot.hasChild(txtnomor)) {
-                                final String getPassword = snapshot.child(txtnomor).child("password").getValue(String.class);
-                                if (getPassword.equals(txtpassword)) {
-                                    Toast.makeText(LoginActivity.this, "Login Berhasil.", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(LoginActivity.this, UserRentalMobil.class));
-                                    finish();
-                                }  else {
-                                    Toast.makeText(LoginActivity.this, "Password Salah.", Toast.LENGTH_SHORT).show();
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            String input1 = ETNomor.getText().toString();
+                            String input2 = ETPassword.getText().toString();
+
+                            if (dataSnapshot.child(input1).exists()) {
+                                if (dataSnapshot.child(input1).child("password").getValue(String.class).equals(input2)) {
+                                    if (checkBox.isChecked()) {
+                                        if (dataSnapshot.child(input1).child("alamat").getValue(String.class).equals("Purwojati")) {
+                                            LoginSesson.setDataLogin(LoginActivity.this, true);
+                                            LoginSesson.setDataAs(LoginActivity.this, "Purwojati");
+                                            startActivity(new Intent(LoginActivity.this, Dashboard.class));
+                                            Toast.makeText(LoginActivity.this, "Login Berhasil.", Toast.LENGTH_SHORT).show();
+                                        } else if (dataSnapshot.child(input1).child("alamat").getValue(String.class).equals("Purwojati")){
+                                            LoginSesson.setDataLogin(LoginActivity.this, true);
+                                            LoginSesson.setDataAs(LoginActivity.this, "alamag");
+                                            startActivity(new Intent(LoginActivity.this, UserRentalMobil.class));
+                                            Toast.makeText(LoginActivity.this, "Login Berhasil.", Toast.LENGTH_SHORT).show();
+                                        }
+                                    } else {
+                                        if (dataSnapshot.child(input1).child("alamat").getValue(String.class).equals("Purwojati")) {
+                                            LoginSesson.setDataLogin(LoginActivity.this, false);
+                                            startActivity(new Intent(LoginActivity.this, Dashboard.class));
+                                            Toast.makeText(LoginActivity.this, "Login Berhasil.", Toast.LENGTH_SHORT).show();
+
+                                        } else if (dataSnapshot.child(input1).child("alamat").getValue(String.class).equals("alamag")){
+                                            LoginSesson.setDataLogin(LoginActivity.this, false);
+                                            startActivity(new Intent(LoginActivity.this, UserRentalMobil.class));
+                                            Toast.makeText(LoginActivity.this, "Login Berhasil.", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+
+                                } else {
+                                    Toast.makeText(LoginActivity.this, "Kata sandi salah", Toast.LENGTH_SHORT).show();
                                 }
                             } else {
-                                Toast.makeText(LoginActivity.this, "Nomor Telpon Salah.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, "Data belum terdaftar", Toast.LENGTH_SHORT).show();
                             }
                         }
 
@@ -187,9 +139,68 @@ public class LoginActivity extends AppCompatActivity {
 
                         }
                     });
+
+//                    //langkah pertama cek admin
+//                    databaseReference.child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
+//                        @Override
+//                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                            if (snapshot.hasChild(txtnomor)) {
+//                                final String getPassword = snapshot.child(txtnomor).child("password").getValue(String.class);
+//                                if (getPassword.equals(txtpassword)) {
+//                                    Toast.makeText(LoginActivity.this, "Login Berhasil.", Toast.LENGTH_SHORT).show();
+//                                    startActivity(new Intent(LoginActivity.this, Dashboard.class));
+//                                    finish();
+//                                   return;
+//                                }
+//                                return;
+//                            }
+//                        }
+//                        @Override
+//                        public void onCancelled(@NonNull DatabaseError error) {
+//
+//                        }
+//                    });
+//
+//                    //langkah kedua cek user
+//                    databaseReference.child("user").addListenerForSingleValueEvent(new ValueEventListener() {
+//                        @Override
+//                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                            if (snapshot.hasChild(txtnomor)) {
+//                                final String getPassword = snapshot.child(txtnomor).child("password").getValue(String.class);
+//                                if (getPassword.equals(txtpassword)) {
+//                                    Toast.makeText(LoginActivity.this, "Login Berhasil.", Toast.LENGTH_SHORT).show();
+//                                    startActivity(new Intent(LoginActivity.this, UserRentalMobil.class));
+//                                    finish();
+//                                }  else {
+//                                    Toast.makeText(LoginActivity.this, "Password Salah.", Toast.LENGTH_SHORT).show();
+//                                }
+//                            } else {
+//                                Toast.makeText(LoginActivity.this, "Nomor Telpon Salah.", Toast.LENGTH_SHORT).show();
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onCancelled(@NonNull DatabaseError error) {
+//
+//                        }
+//                    });
                 }
+
             }
         });
 
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (LoginSesson.getDataLogin(this)) {
+            if (LoginSesson.getDataAs(this).equals("admin")) {
+                startActivity(new Intent(this, Dashboard.class));
+                finish();
+            } else {
+                startActivity(new Intent(this, UserRentalMobil.class));
+                finish();
+            }
+        }
     }
 }

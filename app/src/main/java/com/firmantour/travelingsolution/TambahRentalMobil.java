@@ -71,10 +71,6 @@ public class TambahRentalMobil extends AppCompatActivity implements AdapterView.
 
         FotoProduk      = findViewById(R.id.imageView);
 
-        JumlahMobil     = findViewById(R.id.tv_jumlahMobil);
-        JumlahMobil2     = findViewById(R.id.tv_jumlahMobil2);
-        JumlahMobil3     = findViewById(R.id.tv_jumlahMobil3);
-
         TextNama        = findViewById(R.id.editTextNama);
         TextNomor       = findViewById(R.id.editTextNomor);
         TextHarga       = findViewById(R.id.editTextHarga);

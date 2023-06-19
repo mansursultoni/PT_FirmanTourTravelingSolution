@@ -15,24 +15,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.PopupMenu;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -191,11 +182,39 @@ public class AdminRentalMobil extends AppCompatActivity implements NavigationVie
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
-            case R.id.item1:
+            case R.id.dashboard:
                 startActivity(new Intent(AdminRentalMobil.this, Dashboard.class));
                 finish();
                 return true;
-            case R.id.item2:
+            case R.id.rentalmobil:
+//                startActivity(new Intent(AdminRentalMobil.this, AdminRentalMobil.class));
+//                finish();
+                return true;
+            case R.id.paketwisata:
+                startActivity(new Intent(AdminRentalMobil.this, AdminPaketWisata.class));
+                finish();
+                return true;
+            case R.id.menunggukonfirmasi:
+//                startActivity(new Intent(Dashboard.this, MenungguKonfirmasi.class));
+//                finish();
+                return true;
+            case R.id.dataadmin:
+//                startActivity(new Intent(Dashboard.this, DataAdmin.class));
+//                finish();
+                return true;
+            case R.id.datauser:
+                startActivity(new Intent(AdminRentalMobil.this, DataUser.class));
+                finish();
+                return true;
+            case R.id.setting:
+//                startActivity(new Intent(Dashboard.this, PengaturanAdmin.class));
+//                finish();
+                return true;
+            case R.id.laporan:
+//                startActivity(new Intent(Dashboard.this, Laporan.class));
+//                finish();
+                return true;
+            case R.id.logout:
 
                 return true;
             default:

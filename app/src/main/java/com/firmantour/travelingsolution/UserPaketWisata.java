@@ -18,7 +18,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.ProgressBar;
@@ -26,7 +25,6 @@ import android.widget.TextView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
@@ -149,11 +147,11 @@ public class UserPaketWisata extends AppCompatActivity implements PopupMenu.OnMe
     @Override
     public boolean onMenuItemClick(@NonNull MenuItem item) {
         switch (item.getItemId()){
-            case R.id.item1:
+            case R.id.dashboard:
                 startActivity(new Intent(UserPaketWisata.this, UserRentalMobil.class));
                 finish();
                 return true;
-            case R.id.item2:
+            case R.id.rentalmobil:
                 closeOptionsMenu();
                 return true;
             default:

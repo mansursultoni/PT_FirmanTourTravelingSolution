@@ -18,6 +18,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.DataSnapshot;
@@ -80,19 +81,23 @@ public class DaftarActivity extends AppCompatActivity implements AdapterView.OnI
                         txtalamat.isEmpty() || txtpassword.isEmpty()){
                     Toast.makeText(DaftarActivity.this, "Data harus lengkap.", Toast.LENGTH_SHORT).show();
                 }else {
-                    databaseReference.child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
+                    databaseReference.child("user").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             if (snapshot.hasChild(txtnomor)){
                                 Toast.makeText(DaftarActivity.this, "Nomor telepon telah terdaftar.", Toast.LENGTH_SHORT).show();
                             }else {
-                                databaseReference.child("admin").child(txtnomor).child("nama").setValue(txtnama);
-                                databaseReference.child("admin").child(txtnomor).child("tanggallahir").setValue(txttanggallahir);
-                                databaseReference.child("admin").child(txtnomor).child("jeniskelamin").setValue(txtjeniskelamin);
-                                databaseReference.child("admin").child(txtnomor).child("alamat").setValue(txtalamat);
-                                databaseReference.child("admin").child(txtnomor).child("password").setValue(txtpassword);
-
-                                Toast.makeText(DaftarActivity.this, "Pendaftaran berhasil, silahkan login.", Toast.LENGTH_SHORT).show();
+                                databaseReference.child("user").child(txtnomor).setValue(new ModelUser(txtnama,txtnomor,txttanggallahir,txtjeniskelamin,txtalamat,txtpassword)).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        Toast.makeText(DaftarActivity.this, "Pendaftaran berhasil, silahkan login.", Toast.LENGTH_SHORT).show();
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(DaftarActivity.this, "Gagal menyimpan data.", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
                             }
                         }
 

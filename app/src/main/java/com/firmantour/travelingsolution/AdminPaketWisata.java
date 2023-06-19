@@ -1,7 +1,6 @@
 package com.firmantour.travelingsolution;
 
 import static com.firmantour.travelingsolution.R.drawable.ic_user;
-import static com.firmantour.travelingsolution.R.drawable.rounded_background_white;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -12,16 +11,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.ProgressBar;
@@ -164,11 +160,11 @@ public class AdminPaketWisata extends AppCompatActivity implements PopupMenu.OnM
     @Override
     public boolean onMenuItemClick(@NonNull MenuItem item) {
         switch (item.getItemId()){
-            case R.id.item1:
+            case R.id.dashboard:
                 startActivity(new Intent(AdminPaketWisata.this, AdminRentalMobil.class));
                 finish();
                 return true;
-            case R.id.item2:
+            case R.id.rentalmobil:
                 closeOptionsMenu();
                 return true;
             default:

@@ -64,7 +64,7 @@ public class TambahPaketWisata extends AppCompatActivity implements AdapterView.
         TextNama        = findViewById(R.id.editTextNama);
         TextNomor       = findViewById(R.id.editTextNomor);
         TextHarga       = findViewById(R.id.editTextHarga);
-        TextDeskripsi   = findViewById(R.id.editTextDeskripsi);
+        TextDeskripsi   = findViewById(R.id.editTextWarna);
         TextStatus      = findViewById(R.id.editTextStatus);
         TombolKembali   = findViewById(R.id.buttonBack);
         TombolSimpan    = findViewById(R.id.buttonUpdate);

@@ -51,7 +51,7 @@ public class UserDetailPaketWisata extends AppCompatActivity {
 
         TextNama    = findViewById(R.id.editTextNama);
         TextHarga   = findViewById(R.id.editTextHarga);
-        TextDeskripsi = findViewById(R.id.editTextDeskripsi);
+        TextDeskripsi = findViewById(R.id.editTextWarna);
         TextStatus  = findViewById(R.id.editTextStatus);
 
         TombolKembali = findViewById(R.id.buttonBack);

@@ -153,7 +153,7 @@
                 android:textSize="16sp" />
 
             <EditText
-                android:id="@+id/editTextDeskripsi"
+                android:id="@+id/editTextWarna"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/txt5"
@@ -180,7 +180,7 @@
                 android:layout_marginTop="8dp"
                 android:textColor="@color/white"
                 android:textSize="18sp"
-                android:layout_below="@id/editTextDeskripsi"
+                android:layout_below="@id/editTextWarna"
                 android:layout_centerHorizontal="true"/>
 
 

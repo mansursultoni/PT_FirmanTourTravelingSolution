@@ -71,7 +71,7 @@ public class AdminDetailPaketWisata extends AppCompatActivity implements Adapter
         TextNama    = findViewById(R.id.editTextNama);
         TextNomor   = findViewById(R.id.editTextNomor);
         TextHarga   = findViewById(R.id.editTextHarga);
-        TextDeskripsi = findViewById(R.id.editTextDeskripsi);
+        TextDeskripsi = findViewById(R.id.editTextWarna);
         TextStatus  = findViewById(R.id.editTextStatus);
 
         TombolHapus = findViewById(R.id.buttonDelete);

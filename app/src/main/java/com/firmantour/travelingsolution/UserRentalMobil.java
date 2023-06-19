@@ -22,9 +22,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -139,13 +137,13 @@ public class UserRentalMobil extends AppCompatActivity implements NavigationView
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
-            case R.id.item1:
+            case R.id.dashboard:
                 Toast.makeText(this, "Item 1", Toast.LENGTH_SHORT).show();
                 return true;
-            case R.id.item2:
+            case R.id.rentalmobil:
                 Toast.makeText(this, "Item 2", Toast.LENGTH_SHORT).show();
                 return true;
-            case R.id.item3:
+            case R.id.paketwisata:
                 SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putString("ingat","false");

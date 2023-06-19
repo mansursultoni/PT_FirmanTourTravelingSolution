@@ -16,12 +16,18 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
@@ -36,13 +42,16 @@ public class TambahRentalMobil extends AppCompatActivity implements AdapterView.
 
     private FirebaseFirestore firebaseFirestore;
     private StorageReference storageReference;
-    ImageView FotoProduk;
-    EditText TextNama, TextNomor, TextHarga, TextDeskripsi, TextStatus;
-    Button TombolSimpan, TombolKembali;
+    ImageView FotoProduk, TombolKembali;
+    EditText TextNama, TextNomor, TextHarga, TextWarna, TextStatus, TextKursi, TextMerk;
+    TextView JumlahMobil, JumlahMobil2, JumlahMobil3;
+    Button TombolSimpan;
     ProgressBar progressBar;
     private Uri filePath;
     private String fotoUrl;
     private static final int IMAGE_REQUEST = 1;
+
+    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://pt-firman-tour-default-rtdb.firebaseio.com/");
 
 
     @Override
@@ -61,11 +70,17 @@ public class TambahRentalMobil extends AppCompatActivity implements AdapterView.
 
         FotoProduk      = findViewById(R.id.imageView);
 
+        JumlahMobil     = findViewById(R.id.tv_jumlahMobil);
+        JumlahMobil2     = findViewById(R.id.tv_jumlahMobil2);
+        JumlahMobil3     = findViewById(R.id.tv_jumlahMobil3);
+
         TextNama        = findViewById(R.id.editTextNama);
         TextNomor       = findViewById(R.id.editTextNomor);
         TextHarga       = findViewById(R.id.editTextHarga);
-        TextDeskripsi   = findViewById(R.id.editTextDeskripsi);
+        TextWarna       = findViewById(R.id.editTextWarna);
         TextStatus      = findViewById(R.id.editTextStatus);
+        TextMerk        = findViewById(R.id.editTextNamaMerk);
+        TextKursi       = findViewById(R.id.editTextJumlahKursi);
         TombolKembali   = findViewById(R.id.buttonBack);
         TombolSimpan    = findViewById(R.id.buttonUpdate);
 
@@ -85,6 +100,9 @@ public class TambahRentalMobil extends AppCompatActivity implements AdapterView.
             public void onClick(View v) {
                 uploadImage();
             }
+
+
+
         });
         TombolKembali.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,13 +112,15 @@ public class TambahRentalMobil extends AppCompatActivity implements AdapterView.
         });
 
     }
-    private void SimpanData(String nama, String nomor, String harga, String deskripsi, String status, String foto){
+    private void SimpanData(String nomor, String status, String merk, String nama, String warna, String kursi, String harga, String foto){
         Map<String, Object> data = new HashMap<>();
-        data.put("nama", nama);
         data.put("nomor", nomor);
-        data.put("harga", harga);
-        data.put("deskripsi", deskripsi);
         data.put("status", status);
+        data.put("merk", merk);
+        data.put("nama", nama);
+        data.put("warna", warna);
+        data.put("kursi", kursi);
+        data.put("harga", harga);
         data.put("foto", foto);
         firebaseFirestore.collection("RentalMobil").document(nomor).set(data).isSuccessful();
     }
@@ -134,11 +154,13 @@ public class TambahRentalMobil extends AppCompatActivity implements AdapterView.
                 public void onComplete(@NonNull Task<Uri> task) {
                     Uri imagePath = task.getResult();
                     fotoUrl = imagePath.toString();
-                    SimpanData(TextNama.getText().toString(),
-                            TextNomor.getText().toString(),
-                            TextHarga.getText().toString(),
-                            TextDeskripsi.getText().toString(),
+                    SimpanData(TextNomor.getText().toString(),
                             TextStatus.getText().toString(),
+                            TextMerk.getText().toString(),
+                            TextNama.getText().toString(),
+                            TextWarna.getText().toString(),
+                            TextKursi.getText().toString(),
+                            TextHarga.getText().toString(),
                             fotoUrl);
                     progressBar.setProgress(0);
                     progressBar.setVisibility(View.INVISIBLE);

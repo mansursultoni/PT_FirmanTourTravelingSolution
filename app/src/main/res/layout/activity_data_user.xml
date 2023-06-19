@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/gradient_blue"
     android:fitsSystemWindows="true"
-    tools:context=".AdminRentalMobil"
+    tools:context=".DataUser"
     tools:openDrawer="start">
 
     <com.google.android.material.navigation.NavigationView
@@ -37,7 +37,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="25dp"
                 android:gravity="center_horizontal"
-                android:text="RENTAL MOBIL"
+                android:text="DATA USER"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -100,7 +100,8 @@
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="10dp" />
+                android:layout_marginTop="10dp"
+                tools:listitem="@layout/item_user"/>
 
         </RelativeLayout>
 

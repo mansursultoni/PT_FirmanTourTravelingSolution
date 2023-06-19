@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grey"
+    android:background="@color/white"
     tools:context=".TambahRentalMobil">
 
     <LinearLayout
@@ -12,16 +12,64 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
         android:background="@color/blue"
         android:orientation="horizontal"
         android:paddingHorizontal="16dp">
+
+        <ImageView
+            android:id="@+id/buttonBack"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/rounded_background_blue"
+            android:src="@drawable/ic_back"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:text="TAMBAH RENTAL MOBIL"
+            android:layout_marginHorizontal="8dp"
+            android:text="TAMBAH PRODUK"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:typeface="normal" />
+        <TextView
+            android:id="@+id/tv_jumlahMobil"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginHorizontal="8dp"
+            android:text="0"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:typeface="normal" />
+        <TextView
+            android:id="@+id/tv_jumlahMobil2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginHorizontal="8dp"
+            android:text="0"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:typeface="normal" />
+        <TextView
+            android:id="@+id/tv_jumlahMobil3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginHorizontal="8dp"
+            android:text="Jumlah"
             android:textAllCaps="true"
             android:textColor="@color/white"
             android:textSize="16sp"
@@ -35,7 +83,8 @@
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/layoutToolbar">
+        android:layout_below="@+id/layoutToolbar"
+        app:layout_constraintTop_toBottomOf="@+id/layoutToolbar">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -43,175 +92,308 @@
 
             <ImageView
                 android:id="@+id/imageView"
-                android:layout_width="380dp"
-                android:layout_height="380dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="16dp"
+                android:adjustViewBounds="true"
                 android:background="@color/white"
-                android:padding="4dp"
+                android:cropToPadding="false"
+                android:scaleType="fitCenter"
+                android:scrollbarAlwaysDrawHorizontalTrack="true"
+                android:scrollbarAlwaysDrawVerticalTrack="false"
                 app:srcCompat="@drawable/ic_image" />
 
-            <TextView
-                android:id="@+id/txt1"
+            <LinearLayout
+                android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/imageView"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="16dp"
-                android:text="Kode"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:layout_marginTop="20dp"
+                android:orientation="vertical"
+                android:paddingHorizontal="16dp">
 
-            <EditText
-                android:id="@+id/editTextNomor"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/txt1"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginVertical="4dp"
-                android:background="@drawable/rounded_background_white"
-                android:drawablePadding="16dp"
-                android:editable="true"
-                android:inputType="number"
-                android:padding="16dp"
-                android:textColor="@color/black"
-                android:textColorHint="@color/grey" />
+                <LinearLayout
+                    android:id="@+id/linearLayout1"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_below="@id/imageView"
+                    android:layout_marginBottom="4dp"
+                    android:background="@drawable/rounded_corner_blue"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="8dp">
 
-            <TextView
-                android:id="@+id/txt2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/editTextNomor"
-                android:layout_marginHorizontal="20dp"
-                android:text="Status"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="Plat Nomor"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
 
-            <EditText
-                android:id="@+id/editTextStatus"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/txt2"
-                android:layout_marginStart="16dp"
-                android:layout_marginVertical="4dp"
-                android:background="@drawable/rounded_background_white"
-                android:drawablePadding="16dp"
-                android:editable="false"
-                android:padding="16dp"
-                android:textColor="@color/black"
-                android:textColorHint="@color/grey" />
+                    <EditText
+                        android:id="@+id/editTextNomor"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@color/transparant"
+                        android:drawablePadding="8dp"
+                        android:editable="true"
+                        android:gravity="center"
+                        android:hint="Plat Nomor"
+                        android:paddingHorizontal="16dp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/grey" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/linearLayout2"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_below="@id/linearLayout1"
+                    android:layout_marginBottom="4dp"
+                    android:background="@drawable/rounded_corner_blue"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="8dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="Status"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+
+                    <EditText
+                        android:id="@+id/editTextStatus"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@color/transparant"
+                        android:drawablePadding="8dp"
+                        android:editable="false"
+                        android:gravity="left|center_vertical"
+                        android:hint="Tidak Tersedia"
+                        android:paddingHorizontal="16dp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/grey" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearLayout3"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_below="@id/linearLayout2"
+                    android:layout_marginBottom="4dp"
+                    android:background="@drawable/rounded_corner_blue"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="8dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@id/editTextStatus"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="Nama Merk"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+
+                    <EditText
+                        android:id="@+id/editTextNamaMerk"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@color/transparant"
+                        android:drawablePadding="8dp"
+                        android:editable="true"
+                        android:gravity="left|center_vertical"
+                        android:hint="Nama Merk"
+                        android:paddingHorizontal="16dp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/grey" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearLayout4"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_below="@id/linearLayout3"
+                    android:layout_marginBottom="4dp"
+                    android:background="@drawable/rounded_corner_blue"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="8dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@id/editTextStatus"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="Nama Mobil"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+
+                    <EditText
+                        android:id="@+id/editTextNama"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@color/transparant"
+                        android:drawablePadding="8dp"
+                        android:editable="true"
+                        android:gravity="left|center_vertical"
+                        android:hint="Nama Mobil"
+                        android:paddingHorizontal="16dp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/grey" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearLayout5"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_below="@id/linearLayout4"
+                    android:layout_marginBottom="4dp"
+                    android:background="@drawable/rounded_corner_blue"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="8dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@id/editTextStatus"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="Warna"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+
+                    <EditText
+                        android:id="@+id/editTextWarna"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@color/transparant"
+                        android:drawablePadding="8dp"
+                        android:editable="true"
+                        android:gravity="left|center_vertical"
+                        android:hint="Warna Mobil"
+                        android:inputType="textMultiLine"
+                        android:paddingHorizontal="16dp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/grey" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearLayout6"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_below="@id/linearLayout5"
+                    android:layout_marginBottom="4dp"
+                    android:background="@drawable/rounded_corner_blue"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="8dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@id/editTextStatus"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="Jumlah Kursi"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+
+                    <EditText
+                        android:id="@+id/editTextJumlahKursi"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@color/transparant"
+                        android:drawablePadding="8dp"
+                        android:editable="true"
+                        android:gravity="left|center_vertical"
+                        android:hint="Jumlah Kursi"
+                        android:paddingHorizontal="16dp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/grey" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearLayout7"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_below="@id/linearLayout6"
+                    android:layout_marginBottom="4dp"
+                    android:background="@drawable/rounded_corner_blue"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="8dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@id/editTextStatus"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="Harga / 24 Jam"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+
+                    <EditText
+                        android:id="@+id/editTextHarga"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@color/transparant"
+                        android:drawablePadding="8dp"
+                        android:editable="true"
+                        android:gravity="left|center_vertical"
+                        android:hint="Harga Sewa"
+                        android:paddingHorizontal="16dp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/grey" />
+                </LinearLayout>
+
+            </LinearLayout>
+
 
             <Spinner
                 android:id="@+id/spinner2"
                 android:layout_width="50dp"
                 android:layout_height="55dp"
-                android:layout_below="@id/txt2"
-                android:layout_alignEnd="@id/editTextStatus"
+                android:layout_below="@id/imageView"
+                android:layout_alignEnd="@id/imageView"
+                android:layout_marginTop="75dp"
+                android:layout_marginEnd="16dp"
                 android:backgroundTint="@color/black" />
-
-            <TextView
-                android:id="@+id/txt3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/editTextStatus"
-                android:layout_marginHorizontal="20dp"
-                android:text="Nama"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
-
-            <EditText
-                android:id="@+id/editTextNama"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/txt3"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginVertical="4dp"
-                android:background="@drawable/rounded_background_white"
-                android:drawablePadding="16dp"
-                android:inputType="text"
-                android:padding="16dp"
-                android:textColor="@color/black"
-                android:textColorHint="@color/grey" />
-
-            <TextView
-                android:id="@+id/txt4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/editTextNama"
-                android:layout_marginHorizontal="20dp"
-                android:text="Harga"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
-
-            <EditText
-                android:id="@+id/editTextHarga"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/txt4"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginVertical="4dp"
-                android:background="@drawable/rounded_background_white"
-                android:drawablePadding="16dp"
-                android:inputType="number"
-                android:padding="16dp"
-                android:textColor="@color/black"
-                android:textColorHint="@color/grey" />
-
-            <TextView
-                android:id="@+id/txt5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/editTextHarga"
-                android:layout_marginHorizontal="20dp"
-                android:text="Deskripsi"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
-
-            <EditText
-                android:id="@+id/editTextDeskripsi"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/txt5"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginVertical="4dp"
-                android:background="@drawable/rounded_background_white"
-                android:drawablePadding="16dp"
-                android:inputType="textMultiLine"
-                android:padding="16dp"
-                android:textColor="@color/black"
-                android:textColorHint="@color/grey" />
 
             <LinearLayout
                 android:id="@+id/layoutButton"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_below="@id/editTextDeskripsi"
-                android:layout_marginTop="10dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/linearLayout"
+                android:layout_marginVertical="16dp"
                 android:orientation="horizontal"
                 android:paddingHorizontal="16dp">
 
 
-                <Button
-                    android:id="@+id/buttonBack"
-                    style="@style/Widget.AppCompat.Button.Borderless"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/rounded_background_blue"
-                    android:text="Kembali"
-                    android:textAllCaps="false"
-                    android:textColor="@color/white"
-                    android:textSize="18sp" />
-
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/buttonUpdate"
                     style="@style/Widget.AppCompat.Button.Borderless"
-                    android:layout_width="wrap_content"
+                    android:layout_width="200dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="16dp"
                     android:layout_weight="1"

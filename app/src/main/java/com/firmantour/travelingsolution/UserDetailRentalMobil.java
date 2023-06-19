@@ -1,42 +1,30 @@
 package com.firmantour.travelingsolution;
 
 import static android.view.View.INVISIBLE;
-import static android.view.View.VISIBLE;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class UserDetailRentalMobil extends AppCompatActivity {
 
@@ -65,7 +53,7 @@ public class UserDetailRentalMobil extends AppCompatActivity {
 
         TextNama    = findViewById(R.id.editTextNama);
         TextHarga   = findViewById(R.id.editTextHarga);
-        TextDeskripsi = findViewById(R.id.editTextDeskripsi);
+        TextDeskripsi = findViewById(R.id.editTextWarna);
         TextStatus  = findViewById(R.id.editTextStatus);
 
         TombolKembali = findViewById(R.id.buttonBack);

@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -164,7 +165,14 @@ public class TambahRentalMobil extends AppCompatActivity implements AdapterView.
                             fotoUrl);
                     progressBar.setProgress(0);
                     progressBar.setVisibility(View.INVISIBLE);
-                    Toast.makeText(TambahRentalMobil.this, "Data berhasil disimpan", Toast.LENGTH_SHORT).show();
+
+                    String nomor = TextNomor.getText().toString();
+                    databaseReference.child("JumlahMobil").child(nomor).setValue("1").addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Toast.makeText(TambahRentalMobil.this, "Data berhasil ditambah.", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                     finish();
                 }
             });

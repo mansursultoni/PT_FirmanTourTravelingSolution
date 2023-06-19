@@ -5,15 +5,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.PostProcessor;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -24,12 +24,12 @@ import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity {
 
-    EditText nomor, password;
-    Button masuk, daftar;
+    EditText ETNomor, ETPassword;
+    TextView Tv1, Tv2, Tv3;
+    Button TombolMasuk, TombolDaftar, TombolTambah;
     CheckBox checkBox;
 
-    DatabaseReference databaseReference = FirebaseDatabase.getInstance().
-            getReferenceFromUrl("https://pt-firman-tour-default-rtdb.firebaseio.com/");
+    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +39,14 @@ public class LoginActivity extends AppCompatActivity {
         Window window = this.getWindow();
         window.setStatusBarColor(this.getResources().getColor(R.color.blue));
 
-        nomor = findViewById(R.id.etNomor);
-        password = findViewById(R.id.etPassword);
+        ETNomor = findViewById(R.id.etNomor);
+        ETPassword = findViewById(R.id.etPassword);
+
+        Tv1 = findViewById(R.id.tv1);
+        Tv2 = findViewById(R.id.tv2);
+        Tv3 = findViewById(R.id.tv3);
+        String text2 = "1";
+        Tv2.setText(text2);
 
 
         SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
@@ -72,8 +78,51 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        daftar = findViewById(R.id.btnDaftar);
-        daftar.setOnClickListener(new View.OnClickListener() {
+        //Menampilkan total database
+        databaseReference.child("user").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                    String data = String.valueOf(snapshot.getChildrenCount());
+                    Tv1.setText(data);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Tv1.setText("0");
+            }
+        });
+
+        TombolTambah = findViewById(R.id.btnTambah);
+        TombolTambah.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+//                String txtnama = ETNomor.getText().toString();
+//                String txt1 = Tv1.getText().toString();
+//                int txt2 = 1;
+//                if (!txtnama.isEmpty()){
+//                    Tv1.setText(txt1);
+//                    int pertama = Integer.parseInt(ETNomor.getText().toString());
+//                    int tambah = pertama + txt2;
+//                    String text = String.valueOf(tambah);
+//                    Tv3.setText(text);
+//                    return;
+//                }
+
+                String textNomor = ETNomor.getText().toString();
+                if (!textNomor.isEmpty()){
+                    int text1 = Integer.parseInt(Tv1.getText().toString());
+                    int text2 = Integer.parseInt(Tv2.getText().toString());
+                    int total = text1 + text2;
+                    String tambah = String.valueOf(total);
+                    Tv3.setText(tambah);
+                }
+            }
+        });
+
+        TombolDaftar = findViewById(R.id.btnDaftar);
+        TombolDaftar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(LoginActivity.this, DaftarActivity.class));
@@ -81,13 +130,13 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        masuk = findViewById(R.id.btnLogin);
-        masuk.setOnClickListener(new View.OnClickListener() {
+        TombolMasuk = findViewById(R.id.btnLogin);
+        TombolMasuk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                String txtnomor = nomor.getText().toString();
-                String txtpassword = password.getText().toString();
+                String txtnomor = ETNomor.getText().toString();
+                String txtpassword = ETPassword.getText().toString();
 
                 if (txtnomor.isEmpty()) {
                     Toast.makeText(LoginActivity.this, "Masukkan Nomor Telepon.", Toast.LENGTH_SHORT).show();
@@ -141,5 +190,6 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+
     }
 }

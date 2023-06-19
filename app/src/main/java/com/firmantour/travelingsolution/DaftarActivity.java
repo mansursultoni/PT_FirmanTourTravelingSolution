@@ -75,7 +75,6 @@ public class DaftarActivity extends AppCompatActivity implements AdapterView.OnI
                 String txtjeniskelamin = jenisKelamin.getText().toString();
                 String txtalamat = alamat.getText().toString();
                 String txtpassword = password.getText().toString();
-                String txtpassword2 = password2.getText().toString();
 
                 if (txtnama.isEmpty() || txtnomor.isEmpty() || txttanggallahir.isEmpty() || txtjeniskelamin.isEmpty() ||
                         txtalamat.isEmpty() || txtpassword.isEmpty()){

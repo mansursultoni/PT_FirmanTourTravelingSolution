@@ -14,16 +14,26 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class Dashboard extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
-
+    TextView JumlahMobil, JumlahUser;
     ImageView imageView;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
-    FirebaseDatabase firebaseDatabase;
+    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+    FirebaseFirestore firebaseFirestore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +62,39 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         toggle.syncState();
 
         navigationView.setNavigationItemSelectedListener(this);
+
+        JumlahMobil = findViewById(R.id.txt_jumlahMobil);
+        JumlahUser = findViewById(R.id.txt_jumlahUser);
+
+        //Menampilkan total user
+        databaseReference.child("user").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                    String data = String.valueOf(snapshot.getChildrenCount());
+                    JumlahUser.setText(data);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                JumlahUser.setText("0");
+            }
+        });
+        //Menampilkan total mobil
+        databaseReference.child("JumlahMobil").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                    String data = String.valueOf(snapshot.getChildrenCount());
+                    JumlahMobil.setText(data);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                JumlahMobil.setText("0");
+            }
+        });
+
 
 
 

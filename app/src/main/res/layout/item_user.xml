@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@color/blue4">
+        android:background="@drawable/gradient_blue_listitem">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -44,9 +44,9 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif"
                     android:text="Nama"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="18sp"
-                    android:textStyle="normal" />
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/textViewNomor"
@@ -55,10 +55,10 @@
                     android:fontFamily="sans-serif"
                     android:maxLines="2"
                     android:text="Nomor Telpon"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:layout_marginBottom="2dp"
                     android:textSize="16sp"
-                    android:textStyle="normal" />
+                    android:textStyle="bold" />
 
             </LinearLayout>
 

@@ -51,24 +51,24 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         checkBox = findViewById(R.id.ingatsaya);
-        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                if(compoundButton.isChecked()){
-                    SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
-                    SharedPreferences.Editor editor = preferences.edit();
-                    editor.putString("ingat","true");
-                    editor.apply();
-                    Toast.makeText(LoginActivity.this, "Check", Toast.LENGTH_SHORT).show();
-                }else {
-                    SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
-                    SharedPreferences.Editor editor = preferences.edit();
-                    editor.putString("ingat","false");
-                    editor.apply();
-                    Toast.makeText(LoginActivity.this, "Uncheck", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+//        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+//                if(compoundButton.isChecked()){
+//                    SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
+//                    SharedPreferences.Editor editor = preferences.edit();
+//                    editor.putString("ingat","false");
+//                    editor.apply();
+//                    Toast.makeText(LoginActivity.this, "Check", Toast.LENGTH_SHORT).show();
+//                }else {
+//                    SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
+//                    SharedPreferences.Editor editor = preferences.edit();
+//                    editor.putString("ingat","true");
+//                    editor.apply();
+//                    Toast.makeText(LoginActivity.this, "Uncheck", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
 
         TombolDaftar = findViewById(R.id.btnDaftar);
         TombolDaftar.setOnClickListener(new View.OnClickListener() {
@@ -93,7 +93,7 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this, "Masukkan Password.", Toast.LENGTH_SHORT).show();
                 } else {
 
-                    databaseReference.child("user").addValueEventListener(new ValueEventListener() {
+                    databaseReference.child("Login").addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             String input1 = ETNomor.getText().toString();
@@ -102,27 +102,31 @@ public class LoginActivity extends AppCompatActivity {
                             if (dataSnapshot.child(input1).exists()) {
                                 if (dataSnapshot.child(input1).child("password").getValue(String.class).equals(input2)) {
                                     if (checkBox.isChecked()) {
-                                        if (dataSnapshot.child(input1).child("alamat").getValue(String.class).equals("Purwojati")) {
+                                        if (dataSnapshot.child(input1).child("sebagai").getValue(String.class).equals("admin")) {
                                             LoginSesson.setDataLogin(LoginActivity.this, true);
-                                            LoginSesson.setDataAs(LoginActivity.this, "Purwojati");
+                                            LoginSesson.setDataAs(LoginActivity.this, "admin");
+                                            Toast.makeText(LoginActivity.this, "Login Berhasil.", Toast.LENGTH_SHORT).show();
                                             startActivity(new Intent(LoginActivity.this, Dashboard.class));
-                                            Toast.makeText(LoginActivity.this, "Login Berhasil.", Toast.LENGTH_SHORT).show();
-                                        } else if (dataSnapshot.child(input1).child("alamat").getValue(String.class).equals("Purwojati")){
+                                            finish();
+                                        } else if (dataSnapshot.child(input1).child("sebagai").getValue(String.class).equals("user")){
                                             LoginSesson.setDataLogin(LoginActivity.this, true);
-                                            LoginSesson.setDataAs(LoginActivity.this, "alamag");
-                                            startActivity(new Intent(LoginActivity.this, UserRentalMobil.class));
+                                            LoginSesson.setDataAs(LoginActivity.this, "user");
                                             Toast.makeText(LoginActivity.this, "Login Berhasil.", Toast.LENGTH_SHORT).show();
+                                            startActivity(new Intent(LoginActivity.this, UserRentalMobil.class));
+                                            finish();
                                         }
                                     } else {
-                                        if (dataSnapshot.child(input1).child("alamat").getValue(String.class).equals("Purwojati")) {
+                                        if (dataSnapshot.child(input1).child("sebagai").getValue(String.class).equals("admin")) {
                                             LoginSesson.setDataLogin(LoginActivity.this, false);
+                                            Toast.makeText(LoginActivity.this, "Login Berhasil.", Toast.LENGTH_SHORT).show();
                                             startActivity(new Intent(LoginActivity.this, Dashboard.class));
-                                            Toast.makeText(LoginActivity.this, "Login Berhasil.", Toast.LENGTH_SHORT).show();
+                                            finish();
 
-                                        } else if (dataSnapshot.child(input1).child("alamat").getValue(String.class).equals("alamag")){
+                                        } else if (dataSnapshot.child(input1).child("sebagai").getValue(String.class).equals("user")){
                                             LoginSesson.setDataLogin(LoginActivity.this, false);
-                                            startActivity(new Intent(LoginActivity.this, UserRentalMobil.class));
                                             Toast.makeText(LoginActivity.this, "Login Berhasil.", Toast.LENGTH_SHORT).show();
+                                            startActivity(new Intent(LoginActivity.this, UserRentalMobil.class));
+                                            finish();
                                         }
                                     }
 

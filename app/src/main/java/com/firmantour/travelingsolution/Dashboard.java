@@ -10,6 +10,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -69,7 +70,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         JumlahUser = findViewById(R.id.txt_jumlahUser);
 
         //Menampilkan total user
-        databaseReference.child("user").addValueEventListener(new ValueEventListener() {
+        databaseReference.child("JumlahUser").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()){
@@ -143,6 +144,8 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                 alertDialog.setPositiveButton("Ya", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        Logout();
+                        startActivity(new Intent(Dashboard.this, LoginActivity.class));
                         finish();
                     }
                 });
@@ -157,5 +160,8 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
             default:
                 return false;
         }
+    }
+    private void Logout(){
+        LoginSesson.clearData(this);
     }
 }

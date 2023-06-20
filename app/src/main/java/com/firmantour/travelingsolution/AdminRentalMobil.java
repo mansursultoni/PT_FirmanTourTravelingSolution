@@ -215,10 +215,29 @@ public class AdminRentalMobil extends AppCompatActivity implements NavigationVie
 //                finish();
                 return true;
             case R.id.logout:
-
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(AdminRentalMobil.this);
+                alertDialog.setTitle("Keluar");
+                alertDialog.setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Logout();
+                        startActivity(new Intent(AdminRentalMobil.this, LoginActivity.class));
+                        finish();
+                    }
+                });
+                alertDialog.setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                alertDialog.show();
                 return true;
             default:
                 return false;
         }
+    }
+    private void Logout(){
+        LoginSesson.clearData(this);
     }
 }

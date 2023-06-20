@@ -30,24 +30,22 @@ import android.widget.Toolbar;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.squareup.picasso.Picasso;
 
-public class UserRentalMobil extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class UserRentalMobil extends AppCompatActivity {
 
     private FirebaseFirestore firebaseFirestore;
     private FirestoreRecyclerAdapter adapter;
     RecyclerView recyclerView;
     ProgressBar progressBar;
+    BottomNavigationView navigationView;
 
-    ImageView imageView;
-
-    DrawerLayout drawerLayout;
-    NavigationView navigationView;
-    Toolbar toolbar;
 
 
 
@@ -61,36 +59,42 @@ public class UserRentalMobil extends AppCompatActivity implements NavigationView
         Window window = this.getWindow();
         window.setStatusBarColor(this.getResources().getColor(R.color.blue));
 
-        imageView = findViewById(R.id.ib_menu);
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // --- To open Drawer ---
-                drawerLayout.openDrawer(GravityCompat.START);
-            }
-        });
-
-        drawerLayout = findViewById(R.id.drawerLayout);
-        navigationView = findViewById(R.id.nav_view);
-
-        navigationView.bringToFront();
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout,R.string.open,R.string.close);
-        drawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
-
-        navigationView.setNavigationItemSelectedListener(this);
-
-
-
-
+        navigationView = findViewById(R.id.bottom_navigation);
         recyclerView = findViewById(R.id.recyclerView);
         progressBar = findViewById(R.id.progressBar);
         firebaseFirestore = FirebaseFirestore.getInstance();
 
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 1));
 
         getData();
+
+        navigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.rentalMobil:
+//                startActivity(new Intent(Dashboard.this, AdminRentalMobil.class));
+//                finish();
+                        return true;
+                    case R.id.paketWisata:
+                        startActivity(new Intent(UserRentalMobil.this, UserPaketWisata.class));
+                        finish();
+                        return true;
+                    case R.id.menunggukonfirmasi:
+//                        startActivity(new Intent(UserRentalMobil.this, MenungguKonfirmasi.class));
+//                        finish();
+                        return true;
+                    case R.id.pengaturan:
+//                    startActivity(new Intent(UserRentalMobil.this, MenungguKonfirmasi.class));
+//                    finish();
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+        });
     }
+
     private void getData() {
         Query query = firebaseFirestore.collection("RentalMobil");
         FirestoreRecyclerOptions<ClassProduk> response = new FirestoreRecyclerOptions.Builder<ClassProduk>()
@@ -134,28 +138,6 @@ public class UserRentalMobil extends AppCompatActivity implements NavigationView
         recyclerView.setAdapter(adapter);
     }
 
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.dashboard:
-                Toast.makeText(this, "Item 1", Toast.LENGTH_SHORT).show();
-                return true;
-            case R.id.rentalmobil:
-                Toast.makeText(this, "Item 2", Toast.LENGTH_SHORT).show();
-                return true;
-            case R.id.paketwisata:
-                SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.putString("ingat","false");
-                editor.apply();
-                startActivity(new Intent(UserRentalMobil.this, LoginActivity.class
-                ));
-                finish();
-                return true;
-            default:
-                return false;
-         }
-    }
 
     public class ProdukHolder extends RecyclerView.ViewHolder {
         ImageView fotoProduk;
@@ -170,24 +152,7 @@ public class UserRentalMobil extends AppCompatActivity implements NavigationView
             statusProduk = itemView.findViewById(R.id.textStatus);
 //            constraintLayout = itemView.findViewById(R.id.constraintLayout);
         }
-    }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        adapter.startListening();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        adapter.startListening();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        adapter.stopListening();
     }
 
 //    public void showPopup(View v){
@@ -228,5 +193,23 @@ public class UserRentalMobil extends AppCompatActivity implements NavigationView
             }
         });
         alertDialog.show();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        adapter.startListening();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        adapter.startListening();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        adapter.stopListening();
     }
 }

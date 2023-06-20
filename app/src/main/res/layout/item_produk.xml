@@ -24,7 +24,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="wrap_content"
             android:layout_toEndOf="@id/imageViewFoto"
             android:orientation="vertical"
             android:padding="8dp">
@@ -34,8 +34,8 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif"
                 android:text="Mobil :"
-                android:textColor="@color/black"
-                android:textSize="14sp"
+                android:textColor="@color/white"
+                android:textSize="16sp"
                 android:textStyle="normal" />
 
             <TextView
@@ -45,19 +45,19 @@
                 android:fontFamily="sans-serif"
                 android:maxLines="2"
                 android:text="Nama Produk"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:layout_marginBottom="2dp"
                 android:textSize="18sp"
-                android:textStyle="normal" />
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif"
                 android:text="Harga :"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                android:textStyle="normal" />
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:id="@+id/linearLayout"
@@ -70,8 +70,8 @@
                     android:id="@+id/textViewRp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Rp"
-                    android:textColor="@color/black"
+                    android:text="Rp "
+                    android:textColor="@color/white"
                     android:textSize="18sp" />
 
                 <TextView
@@ -80,7 +80,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="2dp"
                     android:text="Harga Produk"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="18dp" />
 
             </LinearLayout>
@@ -90,8 +90,8 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif"
                 android:text="Status :"
-                android:textColor="@color/black"
-                android:textSize="14sp"
+                android:textColor="@color/white"
+                android:textSize="16sp"
                 android:textStyle="normal" />
 
             <TextView
@@ -100,7 +100,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif"
                 android:text="Status"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/txt1"

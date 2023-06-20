@@ -34,6 +34,7 @@ public class DaftarActivity extends AppCompatActivity implements AdapterView.OnI
 
 
     TextInputEditText nama, nomor, tanggalLahir, jenisKelamin, alamat, password, password2;
+    TextView sebagai;
     ImageButton kembali, editTanggal;
     Button daftar;
 
@@ -56,6 +57,7 @@ public class DaftarActivity extends AppCompatActivity implements AdapterView.OnI
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
 
+        sebagai = findViewById(R.id.tv_user);
         nama = findViewById(R.id.etNama);
         nomor = findViewById(R.id.etNomor);
         tanggalLahir = findViewById(R.id.etTanggalLahir);
@@ -69,34 +71,51 @@ public class DaftarActivity extends AppCompatActivity implements AdapterView.OnI
         daftar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String txtsebagai = sebagai.getText().toString();
                 String txtnama = nama.getText().toString();
                 String txtnomor = nomor.getText().toString();
                 String txttanggallahir = tanggalLahir.getText().toString();
                 String txtjeniskelamin = jenisKelamin.getText().toString();
                 String txtalamat = alamat.getText().toString();
                 String txtpassword = password.getText().toString();
+                String txtpassword2 = password2.getText().toString();
 
                 if (txtnama.isEmpty() || txtnomor.isEmpty() || txttanggallahir.isEmpty() || txtjeniskelamin.isEmpty() ||
                         txtalamat.isEmpty() || txtpassword.isEmpty()){
                     Toast.makeText(DaftarActivity.this, "Data harus lengkap.", Toast.LENGTH_SHORT).show();
                 }else {
-                    databaseReference.child("user").addListenerForSingleValueEvent(new ValueEventListener() {
+                    databaseReference.child("Login").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             if (snapshot.hasChild(txtnomor)){
                                 Toast.makeText(DaftarActivity.this, "Nomor telepon telah terdaftar.", Toast.LENGTH_SHORT).show();
                             }else {
-                                databaseReference.child("user").child(txtnomor).setValue(new ModelUser(txtnama,txtnomor,txttanggallahir,txtjeniskelamin,txtalamat,txtpassword)).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void unused) {
-                                        Toast.makeText(DaftarActivity.this, "Pendaftaran berhasil, silahkan login.", Toast.LENGTH_SHORT).show();
-                                    }
-                                }).addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Toast.makeText(DaftarActivity.this, "Gagal menyimpan data.", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
+                                if (!txtpassword2.equals(txtpassword)){
+                                    Toast.makeText(DaftarActivity.this, "Masukkan ulang password.", Toast.LENGTH_SHORT).show();
+                                }else {
+                                    databaseReference.child("Login").child(txtnomor).setValue(new ModelUser(txtsebagai, txtnama, txtnomor, txttanggallahir, txtjeniskelamin, txtalamat, txtpassword)).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void unused) {
+                                            Toast.makeText(DaftarActivity.this, "Pendaftaran berhasil, silahkan login.", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Toast.makeText(DaftarActivity.this, "Gagal menyimpan data.", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                    databaseReference.child("JumlahUser").child(txtnomor).setValue(new ModelUser(txtsebagai, txtnama, txtnomor, txttanggallahir, txtjeniskelamin, txtalamat, txtpassword)).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void unused) {
+                                            Toast.makeText(DaftarActivity.this, "Pendaftaran berhasil, silahkan login.", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Toast.makeText(DaftarActivity.this, "Gagal menyimpan data.", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                }
                             }
                         }
 

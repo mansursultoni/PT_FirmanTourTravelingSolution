@@ -12,6 +12,9 @@
         android:theme="@style/Theme.PTFIRMANTOURTRAVELINGSOLUTION"
         tools:targetApi="31">
         <activity
+            android:name=".UserPemesanan"
+            android:exported="false" />
+        <activity
             android:name=".DataUser"
             android:exported="false" />
         <activity

@@ -31,7 +31,7 @@ public class UserDetailRentalMobil extends AppCompatActivity {
     private FirebaseFirestore firebaseFirestore;
     private StorageReference storageReference;
     ImageView FotoProduk;
-    EditText TextNama, TextHarga, TextDeskripsi, TextStatus;
+    EditText EtNomor, EtStatus, EtMerk, EtNama, EtWarna, EtJumlahKursi, EtHarga;
     Button TombolHubungi;
     ImageView TombolKembali;
     ProgressBar progressBar;
@@ -51,13 +51,15 @@ public class UserDetailRentalMobil extends AppCompatActivity {
 
         FotoProduk  = findViewById(R.id.imageView);
 
-        TextNama    = findViewById(R.id.editTextNama);
-        TextHarga   = findViewById(R.id.editTextHarga);
-        TextDeskripsi = findViewById(R.id.editTextWarna);
-        TextStatus  = findViewById(R.id.editTextStatus);
+        EtNomor = findViewById(R.id.editTextNomor);
+        EtStatus = findViewById(R.id.editTextStatus);
+        EtMerk = findViewById(R.id.editTextNamaMerk);
+        EtNama = findViewById(R.id.editTextNama);
+        EtWarna = findViewById(R.id.editTextWarna);
+        EtJumlahKursi = findViewById(R.id.editTextJumlahKursi);
+        EtHarga = findViewById(R.id.editTextHarga);
 
         TombolKembali = findViewById(R.id.buttonBack);
-        TombolHubungi = findViewById(R.id.buttonHubungi);
 
         progressBar = findViewById(R.id.progressBar);
         progressBar.setVisibility(INVISIBLE);
@@ -73,25 +75,25 @@ public class UserDetailRentalMobil extends AppCompatActivity {
             }
         });
 
-        TombolHubungi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String pesan1   = TextNama.getText().toString();
-                String pesan2   = TextHarga.getText().toString();
-                String pesan3   = TextDeskripsi.getText().toString();
-
-                String semuaPesan   = "Nama : " + pesan1 + "\n" + "Harga : " + pesan2 + "\n" + "Deskripsi : " + pesan3 + "\n" + "Tambahan : " + "\n";
-
-                Intent kirimWhatsapp = new Intent(Intent.ACTION_SEND);
-                kirimWhatsapp.setType("text/plain");
-                kirimWhatsapp.putExtra(Intent.EXTRA_TEXT, semuaPesan);
-                kirimWhatsapp.putExtra("jid", "6285842358182" + "@s.whatsapp.net");
-                kirimWhatsapp.setPackage("com.whatsapp");
-
-                startActivity(kirimWhatsapp);
-
-            }
-        });
+//        TombolHubungi.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                String pesan1   = EtNama.getText().toString();
+//                String pesan2   = EtHarga.getText().toString();
+//                String pesan3   = TextDeskripsi.getText().toString();
+//
+//                String semuaPesan   = "Nama : " + pesan1 + "\n" + "Harga : " + pesan2 + "\n" + "Deskripsi : " + pesan3 + "\n" + "Tambahan : " + "\n";
+//
+//                Intent kirimWhatsapp = new Intent(Intent.ACTION_SEND);
+//                kirimWhatsapp.setType("text/plain");
+//                kirimWhatsapp.putExtra(Intent.EXTRA_TEXT, semuaPesan);
+//                kirimWhatsapp.putExtra("jid", "6285842358182" + "@s.whatsapp.net");
+//                kirimWhatsapp.setPackage("com.whatsapp");
+//
+//                startActivity(kirimWhatsapp);
+//
+//            }
+//        });
 
 
     }
@@ -102,10 +104,13 @@ public class UserDetailRentalMobil extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                TextNama.setText(document.getString("nama"));
-                                TextHarga.setText(document.getString("harga"));
-                                TextDeskripsi.setText(document.getString("deskripsi"));
-                                TextStatus.setText(document.getString("status"));
+                                EtNomor.setText(document.getString("nomor"));
+                                EtStatus.setText(document.getString("status"));
+                                EtMerk.setText(document.getString("merk"));
+                                EtNama.setText(document.getString("nama"));
+                                EtWarna.setText(document.getString("warna"));
+                                EtJumlahKursi.setText(document.getString("kursi"));
+                                EtHarga.setText(document.getString("harga"));
                                 fotoUrl = document.getString("foto");
                                 if (fotoUrl != "") {
                                     Picasso.get().load(fotoUrl).fit().into(FotoProduk);

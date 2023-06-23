@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/gradient_blue"
     android:fitsSystemWindows="true"
-    tools:context=".DataUser"
+    tools:context=".AdminRentalMobil"
     tools:openDrawer="start">
 
     <com.google.android.material.navigation.NavigationView
@@ -27,17 +27,17 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="250dp"
-            app:layout_constraintBottom_toTopOf="@+id/layoutToolbar"
+            app:layout_constraintBottom_toTopOf="@+id/relative2"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/RentalMobil"
+                android:id="@+id/tv_dataUser"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="25dp"
                 android:gravity="center_horizontal"
-                android:text="DATA USER"
+                android:text="RENTAL MOBIL"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -50,7 +50,7 @@
                 android:src="@drawable/ic_logomobil" />
 
             <ImageButton
-                android:id="@+id/imageButton"
+                android:id="@+id/ib_menuDrawer"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_margin="8dp"
@@ -63,7 +63,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:layout_toEndOf="@id/imageButton"
+                android:layout_toEndOf="@id/ib_menuDrawer"
                 android:text="Menu"
                 android:textColor="@color/white"
                 android:textSize="20sp"
@@ -85,7 +85,7 @@
 
 
         <RelativeLayout
-            android:id="@+id/layoutToolbar"
+            android:id="@+id/relative2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="250dp"
@@ -97,11 +97,10 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView"
+                android:id="@+id/recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
-                tools:listitem="@layout/item_user"/>
+                android:layout_marginTop="10dp" />
 
         </RelativeLayout>
 

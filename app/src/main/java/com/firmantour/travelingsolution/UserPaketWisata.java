@@ -40,14 +40,14 @@ public class UserPaketWisata extends AppCompatActivity implements PopupMenu.OnMe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_paket_wisata);
+        setContentView(R.layout.activity_userpaketwisata);
 
 
         Window window = this.getWindow();
         window.setStatusBarColor(this.getResources().getColor(R.color.blue));
 
 
-        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView = findViewById(R.id.recycler_view);
         progressBar = findViewById(R.id.progressBar);
         firebaseFirestore = FirebaseFirestore.getInstance();
 
@@ -59,9 +59,9 @@ public class UserPaketWisata extends AppCompatActivity implements PopupMenu.OnMe
     }
     private void getData() {
         Query query = firebaseFirestore.collection("PaketWisata");
-        FirestoreRecyclerOptions<ClassProduk> response = new FirestoreRecyclerOptions.Builder<ClassProduk>()
-                .setQuery(query, ClassProduk.class).build();
-        adapter = new FirestoreRecyclerAdapter<ClassProduk, ProdukHolder>(response) {
+        FirestoreRecyclerOptions<ModelMobil> response = new FirestoreRecyclerOptions.Builder<ModelMobil>()
+                .setQuery(query, ModelMobil.class).build();
+        adapter = new FirestoreRecyclerAdapter<ModelMobil, ProdukHolder>(response) {
             @NonNull
             @Override
             public ProdukHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -70,7 +70,7 @@ public class UserPaketWisata extends AppCompatActivity implements PopupMenu.OnMe
             }
 
             @Override
-            protected void onBindViewHolder(@NonNull ProdukHolder holder, int position, @NonNull final ClassProduk model) {
+            protected void onBindViewHolder(@NonNull ProdukHolder holder, int position, @NonNull final ModelMobil model) {
                 progressBar.setVisibility(View.GONE);
                 if (model.getFoto() != null) {
                     Picasso.get().load(model.getFoto()).fit().into(holder.fotoProduk);
@@ -84,7 +84,7 @@ public class UserPaketWisata extends AppCompatActivity implements PopupMenu.OnMe
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(UserPaketWisata.this, UserDetailPaketWisata.class);
+                        Intent intent = new Intent(UserPaketWisata.this, UserDetailWisata.class);
                         intent.putExtra("nomor", model.getNomor());
                         startActivity(intent);
 //Snackbar.make(recyclerView, model.getNama()+", " +model.getTelepon(), Snackbar.LENGTH_LONG).setAction("Action", null).show();

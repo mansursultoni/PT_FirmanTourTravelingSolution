@@ -25,7 +25,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
-public class UserDetailPaketWisata extends AppCompatActivity {
+public class UserDetailWisata extends AppCompatActivity {
 
     private FirebaseFirestore firebaseFirestore;
     private StorageReference storageReference;
@@ -40,7 +40,7 @@ public class UserDetailPaketWisata extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_detail_paket_wisata);
+        setContentView(R.layout.activity_userdetailwisata);
 
 
         Window window = this.getWindow();
@@ -54,7 +54,7 @@ public class UserDetailPaketWisata extends AppCompatActivity {
         TextDeskripsi = findViewById(R.id.editTextWarna);
         TextStatus  = findViewById(R.id.editTextStatus);
 
-        TombolKembali = findViewById(R.id.buttonBack);
+        TombolKembali = findViewById(R.id.ib_back);
 
         progressBar = findViewById(R.id.progressBar);
         progressBar.setVisibility(INVISIBLE);
@@ -91,7 +91,7 @@ public class UserDetailPaketWisata extends AppCompatActivity {
                                 }
                             }
                         } else {
-                            Toast.makeText(UserDetailPaketWisata.this, "Gagal Mengambil Document", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(UserDetailWisata.this, "Gagal Mengambil Document", Toast.LENGTH_SHORT).show();
                             finish();
                         }
                     }

@@ -1,17 +1,8 @@
 package com.firmantour.travelingsolution;
 
 public class ModelUser {
-    private String sebagai;
-    private String nama;
-    private String nomor;
-    private String tanggallahir;
-    private String jeniskelamin;
-    private String alamat;
-    private String password;
+    private String sebagai, nama, nomor, tanggallahir, jeniskelamin, alamat, password;
 
-    public ModelUser(){
-
-    }
     public ModelUser(String sebagai, String nama, String nomor, String tanggallahir, String jeniskelamin, String alamat, String password) {
         this.sebagai = sebagai;
         this.nama = nama;

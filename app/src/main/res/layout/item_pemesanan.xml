@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:id="@+id/cardPemesanan"
     android:layout_marginBottom="8dp"
-    android:id="@+id/cardUser">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:background="@drawable/gradient_blue_listitem">
@@ -39,7 +38,7 @@
                 android:padding="8dp">
 
                 <TextView
-                    android:id="@+id/textViewNama"
+                    android:id="@+id/tv_nama"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif"
@@ -49,12 +48,23 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/textViewNomor"
+                    android:id="@+id/tv_nomorTelpon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif"
                     android:maxLines="2"
                     android:text="Nomor Telpon"
+                    android:textColor="@color/white"
+                    android:layout_marginBottom="2dp"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/tv_namaMobil"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:maxLines="2"
+                    android:text="Nama Mobil"
                     android:textColor="@color/white"
                     android:layout_marginBottom="2dp"
                     android:textSize="16sp"
@@ -67,4 +77,4 @@
 
     </RelativeLayout>
 
-</RelativeLayout>
+</androidx.cardview.widget.CardView>

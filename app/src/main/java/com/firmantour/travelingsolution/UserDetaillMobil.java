@@ -2,10 +2,6 @@ package com.firmantour.travelingsolution;
 
 import static android.view.View.INVISIBLE;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,9 +9,15 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -26,14 +28,15 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
-public class UserDetailRentalMobil extends AppCompatActivity {
+public class UserDetaillMobil extends AppCompatActivity {
 
     private FirebaseFirestore firebaseFirestore;
     private StorageReference storageReference;
     ImageView FotoProduk;
+    TextView TvNomorTelpon;
     EditText EtNomor, EtStatus, EtMerk, EtNama, EtWarna, EtJumlahKursi, EtHarga;
-    Button TombolHubungi;
-    ImageView TombolKembali;
+    Button BtPemesanan, BtHubungi;
+    ImageButton IbKembali;
     ProgressBar progressBar;
     private Uri filePath;
     private String fotoUrl, produkId;
@@ -42,15 +45,14 @@ public class UserDetailRentalMobil extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_detail_rental_mobil);
+        setContentView(R.layout.activity_userdetailmobil);
 
 
         Window window = this.getWindow();
         window.setStatusBarColor(this.getResources().getColor(R.color.blue));
 
-
+        //--Inisialisasi
         FotoProduk  = findViewById(R.id.imageView);
-
         EtNomor = findViewById(R.id.editTextNomor);
         EtStatus = findViewById(R.id.editTextStatus);
         EtMerk = findViewById(R.id.editTextNamaMerk);
@@ -58,44 +60,71 @@ public class UserDetailRentalMobil extends AppCompatActivity {
         EtWarna = findViewById(R.id.editTextWarna);
         EtJumlahKursi = findViewById(R.id.editTextJumlahKursi);
         EtHarga = findViewById(R.id.editTextHarga);
-
-        TombolKembali = findViewById(R.id.buttonBack);
-
+        TvNomorTelpon = findViewById(R.id.tv_nomorTelpon);
+        IbKembali = findViewById(R.id.ib_back);
         progressBar = findViewById(R.id.progressBar);
-        progressBar.setVisibility(INVISIBLE);
-        firebaseFirestore   = FirebaseFirestore.getInstance();
-        storageReference    = FirebaseStorage.getInstance().getReference();
-        produkId    = getIntent().getExtras().getString("nomor");
-        readData();
 
-        TombolKembali.setOnClickListener(new View.OnClickListener() {
+        ambilDataIntent();
+
+        //--Tombol Pemesanan--
+        BtPemesanan = findViewById(R.id.button_pemesanan);
+        BtPemesanan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                kirimDataIntent();
+            }
+        });
+
+        //--Tombol Kembali--
+        IbKembali.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
 
-//        TombolHubungi.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                String pesan1   = EtNama.getText().toString();
-//                String pesan2   = EtHarga.getText().toString();
-//                String pesan3   = TextDeskripsi.getText().toString();
-//
-//                String semuaPesan   = "Nama : " + pesan1 + "\n" + "Harga : " + pesan2 + "\n" + "Deskripsi : " + pesan3 + "\n" + "Tambahan : " + "\n";
-//
-//                Intent kirimWhatsapp = new Intent(Intent.ACTION_SEND);
-//                kirimWhatsapp.setType("text/plain");
-//                kirimWhatsapp.putExtra(Intent.EXTRA_TEXT, semuaPesan);
-//                kirimWhatsapp.putExtra("jid", "6285842358182" + "@s.whatsapp.net");
-//                kirimWhatsapp.setPackage("com.whatsapp");
-//
-//                startActivity(kirimWhatsapp);
-//
-//            }
-//        });
+        progressBar.setVisibility(INVISIBLE);
+        firebaseFirestore   = FirebaseFirestore.getInstance();
+        storageReference    = FirebaseStorage.getInstance().getReference();
+        produkId    = getIntent().getExtras().getString("nomor");
+
+        readData();
 
 
+      /*  TombolHubungi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String pesan1   = EtNama.getText().toString();
+                String pesan2   = EtHarga.getText().toString();
+                String pesan3   = TextDeskripsi.getText().toString();
+
+                String semuaPesan   = "Nama : " + pesan1 + "\n" + "Harga : " + pesan2 + "\n" + "Deskripsi : " + pesan3 + "\n" + "Tambahan : " + "\n";
+
+                Intent kirimWhatsapp = new Intent(Intent.ACTION_SEND);
+                kirimWhatsapp.setType("text/plain");
+                kirimWhatsapp.putExtra(Intent.EXTRA_TEXT, semuaPesan);
+                kirimWhatsapp.putExtra("jid", "6285842358182" + "@s.whatsapp.net");
+                kirimWhatsapp.setPackage("com.whatsapp");
+
+                startActivity(kirimWhatsapp);
+
+            }
+        });*/
+
+
+    }
+    private void kirimDataIntent(){
+        String input1 = TvNomorTelpon.getText().toString();
+        String input2 = EtNomor.getText().toString();
+        Intent intent = new Intent(UserDetaillMobil.this, UserPemesanan.class);
+        intent.putExtra("platnomor",input2);
+        intent.putExtra("nomortelpon", input1);
+        startActivity(intent);
+    }
+    private void ambilDataIntent(){
+        Intent intent = getIntent();
+        String nomorTelpon = intent.getStringExtra("nomortelpon");
+        TvNomorTelpon.setText(nomorTelpon);
     }
     private void readData() {
         firebaseFirestore.collection("RentalMobil").whereEqualTo("nomor", produkId)
@@ -119,13 +148,12 @@ public class UserDetailRentalMobil extends AppCompatActivity {
                                 }
                             }
                         } else {
-                            Toast.makeText(UserDetailRentalMobil.this, "Gagal Mengambil Document", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(UserDetaillMobil.this, "Gagal Mengambil Document", Toast.LENGTH_SHORT).show();
                             finish();
                         }
                     }
                 });
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -137,6 +165,5 @@ public class UserDetailRentalMobil extends AppCompatActivity {
             Toast.makeText(this, "Tidak ada gambar dipilih", Toast.LENGTH_SHORT).show();
         }
     }
-
 
 }

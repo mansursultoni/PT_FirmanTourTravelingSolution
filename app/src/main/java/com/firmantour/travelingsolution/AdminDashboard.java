@@ -1,5 +1,17 @@
 package com.firmantour.travelingsolution;
 
+import static android.content.ContentValues.TAG;
+
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.Window;
+import android.widget.ImageView;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
@@ -7,55 +19,39 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.Window;
-import android.widget.ImageView;
-import android.widget.TextView;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.AggregateQuery;
+import com.google.firebase.firestore.AggregateQuerySnapshot;
+import com.google.firebase.firestore.AggregateSource;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 
-public class Dashboard extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class AdminDashboard extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
-    TextView JumlahMobil, JumlahUser;
+    TextView JumlahMobil, JumlahUser, JumlahMobilSewa;
     ImageView imageView;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-    FirebaseFirestore firebaseFirestore;
+    FirebaseFirestore firebaseFirestore =FirebaseFirestore.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dashboard);
+        setContentView(R.layout.activity_admindashboard);
 
         Window window = this.getWindow();
         window.setStatusBarColor(this.getResources().getColor(R.color.blue));
 
 
-        imageView = findViewById(R.id.imageButton);
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // --- To open Drawer ---
-                drawerLayout.openDrawer(GravityCompat.START);
-            }
-        });
-
+        imageView = findViewById(R.id.ib_menuDrawer);
+        JumlahMobil = findViewById(R.id.txt_jumlahMobil);
+        JumlahUser = findViewById(R.id.txt_jumlahUser);
+        JumlahMobilSewa = findViewById(R.id.txt_mobilDisewa);
         drawerLayout = findViewById(R.id.drawerLayout);
         navigationView = findViewById(R.id.nav_view);
 
@@ -63,44 +59,17 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout,R.string.open,R.string.close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-
         navigationView.setNavigationItemSelectedListener(this);
 
-        JumlahMobil = findViewById(R.id.txt_jumlahMobil);
-        JumlahUser = findViewById(R.id.txt_jumlahUser);
-
-        //Menampilkan total user
-        databaseReference.child("JumlahUser").addValueEventListener(new ValueEventListener() {
+        imageView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()){
-                    String data = String.valueOf(snapshot.getChildrenCount());
-                    JumlahUser.setText(data);
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                JumlahUser.setText("0");
-            }
-        });
-        //Menampilkan total mobil
-        databaseReference.child("JumlahMobil").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()){
-                    String data = String.valueOf(snapshot.getChildrenCount());
-                    JumlahMobil.setText(data);
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                JumlahMobil.setText("0");
+            public void onClick(View v) {
+                drawerLayout.openDrawer(GravityCompat.START);
             }
         });
 
-
-
-
+        getJumlahMobil();
+        getJumlahUser();
 
     }
     @Override
@@ -111,11 +80,11 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
 //                finish();
                 return true;
             case R.id.rentalmobil:
-                startActivity(new Intent(Dashboard.this, AdminRentalMobil.class));
+                startActivity(new Intent(AdminDashboard.this, AdminRentalMobil.class));
                 finish();
                 return true;
             case R.id.paketwisata:
-                startActivity(new Intent(Dashboard.this, AdminPaketWisata.class));
+                startActivity(new Intent(AdminDashboard.this, AdminPaketWisata.class));
                 finish();
                 return true;
             case R.id.menunggukonfirmasi:
@@ -127,7 +96,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
 //                finish();
                 return true;
             case R.id.datauser:
-                startActivity(new Intent(Dashboard.this, DataUser.class));
+                startActivity(new Intent(AdminDashboard.this, AdminDataUser.class));
                 finish();
                 return true;
             case R.id.setting:
@@ -139,13 +108,13 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
 //                finish();
                 return true;
             case R.id.logout:
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder(Dashboard.this);
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(AdminDashboard.this);
                 alertDialog.setTitle("Keluar");
                 alertDialog.setPositiveButton("Ya", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Logout();
-                        startActivity(new Intent(Dashboard.this, LoginActivity.class));
+                        startActivity(new Intent(AdminDashboard.this, ActivityLogin.class));
                         finish();
                     }
                 });
@@ -163,5 +132,39 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
     }
     private void Logout(){
         LoginSesson.clearData(this);
+    }
+    private void getJumlahMobil(){
+        CollectionReference query = firebaseFirestore.collection("RentalMobil");
+        AggregateQuery countQuery = query.count();
+        countQuery.get(AggregateSource.SERVER).addOnCompleteListener(new OnCompleteListener<AggregateQuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<AggregateQuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    // Count fetched successfully
+                    AggregateQuerySnapshot snapshot = task.getResult();
+                    JumlahMobil.setText(String.valueOf(snapshot.getCount()));
+                    Log.d(TAG, "Count: " + snapshot.getCount());
+                } else {
+                    Log.d(TAG, "Count failed: ", task.getException());
+                }
+            }
+        });
+    }
+    private void getJumlahUser(){
+        CollectionReference query = firebaseFirestore.collection("users");
+        AggregateQuery countQuery = query.count();
+        countQuery.get(AggregateSource.SERVER).addOnCompleteListener(new OnCompleteListener<AggregateQuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<AggregateQuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    // Count fetched successfully
+                    AggregateQuerySnapshot snapshot = task.getResult();
+                    JumlahUser.setText(String.valueOf(snapshot.getCount()));
+                    Log.d(TAG, "Count: " + snapshot.getCount());
+                } else {
+                    Log.d(TAG, "Count failed: ", task.getException());
+                }
+            }
+        });
     }
 }

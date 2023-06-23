@@ -38,7 +38,7 @@ import com.squareup.picasso.Picasso;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AdminDetailPaketWisata extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+public class AdminDetailWisata extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
 
     private FirebaseFirestore firebaseFirestore;
@@ -55,7 +55,7 @@ public class AdminDetailPaketWisata extends AppCompatActivity implements Adapter
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_detail_paket_wisata);
+        setContentView(R.layout.activity_admindetailwisata);
 
         Window window = this.getWindow();
         window.setStatusBarColor(this.getResources().getColor(R.color.blue));
@@ -76,7 +76,7 @@ public class AdminDetailPaketWisata extends AppCompatActivity implements Adapter
 
         TombolHapus = findViewById(R.id.buttonDelete);
         TombolEdit  = findViewById(R.id.buttonUpdate);
-        TombolKembali = findViewById(R.id.buttonBack);
+        TombolKembali = findViewById(R.id.ib_back);
 
         progressBar = findViewById(R.id.progressBar);
         progressBar.setVisibility(INVISIBLE);
@@ -93,7 +93,7 @@ public class AdminDetailPaketWisata extends AppCompatActivity implements Adapter
         TombolEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder(AdminDetailPaketWisata.this);
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(AdminDetailWisata.this);
                 alertDialog.setTitle("Edit");
                 alertDialog.setMessage("Yakin mengedit data?");
                 alertDialog.setPositiveButton("Ya", new DialogInterface.OnClickListener() {
@@ -114,7 +114,7 @@ public class AdminDetailPaketWisata extends AppCompatActivity implements Adapter
         TombolHapus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder(AdminDetailPaketWisata.this);
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(AdminDetailWisata.this);
                 alertDialog.setTitle("Hapus");
                 alertDialog.setMessage("Yakin menghapus data?");
                 alertDialog.setPositiveButton("Ya", new DialogInterface.OnClickListener() {
@@ -161,7 +161,7 @@ public class AdminDetailPaketWisata extends AppCompatActivity implements Adapter
                                 }
                             }
                         } else {
-                            Toast.makeText(AdminDetailPaketWisata.this, "Gagal Mengambil Document", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AdminDetailWisata.this, "Gagal Mengambil Document", Toast.LENGTH_SHORT).show();
                             finish();
                         }
                     }
@@ -216,7 +216,7 @@ public class AdminDetailPaketWisata extends AppCompatActivity implements Adapter
                             fotoUrl);
                     progressBar.setProgress(0);
                     progressBar.setVisibility(INVISIBLE);
-                    Toast.makeText(AdminDetailPaketWisata.this, "Data berhasil disimpan", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AdminDetailWisata.this, "Data berhasil disimpan", Toast.LENGTH_SHORT).show();
                     finish();
                 }
             });
@@ -231,7 +231,7 @@ public class AdminDetailPaketWisata extends AppCompatActivity implements Adapter
                 @Override
                 public void onFailure(@NonNull Exception e) {
                     progressBar.setVisibility(INVISIBLE);
-                    Toast.makeText(AdminDetailPaketWisata.this, "Gagal " + e.getMessage(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(AdminDetailWisata.this, "Gagal " + e.getMessage(), Toast.LENGTH_LONG).show();
                 }
             });
         } else {

@@ -1,9 +1,5 @@
 package com.firmantour.travelingsolution;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,59 +12,74 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class TambahPaketWisata extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class AdminTambahMobil extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private FirebaseFirestore firebaseFirestore;
     private StorageReference storageReference;
-    ImageView FotoProduk;
-    EditText TextNama, TextNomor, TextHarga, TextDeskripsi, TextStatus;
-    Button TombolSimpan, TombolKembali;
+    ImageView FotoProduk, TombolKembali;
+    Spinner spinner;
+    EditText TextNama, TextNomor, TextHarga, TextWarna, TextStatus, TextKursi, TextMerk;
+    TextView JumlahMobil, JumlahMobil2, JumlahMobil3;
+    Button TombolSimpan;
     ProgressBar progressBar;
     private Uri filePath;
     private String fotoUrl;
     private static final int IMAGE_REQUEST = 1;
 
+    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://pt-firman-tour-default-rtdb.firebaseio.com/");
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tambah_paket_wisata);
-
+        setContentView(R.layout.activity_admintambahmobil);
 
         Window window = this.getWindow();
         window.setStatusBarColor(this.getResources().getColor(R.color.blue));
 
-        Spinner spinner = findViewById(R.id.spinner2);
+        spinner = findViewById(R.id.spinner2);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.status, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
 
         FotoProduk      = findViewById(R.id.imageView);
-
         TextNama        = findViewById(R.id.editTextNama);
         TextNomor       = findViewById(R.id.editTextNomor);
         TextHarga       = findViewById(R.id.editTextHarga);
-        TextDeskripsi   = findViewById(R.id.editTextWarna);
+        TextWarna       = findViewById(R.id.editTextWarna);
         TextStatus      = findViewById(R.id.editTextStatus);
-        TombolKembali   = findViewById(R.id.buttonBack);
+        TextMerk        = findViewById(R.id.editTextNamaMerk);
+        TextKursi       = findViewById(R.id.editTextJumlahKursi);
+        TombolKembali   = findViewById(R.id.ib_back);
         TombolSimpan    = findViewById(R.id.buttonUpdate);
-
         progressBar     = findViewById(R.id.progressBar);
         progressBar.setVisibility(View.INVISIBLE);
 
@@ -77,6 +88,7 @@ public class TambahPaketWisata extends AppCompatActivity implements AdapterView.
         FotoProduk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 ambilGambar();
             }
         });
@@ -85,6 +97,9 @@ public class TambahPaketWisata extends AppCompatActivity implements AdapterView.
             public void onClick(View v) {
                 uploadImage();
             }
+
+
+
         });
         TombolKembali.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,31 +109,41 @@ public class TambahPaketWisata extends AppCompatActivity implements AdapterView.
         });
 
     }
-    private void SimpanData(String nama, String nomor, String harga, String deskripsi, String status, String foto){
+
+    private void SimpanData(String nomor, String status, String merk, String nama, String warna, String kursi, String harga, String foto){
         Map<String, Object> data = new HashMap<>();
-        data.put("nama", nama);
         data.put("nomor", nomor);
-        data.put("harga", harga);
-        data.put("deskripsi", deskripsi);
         data.put("status", status);
+        data.put("merk", merk);
+        data.put("nama", nama);
+        data.put("warna", warna);
+        data.put("kursi", kursi);
+        data.put("harga", harga);
         data.put("foto", foto);
-        firebaseFirestore.collection("PaketWisata").document(nomor).set(data).isSuccessful();
+        firebaseFirestore.collection("RentalMobil").document(nomor).set(data).isSuccessful();
     }
     private void ambilGambar(){
-        Intent intent = new Intent();
+        ImagePicker.with(AdminTambahMobil.this)
+                .crop(1f,1f)
+                .start();
+       /* Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Pilih Gambar"),IMAGE_REQUEST);
+        startActivityForResult(Intent.createChooser(intent, "Pilih Gambar"),IMAGE_REQUEST);*/
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null ){
+
+        filePath = data.getData();
+        FotoProduk.setImageURI(filePath);
+
+        /* if (requestCode == IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null ){
             filePath = data.getData();
-            Picasso.get().load(filePath).fit().centerInside().into(FotoProduk);
+            Picasso.get().load(filePath).fit().centerCrop().into(FotoProduk);
         }else{
             Toast.makeText(this, "Tidak ada gambar dipilih", Toast.LENGTH_SHORT).show();
-        }
+        }*/
     }
     private void uploadImage(){
         if(filePath != null){
@@ -134,15 +159,51 @@ public class TambahPaketWisata extends AppCompatActivity implements AdapterView.
                 public void onComplete(@NonNull Task<Uri> task) {
                     Uri imagePath = task.getResult();
                     fotoUrl = imagePath.toString();
-                    SimpanData(TextNama.getText().toString(),
-                            TextNomor.getText().toString(),
-                            TextHarga.getText().toString(),
-                            TextDeskripsi.getText().toString(),
+                    SimpanData(TextNomor.getText().toString(),
                             TextStatus.getText().toString(),
+                            TextMerk.getText().toString(),
+                            TextNama.getText().toString(),
+                            TextWarna.getText().toString(),
+                            TextKursi.getText().toString(),
+                            TextHarga.getText().toString(),
                             fotoUrl);
                     progressBar.setProgress(0);
                     progressBar.setVisibility(View.INVISIBLE);
-                    Toast.makeText(TambahPaketWisata.this, "Data berhasil disimpan", Toast.LENGTH_SHORT).show();
+
+                    String nomor = TextNomor.getText().toString();
+
+                    //--SimpanData Realtime Database -JumlahMobil
+                    databaseReference.child("JumlahMobil").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot.hasChild(nomor)){
+                                Toast.makeText(AdminTambahMobil.this, "Plat Nomor Sudah Terdaftar.", Toast.LENGTH_SHORT).show();
+                            }else {
+                                String txtplat = TextNomor.getText().toString();
+                                String txtmerk = TextMerk.getText().toString();
+                                String txtnama = TextNama.getText().toString();
+                                String txtwarna = TextWarna.getText().toString();
+                                String txtkursi = TextKursi.getText().toString();
+                                String txtharga = TextHarga.getText().toString();
+                                databaseReference.child("JumlahMobil").push().setValue(new ModelMobil(txtplat, txtmerk, txtnama, txtwarna, txtkursi, txtharga)).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        Toast.makeText(AdminTambahMobil.this, "Data berhasil ditambah.", Toast.LENGTH_SHORT).show();
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(AdminTambahMobil.this, "Gagal menyimpan data.", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
                     finish();
                 }
             });
@@ -157,7 +218,7 @@ public class TambahPaketWisata extends AppCompatActivity implements AdapterView.
                 @Override
                 public void onFailure(@NonNull Exception e) {
                     progressBar.setVisibility(View.INVISIBLE);
-                    Toast.makeText(TambahPaketWisata.this, "Failed " + e.getMessage(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(AdminTambahMobil.this, "Failed " + e.getMessage(), Toast.LENGTH_LONG).show();
                 }
             });
         }

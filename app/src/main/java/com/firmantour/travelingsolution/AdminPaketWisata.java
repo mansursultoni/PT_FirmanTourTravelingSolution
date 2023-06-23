@@ -41,7 +41,7 @@ public class AdminPaketWisata extends AppCompatActivity implements PopupMenu.OnM
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_paket_wisata);
+        setContentView(R.layout.activity_adminwisata);
 
 
 
@@ -49,7 +49,7 @@ public class AdminPaketWisata extends AppCompatActivity implements PopupMenu.OnM
         window.setStatusBarColor(this.getResources().getColor(R.color.blue));
 
 
-        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView = findViewById(R.id.recycler_view);
         progressBar = findViewById(R.id.progressBar);
         firebaseFirestore = FirebaseFirestore.getInstance();
 
@@ -64,7 +64,7 @@ public class AdminPaketWisata extends AppCompatActivity implements PopupMenu.OnM
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(AdminPaketWisata.this, TambahPaketWisata.class));
+                startActivity(new Intent(AdminPaketWisata.this, AdminTambahWisata.class));
             }
         });
 
@@ -72,9 +72,9 @@ public class AdminPaketWisata extends AppCompatActivity implements PopupMenu.OnM
 
     private void getData() {
         Query query = firebaseFirestore.collection("PaketWisata");
-        FirestoreRecyclerOptions<ClassProduk> response = new FirestoreRecyclerOptions.Builder<ClassProduk>()
-                .setQuery(query, ClassProduk.class).build();
-        adapter = new FirestoreRecyclerAdapter<ClassProduk, ProdukHolder>(response) {
+        FirestoreRecyclerOptions<ModelMobil> response = new FirestoreRecyclerOptions.Builder<ModelMobil>()
+                .setQuery(query, ModelMobil.class).build();
+        adapter = new FirestoreRecyclerAdapter<ModelMobil, ProdukHolder>(response) {
             @NonNull
             @Override
             public ProdukHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -83,7 +83,7 @@ public class AdminPaketWisata extends AppCompatActivity implements PopupMenu.OnM
             }
 
             @Override
-            protected void onBindViewHolder(@NonNull ProdukHolder holder, int position, @NonNull final ClassProduk model) {
+            protected void onBindViewHolder(@NonNull ProdukHolder holder, int position, @NonNull final ModelMobil model) {
                 progressBar.setVisibility(View.GONE);
                 if (model.getFoto() != null) {
                     Picasso.get().load(model.getFoto()).fit().into(holder.fotoProduk);
@@ -97,7 +97,7 @@ public class AdminPaketWisata extends AppCompatActivity implements PopupMenu.OnM
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(AdminPaketWisata.this, AdminDetailPaketWisata.class);
+                        Intent intent = new Intent(AdminPaketWisata.this, AdminDetailWisata.class);
                         intent.putExtra("nomor", model.getNomor());
                         startActivity(intent);
 //Snackbar.make(recyclerView, model.getNama()+", " +model.getTelepon(), Snackbar.LENGTH_LONG).setAction("Action", null).show();

@@ -8,7 +8,7 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start"
     android:id="@+id/drawerLayout"
-    tools:context=".Dashboard">
+    tools:context=".AdminDashboard">
 
 
     <com.google.android.material.navigation.NavigationView
@@ -28,11 +28,11 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="250dp"
-            app:layout_constraintBottom_toTopOf="@+id/layoutToolbar"
+            app:layout_constraintBottom_toTopOf="@+id/relative2"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/RentalMobil"
+                android:id="@+id/tv_dataUser"
                 android:text="DASHBOARD"
                 android:textStyle="bold"
                 android:textColor="@color/white"
@@ -52,7 +52,7 @@
             <ImageButton
                 android:layout_margin="8dp"
                 android:src="@drawable/ic_menu"
-                android:id="@+id/imageButton"
+                android:id="@+id/ib_menuDrawer"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:background="@color/transparant"
@@ -67,7 +67,7 @@
                 android:textStyle="bold"
                 android:textColor="@color/white"
                 android:textSize="20sp"
-                android:layout_toEndOf="@id/imageButton"/>
+                android:layout_toEndOf="@id/ib_menuDrawer"/>
 
 
 
@@ -76,7 +76,7 @@
 
 
         <RelativeLayout
-            android:id="@+id/layoutToolbar"
+            android:id="@+id/relative2"
             android:layout_marginTop="250dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

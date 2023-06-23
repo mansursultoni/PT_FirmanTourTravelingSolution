@@ -5,11 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/grey"
-    tools:context=".UserDetailPaketWisata">
+    tools:context=".AdminDetailWisata">
+
 
 
     <LinearLayout
-        android:id="@+id/layoutToolbar"
+        android:id="@+id/relative2"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="@color/blue"
@@ -18,7 +19,7 @@
         android:layout_alignParentTop="true">
 
         <ImageView
-            android:id="@+id/buttonBack"
+            android:id="@+id/ib_back"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="35dp"
             android:layout_height="35dp"
@@ -34,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginHorizontal="8dp"
-            android:text="PAKET WISATA"
+            android:text="DETAIL PRODUK"
             android:textAllCaps="true"
             android:textColor="@color/white"
             android:textSize="16sp"
@@ -48,8 +49,8 @@
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/layoutToolbar"
-        app:layout_constraintTop_toBottomOf="@+id/layoutToolbar">
+        android:layout_below="@+id/relative2"
+        app:layout_constraintTop_toBottomOf="@+id/relative2">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -65,12 +66,36 @@
                 android:padding="4dp"
                 app:srcCompat="@drawable/ic_image" />
 
+            <TextView
+                android:id="@+id/txt1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/imageView"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="16dp"
+                android:text="Kode"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/editTextNomor"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txt1"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginVertical="4dp"
+                android:background="@drawable/rounded_background_white"
+                android:drawablePadding="16dp"
+                android:editable="false"
+                android:padding="16dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/grey" />
 
             <TextView
                 android:id="@+id/txt2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/imageView"
+                android:layout_below="@id/editTextNomor"
                 android:layout_marginHorizontal="20dp"
                 android:text="Status"
                 android:textColor="@color/black"
@@ -90,6 +115,13 @@
                 android:textColor="@color/black"
                 android:textColorHint="@color/grey" />
 
+            <Spinner
+                android:id="@+id/spinner2"
+                android:layout_width="50dp"
+                android:layout_height="55dp"
+                android:layout_below="@id/txt2"
+                android:layout_alignEnd="@id/editTextStatus"
+                android:backgroundTint="@color/black" />
 
             <TextView
                 android:id="@+id/txt3"
@@ -107,7 +139,6 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/txt3"
                 android:layout_marginHorizontal="16dp"
-                android:enabled="false"
                 android:layout_marginVertical="4dp"
                 android:background="@drawable/rounded_background_white"
                 android:drawablePadding="16dp"
@@ -131,7 +162,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/txt4"
-                android:enabled="false"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginVertical="4dp"
                 android:background="@drawable/rounded_background_white"
@@ -157,7 +187,6 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/txt5"
                 android:layout_marginHorizontal="16dp"
-                android:enabled="false"
                 android:layout_marginVertical="4dp"
                 android:background="@drawable/rounded_background_white"
                 android:drawablePadding="16dp"
@@ -166,6 +195,47 @@
                 android:textColor="@color/black"
                 android:textColorHint="@color/grey" />
 
+            <LinearLayout
+                android:id="@+id/layoutButton"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_below="@id/editTextWarna"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:paddingHorizontal="16dp">
+
+                <Button
+                    android:id="@+id/buttonDelete"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_background_red"
+                    android:text="Hapus"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    tools:layout_editor_absoluteX="70dp"
+                    tools:layout_editor_absoluteY="495dp" />
+
+                <Button
+                    android:id="@+id/buttonUpdate"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_background_blue"
+                    android:text="Simpan Perubahan"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    tools:layout_editor_absoluteX="70dp"
+                    tools:layout_editor_absoluteY="495dp" />
+
+            </LinearLayout>
 
 
         </RelativeLayout>
@@ -182,6 +252,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layoutToolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/relative2" />
 
 </RelativeLayout>

@@ -1,7 +1,6 @@
 package com.firmantour.travelingsolution;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 

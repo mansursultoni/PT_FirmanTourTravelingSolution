@@ -3,11 +3,6 @@ package com.firmantour.travelingsolution;
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -22,6 +17,11 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -38,11 +38,12 @@ import com.squareup.picasso.Picasso;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AdminDetailRentalMobil extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+public class AdminDetailMobil extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
     private FirebaseFirestore firebaseFirestore;
     private StorageReference storageReference;
     ImageView FotoProduk;
+    Spinner spinner;
     EditText TextNama, TextNomor, TextHarga, TextDeskripsi, TextStatus;
     Button TombolEdit, TombolHapus;
     ImageView TombolKembali;
@@ -54,35 +55,35 @@ public class AdminDetailRentalMobil extends AppCompatActivity implements Adapter
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_detail_rental_mobil);
+        setContentView(R.layout.activity_admindetailmobil);
 
         Window window = this.getWindow();
         window.setStatusBarColor(this.getResources().getColor(R.color.blue));
 
-        Spinner spinner = findViewById(R.id.spinner2);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.status, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(this);
-
+        spinner     = findViewById(R.id.spinner2);
         FotoProduk  = findViewById(R.id.imageView);
-
         TextNama    = findViewById(R.id.editTextNama);
         TextNomor   = findViewById(R.id.editTextNomor);
         TextHarga   = findViewById(R.id.editTextHarga);
         TextDeskripsi = findViewById(R.id.editTextWarna);
         TextStatus  = findViewById(R.id.editTextStatus);
-
         TombolHapus = findViewById(R.id.buttonDelete);
         TombolEdit  = findViewById(R.id.buttonUpdate);
-        TombolKembali = findViewById(R.id.buttonBack);
-
+        TombolKembali = findViewById(R.id.ib_back);
         progressBar = findViewById(R.id.progressBar);
+
         progressBar.setVisibility(INVISIBLE);
         firebaseFirestore   = FirebaseFirestore.getInstance();
         storageReference    = FirebaseStorage.getInstance().getReference();
         produkId    = getIntent().getExtras().getString("nomor");
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.status, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(this);
+
         readData();
+
         FotoProduk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,7 +93,7 @@ public class AdminDetailRentalMobil extends AppCompatActivity implements Adapter
         TombolEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder(AdminDetailRentalMobil.this);
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(AdminDetailMobil.this);
                 alertDialog.setTitle("Edit");
                 alertDialog.setMessage("Yakin mengedit data?");
                 alertDialog.setPositiveButton("Ya", new DialogInterface.OnClickListener() {
@@ -113,7 +114,7 @@ public class AdminDetailRentalMobil extends AppCompatActivity implements Adapter
         TombolHapus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder(AdminDetailRentalMobil.this);
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(AdminDetailMobil.this);
                 alertDialog.setTitle("Hapus");
                 alertDialog.setMessage("Yakin menghapus data?");
                 alertDialog.setPositiveButton("Ya", new DialogInterface.OnClickListener() {
@@ -160,7 +161,7 @@ public class AdminDetailRentalMobil extends AppCompatActivity implements Adapter
                                 }
                             }
                         } else {
-                            Toast.makeText(AdminDetailRentalMobil.this, "Gagal Mengambil Document", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AdminDetailMobil.this, "Gagal Mengambil Document", Toast.LENGTH_SHORT).show();
                             finish();
                         }
                     }
@@ -215,7 +216,7 @@ public class AdminDetailRentalMobil extends AppCompatActivity implements Adapter
                             fotoUrl);
                     progressBar.setProgress(0);
                     progressBar.setVisibility(INVISIBLE);
-                    Toast.makeText(AdminDetailRentalMobil.this, "Data berhasil disimpan", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AdminDetailMobil.this, "Data berhasil disimpan", Toast.LENGTH_SHORT).show();
                     finish();
                 }
             });
@@ -230,7 +231,7 @@ public class AdminDetailRentalMobil extends AppCompatActivity implements Adapter
                 @Override
                 public void onFailure(@NonNull Exception e) {
                     progressBar.setVisibility(INVISIBLE);
-                    Toast.makeText(AdminDetailRentalMobil.this, "Gagal " + e.getMessage(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(AdminDetailMobil.this, "Gagal " + e.getMessage(), Toast.LENGTH_LONG).show();
                 }
             });
         } else {
@@ -256,25 +257,6 @@ public class AdminDetailRentalMobil extends AppCompatActivity implements Adapter
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String text = parent.getItemAtPosition(position).toString();
         TextStatus.setText(text);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 
     @Override

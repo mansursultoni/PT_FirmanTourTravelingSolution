@@ -1,12 +1,14 @@
 package com.firmantour.travelingsolution;
 
-public class ClassProduk {
+public class ModelMobil {
+
+
     private String nama, nomor, harga, deskripsi,status, foto;
 
-    public ClassProduk() {
+    public ModelMobil() {
     }
 
-    public ClassProduk(String nama, String nomor, String harga, String deskripsi, String status, String foto) {
+    public ModelMobil(String nama, String nomor, String harga, String deskripsi, String status, String foto) {
         this.nama = nama;
         this.nomor = nomor;
         this.harga = harga;

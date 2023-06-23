@@ -1,14 +1,6 @@
 package com.firmantour.travelingsolution;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import static com.firmantour.travelingsolution.R.drawable.ic_user;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -21,21 +13,38 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.squareup.picasso.Picasso;
 
-import static com.firmantour.travelingsolution.R.drawable.ic_user;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AdminRentalMobil extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private FirebaseFirestore firebaseFirestore;
     private FirestoreRecyclerAdapter adapter;
+    private Adapter adapterMobil;
+    private List<ModelUser> list = new ArrayList<>();
     RecyclerView recyclerView;
     ImageView imageView, btnTambah;
     DrawerLayout drawerLayout;
@@ -46,13 +55,19 @@ public class AdminRentalMobil extends AppCompatActivity implements NavigationVie
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_rental_mobil);
+        setContentView(R.layout.activity_adminrentalmobil);
 
 
         Window window = this.getWindow();
         window.setStatusBarColor(this.getResources().getColor(R.color.blue));
 
-        imageView = findViewById(R.id.imageButton);
+        imageView = findViewById(R.id.ib_menuDrawer);
+        btnTambah = findViewById(R.id.btn_tambah);
+        drawerLayout = findViewById(R.id.drawerLayout);
+        navigationView = findViewById(R.id.nav_view);
+        recyclerView = findViewById(R.id.recycler_view);
+
+
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,17 +75,12 @@ public class AdminRentalMobil extends AppCompatActivity implements NavigationVie
                 drawerLayout.openDrawer(GravityCompat.START);
             }
         });
-
-        btnTambah = findViewById(R.id.btn_tambah);
         btnTambah.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(AdminRentalMobil.this, TambahRentalMobil.class));
+                startActivity(new Intent(AdminRentalMobil.this, AdminTambahMobil.class));
             }
         });
-
-        drawerLayout = findViewById(R.id.drawerLayout);
-        navigationView = findViewById(R.id.nav_view);
 
         navigationView.bringToFront();
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout,R.string.open,R.string.close);
@@ -78,18 +88,27 @@ public class AdminRentalMobil extends AppCompatActivity implements NavigationVie
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
-        recyclerView = findViewById(R.id.recyclerView);
         firebaseFirestore = FirebaseFirestore.getInstance();
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 1));
 
-        getData();
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
+        RecyclerView.ItemDecoration decoration = new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.addItemDecoration(decoration);
+        recyclerView.setAdapter(adapterMobil);
+
+//        recyclerView.setLayoutManager(new GridLayoutManager(this, 1));
+
+//        getData();
+
+
+
     }
 
     private void getData() {
         Query query = firebaseFirestore.collection("RentalMobil");
-        FirestoreRecyclerOptions<ClassProduk> response = new FirestoreRecyclerOptions.Builder<ClassProduk>()
-                .setQuery(query, ClassProduk.class).build();
-        adapter = new FirestoreRecyclerAdapter<ClassProduk, ProdukHolder>(response) {
+        FirestoreRecyclerOptions<ModelMobil> response = new FirestoreRecyclerOptions.Builder<ModelMobil>()
+                .setQuery(query, ModelMobil.class).build();
+        adapter = new FirestoreRecyclerAdapter<ModelMobil, ProdukHolder>(response) {
             @NonNull
             @Override
             public ProdukHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -98,7 +117,7 @@ public class AdminRentalMobil extends AppCompatActivity implements NavigationVie
             }
 
             @Override
-            protected void onBindViewHolder(@NonNull ProdukHolder holder, int position, @NonNull final ClassProduk model) {
+            protected void onBindViewHolder(@NonNull ProdukHolder holder, int position, @NonNull final ModelMobil model) {
                 if (model.getFoto() != null) {
                     Picasso.get().load(model.getFoto()).fit().into(holder.fotoProduk);
                 } else {
@@ -110,10 +129,9 @@ public class AdminRentalMobil extends AppCompatActivity implements NavigationVie
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(AdminRentalMobil.this, AdminDetailRentalMobil.class);
+                        Intent intent = new Intent(AdminRentalMobil.this, AdminDetailMobil.class);
                         intent.putExtra("nomor", model.getNomor());
                         startActivity(intent);
-//Snackbar.make(recyclerView, model.getNama()+", " +model.getTelepon(), Snackbar.LENGTH_LONG).setAction("Action", null).show();
                     }
                 });
             }
@@ -127,7 +145,7 @@ public class AdminRentalMobil extends AppCompatActivity implements NavigationVie
         recyclerView.setAdapter(adapter);
     }
 
-    public class ProdukHolder extends RecyclerView.ViewHolder {
+    private class ProdukHolder extends RecyclerView.ViewHolder {
         ImageView fotoProduk;
         TextView namaProduk, hargaProduk, statusProduk;
         ConstraintLayout constraintLayout;
@@ -145,7 +163,8 @@ public class AdminRentalMobil extends AppCompatActivity implements NavigationVie
     @Override
     protected void onStart() {
         super.onStart();
-        adapter.startListening();
+        getData();
+//        adapter.startListening();
     }
 
     @Override
@@ -183,7 +202,7 @@ public class AdminRentalMobil extends AppCompatActivity implements NavigationVie
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.dashboard:
-                startActivity(new Intent(AdminRentalMobil.this, Dashboard.class));
+                startActivity(new Intent(AdminRentalMobil.this, AdminDashboard.class));
                 finish();
                 return true;
             case R.id.rentalmobil:
@@ -203,7 +222,7 @@ public class AdminRentalMobil extends AppCompatActivity implements NavigationVie
 //                finish();
                 return true;
             case R.id.datauser:
-                startActivity(new Intent(AdminRentalMobil.this, DataUser.class));
+                startActivity(new Intent(AdminRentalMobil.this, AdminDataUser.class));
                 finish();
                 return true;
             case R.id.setting:
@@ -221,7 +240,7 @@ public class AdminRentalMobil extends AppCompatActivity implements NavigationVie
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Logout();
-                        startActivity(new Intent(AdminRentalMobil.this, LoginActivity.class));
+                        startActivity(new Intent(AdminRentalMobil.this, ActivityLogin.class));
                         finish();
                     }
                 });
@@ -239,5 +258,18 @@ public class AdminRentalMobil extends AppCompatActivity implements NavigationVie
     }
     private void Logout(){
         LoginSesson.clearData(this);
+    }
+    private void deleteData(String id){
+        firebaseFirestore.collection("users").document(id)
+                .delete()
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (!task.isSuccessful()){
+                            Toast.makeText(getApplicationContext(), "Data gagal di hapus!", Toast.LENGTH_SHORT).show();
+                        }
+                        getData();
+                    }
+                });
     }
 }

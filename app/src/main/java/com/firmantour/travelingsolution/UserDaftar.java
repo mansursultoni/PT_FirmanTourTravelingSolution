@@ -137,7 +137,6 @@ public class UserDaftar extends AppCompatActivity implements AdapterView.OnItemS
                                 if (!txtpassword2.equals(txtpassword)){
                                     Toast.makeText(UserDaftar.this, "Masukkan ulang password.", Toast.LENGTH_SHORT).show();
                                 }else {
-
                                     databaseReference.child("Login").child(txtnomor).setValue(new ModelUser(txtsebagai, txtnama, txtnomor, txttanggallahir, txtjeniskelamin, txtalamat, txtpassword)).addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void unused) {
@@ -190,14 +189,12 @@ public class UserDaftar extends AppCompatActivity implements AdapterView.OnItemS
         user.put("alamat", alamat);
         user.put("password", password);
 
-        db.collection("users").document(nomor).set(user)
+        db.collection("Users").document(nomor).set(user)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()){
-                            Toast.makeText(getApplicationContext(), "Berhasil!", Toast.LENGTH_SHORT).show();
                         }else{
-                            Toast.makeText(getApplicationContext(), "Gagal!", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

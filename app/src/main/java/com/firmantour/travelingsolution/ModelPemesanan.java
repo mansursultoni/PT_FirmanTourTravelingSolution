@@ -13,8 +13,10 @@ public class ModelPemesanan {
     private String sewa;
     private String kembali;
 
-    public ModelPemesanan(){
-
+    public ModelPemesanan(String platnomor, String namamobil, String namamerk){
+        this.platnomor = platnomor;
+        this.namamobil = namamobil;
+        this.namamerk = namamerk;
     }
 
     public ModelPemesanan(String nama, String notlep, String alamat, String platnomor, String namamerk, String namamobil, String warna, String jumlahkursi, String totalharga, String sewa, String kembali) {

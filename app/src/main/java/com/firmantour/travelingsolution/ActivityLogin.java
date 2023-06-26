@@ -98,7 +98,7 @@ public class ActivityLogin extends AppCompatActivity {
                                 LoginSesson.setDataLogin(ActivityLogin.this, true);
                                 LoginSesson.setDataAs(ActivityLogin.this, "admin");
                                 Toast.makeText(ActivityLogin.this, "Login Berhasil.", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(ActivityLogin.this, AdminDashboard2.class));
+                                startActivity(new Intent(ActivityLogin.this, AdminDashboard.class));
                                 finish();
                             } else if (dataSnapshot.child(input1).child("sebagai").getValue(String.class).equals("user")){
                                 LoginSesson.setDataLogin(ActivityLogin.this, true);

@@ -1,11 +1,10 @@
 package com.firmantour.travelingsolution;
 
 public class ModelMobil {
-
-
     private String nama, nomor, harga, deskripsi,status, foto;
 
-    public ModelMobil() {
+    public ModelMobil(){
+
     }
 
     public ModelMobil(String nama, String nomor, String harga, String deskripsi, String status, String foto) {

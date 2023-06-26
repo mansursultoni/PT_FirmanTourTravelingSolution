@@ -117,8 +117,8 @@ public class UserDetaillMobil extends AppCompatActivity {
         String input1 = TvNomorTelpon.getText().toString();
         String input2 = EtNomor.getText().toString();
         Intent intent = new Intent(UserDetaillMobil.this, UserPemesanan.class);
-        intent.putExtra("platnomor",input2);
-        intent.putExtra("nomortelpon", input1);
+        intent.putExtra("pltnomor",input2);
+        intent.putExtra("notlep", input1);
         startActivity(intent);
     }
     private void ambilDataIntent(){

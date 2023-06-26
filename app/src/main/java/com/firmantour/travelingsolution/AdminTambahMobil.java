@@ -30,6 +30,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
@@ -147,80 +149,96 @@ public class AdminTambahMobil extends AppCompatActivity implements AdapterView.O
     }
     private void uploadImage(){
         if(filePath != null){
-            final StorageReference ref = storageReference.child(TextNomor.getText().toString());
-            UploadTask uploadTask = ref.putFile(filePath);
-            Task<Uri> uriTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+            String platnomor = TextNomor.getText().toString();
+            DocumentReference docRef = firebaseFirestore.collection("RentalMobil").document(platnomor);
+            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
-                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                    return ref.getDownloadUrl();
-                }
-            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                @Override
-                public void onComplete(@NonNull Task<Uri> task) {
-                    Uri imagePath = task.getResult();
-                    fotoUrl = imagePath.toString();
-                    SimpanData(TextNomor.getText().toString(),
-                            TextStatus.getText().toString(),
-                            TextMerk.getText().toString(),
-                            TextNama.getText().toString(),
-                            TextWarna.getText().toString(),
-                            TextKursi.getText().toString(),
-                            TextHarga.getText().toString(),
-                            fotoUrl);
-                    progressBar.setProgress(0);
-                    progressBar.setVisibility(View.INVISIBLE);
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+                            Toast.makeText(AdminTambahMobil.this, "Data mobil dengan plat nomor "+platnomor+" sudah ada.", Toast.LENGTH_LONG).show();
+                        } else {
+                            final StorageReference ref = storageReference.child(TextNomor.getText().toString());
+                            UploadTask uploadTask = ref.putFile(filePath);
+                            Task<Uri> uriTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                                @Override
+                                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
 
-                    String nomor = TextNomor.getText().toString();
+                                    return ref.getDownloadUrl();
+                                }
+                            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Uri> task) {
+                                    Uri imagePath = task.getResult();
+                                    fotoUrl = imagePath.toString();
+                                    SimpanData(TextNomor.getText().toString(),
+                                            TextStatus.getText().toString(),
+                                            TextMerk.getText().toString(),
+                                            TextNama.getText().toString(),
+                                            TextWarna.getText().toString(),
+                                            TextKursi.getText().toString(),
+                                            TextHarga.getText().toString(),
+                                            fotoUrl);
+                                    progressBar.setProgress(0);
+                                    progressBar.setVisibility(View.INVISIBLE);
 
-                    //--SimpanData Realtime Database -JumlahMobil
-                    databaseReference.child("JumlahMobil").addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if (snapshot.hasChild(nomor)){
-                                Toast.makeText(AdminTambahMobil.this, "Plat Nomor Sudah Terdaftar.", Toast.LENGTH_SHORT).show();
-                            }else {
-                                String txtplat = TextNomor.getText().toString();
-                                String txtmerk = TextMerk.getText().toString();
-                                String txtnama = TextNama.getText().toString();
-                                String txtwarna = TextWarna.getText().toString();
-                                String txtkursi = TextKursi.getText().toString();
-                                String txtharga = TextHarga.getText().toString();
-                                databaseReference.child("JumlahMobil").push().setValue(new ModelMobil(txtplat, txtmerk, txtnama, txtwarna, txtkursi, txtharga)).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void unused) {
-                                        Toast.makeText(AdminTambahMobil.this, "Data berhasil ditambah.", Toast.LENGTH_SHORT).show();
-                                    }
-                                }).addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Toast.makeText(AdminTambahMobil.this, "Gagal menyimpan data.", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                            }
+                                    //--SimpanData Realtime Database
+                                    String nomor = TextNomor.getText().toString();
+                                    databaseReference.child("Mobil").addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            if (snapshot.hasChild(nomor)){
+                                                Toast.makeText(AdminTambahMobil.this, "Plat Nomor Sudah Terdaftar.", Toast.LENGTH_SHORT).show();
+                                            }else {
+                                                String txtplat = TextNomor.getText().toString();
+                                                String txtmerk = TextMerk.getText().toString();
+                                                String txtnama = TextNama.getText().toString();
+                                                String txtwarna = TextWarna.getText().toString();
+                                                String txtkursi = TextKursi.getText().toString();
+                                                String txtharga = TextHarga.getText().toString();
+                                                databaseReference.child("Mobil").push().setValue(new ModelMobil(txtplat, txtmerk, txtnama, txtwarna, txtkursi, txtharga)).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void unused) {
+                                                        Toast.makeText(AdminTambahMobil.this, "Data berhasil ditambah.", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                }).addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        Toast.makeText(AdminTambahMobil.this, "Gagal menyimpan data.", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                });
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    });
+                                    finish();
+                                }
+                            });
+                            uploadTask.addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                                @Override
+                                public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
+                                    progressBar.setVisibility(View.VISIBLE);
+                                    double progres = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot.getTotalByteCount());
+                                    progressBar.setProgress((int)progres);
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    progressBar.setVisibility(View.INVISIBLE);
+                                    Toast.makeText(AdminTambahMobil.this, "Failed " + e.getMessage(), Toast.LENGTH_LONG).show();
+                                }
+                            });
                         }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
-                    finish();
+                    } else {
+                    }
                 }
             });
-            uploadTask.addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
-                    progressBar.setVisibility(View.VISIBLE);
-                    double progres = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot.getTotalByteCount());
-                    progressBar.setProgress((int)progres);
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    progressBar.setVisibility(View.INVISIBLE);
-                    Toast.makeText(AdminTambahMobil.this, "Failed " + e.getMessage(), Toast.LENGTH_LONG).show();
-                }
-            });
+
         }
     }
 

@@ -1,7 +1,6 @@
 package com.firmantour.travelingsolution;
 
 import android.app.DatePickerDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -13,17 +12,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.joda.time.Period;
@@ -38,12 +39,13 @@ import java.util.Date;
 public class UserPemesanan extends AppCompatActivity {
 
     FirebaseFirestore firebaseFirestore;
-    TextView TvTglSewa, TvTglKembali, TvJumlahHari, TvNama, TvNomorTelpon, TvAlamat, TvPlatNomor,
+    TextView TvID, TvJumlahHari, TvNama, TvNomorTelpon, TvAlamat, TvPlatNomor,
             TvNamaMerk, TvNamaMobil, TvWarna, TvJumlahKursi, TvHarga, TvTotalHarga;
     EditText EtTanggalSewa, EtTanggalKembali;
     Button BtPesan;
     ImageButton IbSewa, IbKembali;
     ArrayList<ModelUser> listUser;
+    String platnomor, namamerk, namamobil;
     int tahun, bulan, tanggal;
     DatabaseReference database = FirebaseDatabase.getInstance().getReference();
 
@@ -52,6 +54,7 @@ public class UserPemesanan extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_userpemesanan);
 
+        TvID = findViewById(R.id.tv_id);
         TvNama = findViewById(R.id.tv_nama);
         TvNomorTelpon = findViewById(R.id.tv_telepon);
         TvAlamat = findViewById(R.id.tv_alamat);
@@ -69,12 +72,29 @@ public class UserPemesanan extends AppCompatActivity {
         TvTotalHarga =findViewById(R.id.tv_totalHarga);
         BtPesan = findViewById(R.id.bt_pesan);
 
+        firebaseFirestore = FirebaseFirestore.getInstance();
 
         Intent intent = getIntent();
-        String notelpon = intent.getStringExtra("nomortelpon");
-        String pltnomor = intent.getStringExtra("platnomor");
-        TvNomorTelpon.setText(notelpon);
-        TvPlatNomor.setText(pltnomor);
+
+        if (intent!=null){
+            String notelpon = intent.getStringExtra("notlep");
+            String pltnomor = intent.getStringExtra("pltnomor");
+            TvNomorTelpon.setText(notelpon);
+            TvPlatNomor.setText(pltnomor);
+            /*TvNama.setText(intent.getStringExtra("nama"));
+            TvNomorTelpon.setText(intent.getStringExtra("nomor"));
+            TvAlamat.setText(intent.getStringExtra("alamat"));
+            TvPlatNomor.setText(intent.getStringExtra("platnomor"));
+            TvNamaMerk.setText(intent.getStringExtra("namamerk"));
+            TvNamaMobil.setText(intent.getStringExtra("namamobil"));
+            TvWarna.setText(intent.getStringExtra("warna"));
+            TvJumlahKursi.setText(intent.getStringExtra("jumlahkursi"));
+            EtTanggalSewa.setText(intent.getStringExtra("tanggalsewa"));
+            EtTanggalKembali.setText(intent.getStringExtra("tanggalkembali"));
+            TvHarga.setText(intent.getStringExtra("harga"));*/
+        }
+
+
 
 
 
@@ -101,7 +121,7 @@ public class UserPemesanan extends AppCompatActivity {
                         bulan = month+1;
                         tanggal = dayOfMonth;
 
-                        EtTanggalSewa.setText(tanggal + "/" + bulan + "/" + tahun );
+                        EtTanggalSewa.setText(tanggal + "-" + bulan + "-" + tahun );
                         String tglSewa = String.valueOf(tanggal);
 //                        TvTglSewa.setText(tglSewa);
                     }
@@ -125,12 +145,14 @@ public class UserPemesanan extends AppCompatActivity {
                         bulan = month+1;
                         tanggal = dayOfMonth;
 
-                        EtTanggalKembali.setText(tanggal + "/" + bulan + "/" + tahun );
+                        EtTanggalKembali.setText(tanggal + "-" + bulan + "-" + tahun );
                         String tglKembali = EtTanggalKembali.getText().toString();
 
+                        String id1 = TvNomorTelpon.getText().toString();
+                        String id2 = TvPlatNomor.getText().toString();
                         String sDate = EtTanggalSewa.getText().toString();
                         String eDate = EtTanggalKembali.getText().toString();
-                        SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("dd/MM/yyyy");
+                        SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("dd-MM-yyyy");
                         try {
                             // converting it to date format
                             Date date1 = simpleDateFormat1.parse(sDate);
@@ -160,7 +182,9 @@ public class UserPemesanan extends AppCompatActivity {
                         int hargaAwal = Integer.parseInt(TvHarga.getText().toString());
                         int jumlahHari = Integer.parseInt(TvJumlahHari.getText().toString());
                         int total = hargaAwal*jumlahHari;
+                        String id = id2+" "+id1+sDate+eDate;
                         String totalHarga = String.valueOf(total);
+                        TvID.setText(id);
                         TvTotalHarga.setText(totalHarga);;
                     }
                 },tahun, bulan, tanggal);
@@ -170,7 +194,55 @@ public class UserPemesanan extends AppCompatActivity {
         BtPesan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String nama = TvNama.getText().toString();
+                String id = TvID.getText().toString();
+                DocumentReference docRef = firebaseFirestore.collection("PesananBelumSelesai").document(id);
+                docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()){
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
+                                Toast.makeText(UserPemesanan.this, "Pemesanan sudah ada.", Toast.LENGTH_SHORT).show();
+                            }else{
+                                String id = TvID.getText().toString();
+                                String nama = TvNama.getText().toString();
+                                String nomor = TvNomorTelpon.getText().toString();
+                                String alamat = TvAlamat.getText().toString();
+                                String platnomor = TvPlatNomor.getText().toString();
+                                String namamerk = TvNamaMerk.getText().toString();
+                                String namamobil = TvNamaMobil.getText().toString();
+                                String warna = TvWarna.getText().toString();
+                                String jumlahkursi = TvJumlahKursi.getText().toString();
+                                String totalharga = TvTotalHarga.getText().toString();
+                                String sewa = EtTanggalSewa.getText().toString();
+                                String kembali = EtTanggalKembali.getText().toString();
+                                Intent intent = new Intent(UserPemesanan.this, UserCheckout.class);
+                                intent.putExtra("id",id);
+                                intent.putExtra("nama",nama);
+                                intent.putExtra("nomor",nomor);
+                                intent.putExtra("alamat",alamat);
+                                intent.putExtra("platnomor",platnomor);
+                                intent.putExtra("namamerk",namamerk);
+                                intent.putExtra("namamobil",namamobil);
+                                intent.putExtra("warna",warna);
+                                intent.putExtra("jumlahkursi",jumlahkursi);
+                                intent.putExtra("totalharga",totalharga);
+                                intent.putExtra("sewa",sewa);
+                                intent.putExtra("kembali",kembali);
+                                startActivity(intent);
+                            }
+                        }
+
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(UserPemesanan.this, "Error", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+
+                /*String nama = TvNama.getText().toString();
                 String notlep = TvNomorTelpon.getText().toString();
                 String alamat = TvAlamat.getText().toString();
                 String platnomor = TvPlatNomor.getText().toString();
@@ -202,7 +274,7 @@ public class UserPemesanan extends AppCompatActivity {
                     alertDialog.setPositiveButton("Pesan", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                       /*     String nama = TvNama.getText().toString();
+                            String nama = TvNama.getText().toString();
                             String notlep = TvNomorTelpon.getText().toString();
                             String alamat = TvAlamat.getText().toString();
                             String platnomor = TvPlatNomor.getText().toString();
@@ -212,7 +284,15 @@ public class UserPemesanan extends AppCompatActivity {
                             String jumlahkursi = TvJumlahKursi.getText().toString();
                             String totalharga = TvTotalHarga.getText().toString();
                             String sewa = EtTanggalSewa.getText().toString();
-                            String kembali = EtTanggalKembali.getText().toString();*/
+                            String kembali = EtTanggalKembali.getText().toString();
+
+                            firebaseFirestore.collection("Pesan").document(platnomor).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                                @Override
+                                public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+
+                                }
+                            });
+
                             database.child("Pemesanan").addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -247,7 +327,7 @@ public class UserPemesanan extends AppCompatActivity {
                         }
                     });
                     alertDialog.show();
-                }
+                }*/
 
             }
         });

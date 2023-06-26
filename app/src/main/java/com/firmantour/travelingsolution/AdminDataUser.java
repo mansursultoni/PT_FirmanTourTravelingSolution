@@ -11,13 +11,11 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,8 +23,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -48,7 +44,7 @@ public class AdminDataUser extends AppCompatActivity implements NavigationView.O
     private List<ModelUser> list = new ArrayList<>();
     private Adapter userAdapter;
     DatabaseReference database = FirebaseDatabase.getInstance().getReference();
-    RecyclerView RView;
+    RecyclerView RecyclerView;
     ImageView imageView;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
@@ -79,39 +75,12 @@ public class AdminDataUser extends AppCompatActivity implements NavigationView.O
                 drawerLayout.openDrawer(GravityCompat.START);
             }
         });
-        userAdapter = new Adapter(getApplicationContext(), list);
-        userAdapter.setDialog(new Adapter.Dialog() {
-            @Override
-            public void onClick(int pos) {
-                final CharSequence[] dialogItem = {"Edit", "Hapus"};
-                android.app.AlertDialog.Builder dialog = new android.app.AlertDialog.Builder(AdminDataUser.this);
-                dialog.setItems(dialogItem, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        switch (i){
-                            case 0:
-                                Intent intent = new Intent(getApplicationContext(), AdminDetailUser.class);
-                                intent.putExtra("nama", list.get(pos).getNama());
-                                intent.putExtra("nomor", list.get(pos).getNomor());
-                                startActivity(intent);
-                                break;
-                            case 1:
-                                deleteData(list.get(pos).getNomor());
-                                break;
-                        }
-                    }
-                });
-                dialog.show();
-            }
-        });
 
+        RecyclerView = findViewById(R.id.recycler_view);
+        RecyclerView.setHasFixedSize(true);
+        RecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-
-        RView = findViewById(R.id.recycler_view);
-        RView.setHasFixedSize(true);
-        RView.setLayoutManager(new LinearLayoutManager(this));
-
-        TampilDataUser();
+//        TampilDataUser();
     }
 
     private void TampilDataUser() {
@@ -197,25 +166,11 @@ public class AdminDataUser extends AppCompatActivity implements NavigationView.O
                 return false;
         }
     }
-    private void deleteData(String id){
-
-        db.collection("users").document(id)
-                .delete()
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (!task.isSuccessful()){
-                            Toast.makeText(getApplicationContext(), "Data gagal di hapus!", Toast.LENGTH_SHORT).show();
-                        }
-                        getData();
-                    }
-                });
-    }
     private void getData(){
         Query query = db.collection("users");
-        FirestoreRecyclerOptions<ModelMobil> response = new FirestoreRecyclerOptions.Builder<ModelMobil>()
-                .setQuery(query, ModelMobil.class).build();
-        adapter = new FirestoreRecyclerAdapter<ModelMobil, ProdukHolder>(response) {
+        FirestoreRecyclerOptions<ModelUser> response = new FirestoreRecyclerOptions.Builder<ModelUser>()
+                .setQuery(query, ModelUser.class).build();
+        adapter = new FirestoreRecyclerAdapter<ModelUser, ProdukHolder>(response) {
             @NonNull
             @Override
             public ProdukHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -224,7 +179,7 @@ public class AdminDataUser extends AppCompatActivity implements NavigationView.O
             }
 
             @Override
-            protected void onBindViewHolder(@NonNull ProdukHolder holder, int position, @NonNull final ModelMobil model) {
+            protected void onBindViewHolder(@NonNull ProdukHolder holder, int position, @NonNull final ModelUser model) {
                 holder.nama.setText(model.getNama());
                 holder.nomor.setText(model.getNomor());
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -243,11 +198,10 @@ public class AdminDataUser extends AppCompatActivity implements NavigationView.O
             }
         };
         adapter.notifyDataSetChanged();
-        RView.setAdapter(adapter);
+        RecyclerView.setAdapter(adapter);
     }
     private class ProdukHolder extends RecyclerView.ViewHolder {
         TextView nama, nomor;
-        ConstraintLayout constraintLayout;
 
         public ProdukHolder(@NonNull View itemView) {
             super(itemView);

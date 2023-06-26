@@ -2,7 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
@@ -13,6 +15,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PTFIRMANTOURTRAVELINGSOLUTION"
         tools:targetApi="31">
+        <activity
+            android:name=".UserPesananBelumSelesai"
+            android:exported="false" />
+        <activity
+            android:name=".AdminDetailPesanan"
+            android:exported="false" />
+        <activity
+            android:name=".MenungguKonfirmasi"
+            android:exported="false" />
         <activity
             android:name=".AdminDetailUser"
             android:exported="false" />
@@ -45,12 +56,6 @@
             android:name=".UserDetaillMobil"
             android:exported="false" />
         <activity
-            android:name=".UserDetailWisata"
-            android:exported="false" />
-        <activity
-            android:name=".AdminDetailWisata"
-            android:exported="false" />
-        <activity
             android:name=".AdminDetailMobil"
             android:exported="false" />
         <activity
@@ -60,13 +65,7 @@
             android:name=".AdminTambahMobil"
             android:exported="false" />
         <activity
-            android:name=".UserPaketWisata"
-            android:exported="false" />
-        <activity
             android:name=".UserRentalMobil"
-            android:exported="false" />
-        <activity
-            android:name=".AdminPaketWisata"
             android:exported="false" />
         <activity
             android:name=".AdminRentalMobil"

@@ -109,7 +109,7 @@
                         android:textSize="18sp" />
 
                     <EditText
-                        android:id="@+id/editTextNomor"
+                        android:id="@+id/et_platnomor"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -144,7 +144,7 @@
                         android:textSize="18sp" />
 
                     <EditText
-                        android:id="@+id/editTextStatus"
+                        android:id="@+id/et_status"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -172,7 +172,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_below="@id/editTextStatus"
+                        android:layout_below="@id/et_status"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
                         android:text="Nama Merk"
@@ -180,7 +180,7 @@
                         android:textSize="18sp" />
 
                     <EditText
-                        android:id="@+id/editTextNamaMerk"
+                        android:id="@+id/et_namamerk"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -209,7 +209,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_below="@id/editTextStatus"
+                        android:layout_below="@id/et_status"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
                         android:text="Nama Mobil"
@@ -217,7 +217,7 @@
                         android:textSize="18sp" />
 
                     <EditText
-                        android:id="@+id/editTextNama"
+                        android:id="@+id/et_namamobil"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -246,7 +246,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_below="@id/editTextStatus"
+                        android:layout_below="@id/et_status"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
                         android:text="Warna"
@@ -254,7 +254,7 @@
                         android:textSize="18sp" />
 
                     <EditText
-                        android:id="@+id/editTextWarna"
+                        android:id="@+id/et_warna"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -283,7 +283,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_below="@id/editTextStatus"
+                        android:layout_below="@id/et_status"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
                         android:text="Jumlah Kursi"
@@ -291,7 +291,7 @@
                         android:textSize="18sp" />
 
                     <EditText
-                        android:id="@+id/editTextJumlahKursi"
+                        android:id="@+id/et_jumlahkursi"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -320,7 +320,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_below="@id/editTextStatus"
+                        android:layout_below="@id/et_status"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
                         android:text="Harga / 24 Jam"
@@ -328,7 +328,7 @@
                         android:textSize="18sp" />
 
                     <EditText
-                        android:id="@+id/editTextHarga"
+                        android:id="@+id/et_harga"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"

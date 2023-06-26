@@ -73,15 +73,15 @@ public class AdminTambahMobil extends AppCompatActivity implements AdapterView.O
         spinner.setOnItemSelectedListener(this);
 
         FotoProduk      = findViewById(R.id.imageView);
-        TextNama        = findViewById(R.id.editTextNama);
-        TextNomor       = findViewById(R.id.editTextNomor);
-        TextHarga       = findViewById(R.id.editTextHarga);
-        TextWarna       = findViewById(R.id.editTextWarna);
-        TextStatus      = findViewById(R.id.editTextStatus);
-        TextMerk        = findViewById(R.id.editTextNamaMerk);
-        TextKursi       = findViewById(R.id.editTextJumlahKursi);
+        TextNomor       = findViewById(R.id.et_platnomor);
+        TextMerk        = findViewById(R.id.et_namamerk);
+        TextNama        = findViewById(R.id.et_namamobil);
+        TextWarna       = findViewById(R.id.et_warna);
+        TextStatus      = findViewById(R.id.et_status);
+        TextKursi       = findViewById(R.id.et_jumlahkursi);
+        TextHarga       = findViewById(R.id.et_harga);
         TombolKembali   = findViewById(R.id.ib_back);
-        TombolSimpan    = findViewById(R.id.buttonUpdate);
+        TombolSimpan    = findViewById(R.id.bt_update);
         progressBar     = findViewById(R.id.progressBar);
         progressBar.setVisibility(View.INVISIBLE);
 
@@ -112,17 +112,17 @@ public class AdminTambahMobil extends AppCompatActivity implements AdapterView.O
 
     }
 
-    private void SimpanData(String nomor, String status, String merk, String nama, String warna, String kursi, String harga, String foto){
+    private void SimpanData(String foto, String platnomor, String status, String namamerk, String namamobil, String warna, String kursi, String harga){
         Map<String, Object> data = new HashMap<>();
-        data.put("nomor", nomor);
+        data.put("foto", foto);
+        data.put("platnomor", platnomor);
         data.put("status", status);
-        data.put("merk", merk);
-        data.put("nama", nama);
+        data.put("namamerk", namamerk);
+        data.put("namamobil", namamobil);
         data.put("warna", warna);
         data.put("kursi", kursi);
         data.put("harga", harga);
-        data.put("foto", foto);
-        firebaseFirestore.collection("RentalMobil").document(nomor).set(data).isSuccessful();
+        firebaseFirestore.collection("RentalMobil").document(platnomor).set(data).isSuccessful();
     }
     private void ambilGambar(){
         ImagePicker.with(AdminTambahMobil.this)
@@ -164,7 +164,6 @@ public class AdminTambahMobil extends AppCompatActivity implements AdapterView.O
                             Task<Uri> uriTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                                 @Override
                                 public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-
                                     return ref.getDownloadUrl();
                                 }
                             }).addOnCompleteListener(new OnCompleteListener<Uri>() {
@@ -172,14 +171,14 @@ public class AdminTambahMobil extends AppCompatActivity implements AdapterView.O
                                 public void onComplete(@NonNull Task<Uri> task) {
                                     Uri imagePath = task.getResult();
                                     fotoUrl = imagePath.toString();
-                                    SimpanData(TextNomor.getText().toString(),
+                                    SimpanData(fotoUrl,
+                                            TextNomor.getText().toString(),
                                             TextStatus.getText().toString(),
                                             TextMerk.getText().toString(),
                                             TextNama.getText().toString(),
                                             TextWarna.getText().toString(),
                                             TextKursi.getText().toString(),
-                                            TextHarga.getText().toString(),
-                                            fotoUrl);
+                                            TextHarga.getText().toString());
                                     progressBar.setProgress(0);
                                     progressBar.setVisibility(View.INVISIBLE);
 
@@ -197,7 +196,7 @@ public class AdminTambahMobil extends AppCompatActivity implements AdapterView.O
                                                 String txtwarna = TextWarna.getText().toString();
                                                 String txtkursi = TextKursi.getText().toString();
                                                 String txtharga = TextHarga.getText().toString();
-                                                databaseReference.child("Mobil").push().setValue(new ModelMobil(txtplat, txtmerk, txtnama, txtwarna, txtkursi, txtharga)).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                databaseReference.child("Mobil").child(nomor).setValue(new ModelMobil2(txtplat, txtmerk, txtnama, txtwarna, txtkursi, txtharga)).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                     @Override
                                                     public void onSuccess(Void unused) {
                                                         Toast.makeText(AdminTambahMobil.this, "Data berhasil ditambah.", Toast.LENGTH_SHORT).show();

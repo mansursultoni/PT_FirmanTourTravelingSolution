@@ -61,13 +61,13 @@ public class AdminTambahWisata extends AppCompatActivity implements AdapterView.
 
         FotoProduk      = findViewById(R.id.imageView);
 
-        TextNama        = findViewById(R.id.editTextNama);
-        TextNomor       = findViewById(R.id.editTextNomor);
-        TextHarga       = findViewById(R.id.editTextHarga);
-        TextDeskripsi   = findViewById(R.id.editTextWarna);
-        TextStatus      = findViewById(R.id.editTextStatus);
+        TextNama        = findViewById(R.id.et_namamobil);
+        TextNomor       = findViewById(R.id.et_platnomor);
+        TextHarga       = findViewById(R.id.et_harga);
+        TextDeskripsi   = findViewById(R.id.et_warna);
+        TextStatus      = findViewById(R.id.et_status);
         TombolKembali   = findViewById(R.id.ib_back);
-        TombolSimpan    = findViewById(R.id.buttonUpdate);
+        TombolSimpan    = findViewById(R.id.bt_update);
 
         progressBar     = findViewById(R.id.progressBar);
         progressBar.setVisibility(View.INVISIBLE);

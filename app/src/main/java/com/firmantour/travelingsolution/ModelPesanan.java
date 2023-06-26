@@ -1,36 +1,33 @@
 package com.firmantour.travelingsolution;
 
-public class ModelPemesanan {
-    private String nama;
-    private String notlep;
-    private String alamat;
-    private String platnomor;
-    private String namamerk;
-    private String namamobil;
-    private String warna;
-    private String jumlahkursi;
-    private String totalharga;
-    private String sewa;
-    private String kembali;
+public class ModelPesanan {
+    String key, nama, nomor, alamat, platnomor, namamerk, namamobil, warna, jumlahkursi, tanggalsewa, tanggalkembali, totalharga;
 
-    public ModelPemesanan(String platnomor, String namamobil, String namamerk){
-        this.platnomor = platnomor;
-        this.namamobil = namamobil;
-        this.namamerk = namamerk;
+    public ModelPesanan(){
+
     }
 
-    public ModelPemesanan(String nama, String notlep, String alamat, String platnomor, String namamerk, String namamobil, String warna, String jumlahkursi, String totalharga, String sewa, String kembali) {
+    public ModelPesanan(String key, String nama, String nomor, String alamat, String platnomor, String namamerk, String namamobil, String warna, String jumlahkursi, String tanggalsewa, String tanggalkembali, String totalharga) {
+        this.key = key;
         this.nama = nama;
-        this.notlep = notlep;
+        this.nomor = nomor;
         this.alamat = alamat;
         this.platnomor = platnomor;
         this.namamerk = namamerk;
         this.namamobil = namamobil;
         this.warna = warna;
         this.jumlahkursi = jumlahkursi;
+        this.tanggalsewa = tanggalsewa;
+        this.tanggalkembali = tanggalkembali;
         this.totalharga = totalharga;
-        this.sewa = sewa;
-        this.kembali = kembali;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public String getNama() {
@@ -41,12 +38,12 @@ public class ModelPemesanan {
         this.nama = nama;
     }
 
-    public String getNotlep() {
-        return notlep;
+    public String getNomor() {
+        return nomor;
     }
 
-    public void setNotlep(String notlep) {
-        this.notlep = notlep;
+    public void setNomor(String nomor) {
+        this.nomor = nomor;
     }
 
     public String getAlamat() {
@@ -97,27 +94,27 @@ public class ModelPemesanan {
         this.jumlahkursi = jumlahkursi;
     }
 
+    public String getTanggalsewa() {
+        return tanggalsewa;
+    }
+
+    public void setTanggalsewa(String tanggalsewa) {
+        this.tanggalsewa = tanggalsewa;
+    }
+
+    public String getTanggalkembali() {
+        return tanggalkembali;
+    }
+
+    public void setTanggalkembali(String tanggalkembali) {
+        this.tanggalkembali = tanggalkembali;
+    }
+
     public String getTotalharga() {
         return totalharga;
     }
 
     public void setTotalharga(String totalharga) {
         this.totalharga = totalharga;
-    }
-
-    public String getSewa() {
-        return sewa;
-    }
-
-    public void setSewa(String sewa) {
-        this.sewa = sewa;
-    }
-
-    public String getKembali() {
-        return kembali;
-    }
-
-    public void setKembali(String kembali) {
-        this.kembali = kembali;
     }
 }

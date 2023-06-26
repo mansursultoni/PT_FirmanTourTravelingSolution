@@ -105,6 +105,7 @@ public class UserCheckout extends AppCompatActivity {
                            String namamobil, String warna, String jumlahkursi, String tanggalsewa,
                            String tanggalkembali, String totalharga){
         String key = TvID.getText().toString();
+        String nmr = TvTelpon.getText().toString();
         Map<String, Object> doc = new HashMap<>();
         doc.put("key",key);
         doc.put("id",id);
@@ -113,13 +114,23 @@ public class UserCheckout extends AppCompatActivity {
         doc.put("alamat", alamat);
         doc.put("platnomor", platnomor);
         doc.put("namamerk", namamerk);
-        doc.put("namamombil", namamobil);
+        doc.put("namamobil", namamobil);
         doc.put("warna", warna);
         doc.put("jumlahkursi", jumlahkursi);
         doc.put("tanggalsewa", tanggalsewa);
         doc.put("tanggalkembali", tanggalkembali);
         doc.put("totalharga", totalharga);
         firebaseFirestore.collection("PesananBelumSelesai").document(key).set(doc)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                    }
+                });
+        firebaseFirestore.collection("PesananUser").document(nmr).set(doc)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {

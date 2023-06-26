@@ -26,6 +26,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -41,10 +43,11 @@ import java.util.Map;
 public class AdminDetailMobil extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
     private FirebaseFirestore firebaseFirestore;
+    DatabaseReference firebaseDatabase;
     private StorageReference storageReference;
-    ImageView FotoProduk;
+    ImageView FotoMobil;
     Spinner spinner;
-    EditText TextNama, TextNomor, TextHarga, TextDeskripsi, TextStatus;
+    EditText TvPlatNomor, TextStatus, TvNamaMerk, TvNamaMobil,  TvWarna, TvJumlahKursi, TextHarga ;
     Button TombolEdit, TombolHapus;
     ImageView TombolKembali;
     ProgressBar progressBar;
@@ -61,14 +64,16 @@ public class AdminDetailMobil extends AppCompatActivity implements AdapterView.O
         window.setStatusBarColor(this.getResources().getColor(R.color.blue));
 
         spinner     = findViewById(R.id.spinner2);
-        FotoProduk  = findViewById(R.id.imageView);
-        TextNama    = findViewById(R.id.editTextNama);
-        TextNomor   = findViewById(R.id.editTextNomor);
-        TextHarga   = findViewById(R.id.editTextHarga);
-        TextDeskripsi = findViewById(R.id.editTextWarna);
-        TextStatus  = findViewById(R.id.editTextStatus);
-        TombolHapus = findViewById(R.id.buttonDelete);
-        TombolEdit  = findViewById(R.id.buttonUpdate);
+        FotoMobil = findViewById(R.id.imageView);
+        TvPlatNomor = findViewById(R.id.et_platnomor);
+        TextStatus  = findViewById(R.id.et_status);
+        TvNamaMerk  = findViewById(R.id.et_namamerk);
+        TvNamaMobil = findViewById(R.id.et_namamobil);
+        TvWarna     = findViewById(R.id.et_warna);
+        TvJumlahKursi= findViewById(R.id.et_jumlahkursi);
+        TextHarga   = findViewById(R.id.et_harga);
+        TombolHapus = findViewById(R.id.bt_delete);
+        TombolEdit  = findViewById(R.id.bt_update);
         TombolKembali = findViewById(R.id.ib_back);
         progressBar = findViewById(R.id.progressBar);
 
@@ -84,7 +89,7 @@ public class AdminDetailMobil extends AppCompatActivity implements AdapterView.O
 
         readData();
 
-        FotoProduk.setOnClickListener(new View.OnClickListener() {
+        FotoMobil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ambilGambar();
@@ -142,22 +147,24 @@ public class AdminDetailMobil extends AppCompatActivity implements AdapterView.O
 
     }
     private void readData() {
-        firebaseFirestore.collection("RentalMobil").whereEqualTo("nomor", produkId)
+        firebaseFirestore.collection("RentalMobil").whereEqualTo("platnomor", produkId)
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                TextNama.setText(document.getString("nama"));
-                                TextNomor.setText(document.getString("nomor"));
-                                TextHarga.setText(document.getString("harga"));
-                                TextDeskripsi.setText(document.getString("deskripsi"));
-                                TextStatus.setText(document.getString("status"));
                                 fotoUrl = document.getString("foto");
+                                TvPlatNomor.setText(document.getString("platnomor"));
+                                TextStatus.setText(document.getString("status"));
+                                TvNamaMerk.setText(document.getString("namamerk"));
+                                TvNamaMobil.setText(document.getString("namamobil"));
+                                TvWarna.setText(document.getString("warna"));
+                                TvJumlahKursi.setText(document.getString("kursi"));
+                                TextHarga.setText(document.getString("harga"));
                                 if (fotoUrl != "") {
-                                    Picasso.get().load(fotoUrl).fit().into(FotoProduk);
+                                    Picasso.get().load(fotoUrl).fit().into(FotoMobil);
                                 } else {
-                                    Picasso.get().load(R.drawable.ic_user).fit().into(FotoProduk);
+                                    Picasso.get().load(R.drawable.ic_user).fit().into(FotoMobil);
                                 }
                             }
                         } else {
@@ -168,15 +175,17 @@ public class AdminDetailMobil extends AppCompatActivity implements AdapterView.O
                 });
     }
 
-    private void SimpanData(String nama, String nomor, String harga, String deskripsi, String status, String foto) {
+    private void SimpanData(String foto, String platnomor, String status, String namamerk, String namamobil, String warna, String jumlahkursi, String harga) {
         Map<String, Object> data = new HashMap<>();
-        data.put("nama", nama);
-        data.put("nomor", nomor);
-        data.put("harga", harga);
-        data.put("deskripsi", deskripsi);
-        data.put("status", status);
         data.put("foto", foto);
-        firebaseFirestore.collection("RentalMobil").document(nomor).set(data).isSuccessful();
+        data.put("platnomor", platnomor);
+        data.put("status", status);
+        data.put("namamerk", namamerk);
+        data.put("namamobil", namamobil);
+        data.put("warna", warna);
+        data.put("jumlahkursi", jumlahkursi);
+        data.put("harga", harga);
+        firebaseFirestore.collection("RentalMobil").document(platnomor).set(data).isSuccessful();
     }
 
     private void ambilGambar() {
@@ -191,7 +200,7 @@ public class AdminDetailMobil extends AppCompatActivity implements AdapterView.O
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             filePath = data.getData();
-            Picasso.get().load(filePath).fit().into(FotoProduk);
+            Picasso.get().load(filePath).fit().into(FotoMobil);
         } else {
             Toast.makeText(this, "Tidak ada gambar dipilih", Toast.LENGTH_SHORT).show();
         }
@@ -199,7 +208,7 @@ public class AdminDetailMobil extends AppCompatActivity implements AdapterView.O
 
     private void uploadImage() {
         if (filePath != null) {
-            final StorageReference ref = storageReference.child(TextNomor.getText().toString());
+            final StorageReference ref = storageReference.child(TvPlatNomor.getText().toString());
             UploadTask uploadTask = ref.putFile(filePath);
             Task<Uri> uriTask = uploadTask.continueWithTask(task -> {
                 return ref.getDownloadUrl();
@@ -208,12 +217,14 @@ public class AdminDetailMobil extends AppCompatActivity implements AdapterView.O
                 public void onComplete(@NonNull Task<Uri> task) {
                     Uri imagePath = task.getResult();
                     fotoUrl = imagePath.toString();
-                    SimpanData(TextNama.getText().toString(),
-                            TextNomor.getText().toString(),
-                            TextHarga.getText().toString(),
-                            TextDeskripsi.getText().toString(),
+                    SimpanData(fotoUrl,
+                            TvPlatNomor.getText().toString(),
                             TextStatus.getText().toString(),
-                            fotoUrl);
+                            TvNamaMerk.getText().toString(),
+                            TvNamaMobil.getText().toString(),
+                            TvWarna.getText().toString(),
+                            TvJumlahKursi.getText().toString(),
+                            TextHarga.getText().toString());
                     progressBar.setProgress(0);
                     progressBar.setVisibility(INVISIBLE);
                     Toast.makeText(AdminDetailMobil.this, "Data berhasil disimpan", Toast.LENGTH_SHORT).show();
@@ -235,20 +246,26 @@ public class AdminDetailMobil extends AppCompatActivity implements AdapterView.O
                 }
             });
         } else {
-            SimpanData(TextNama.getText().toString(),
-                    TextNomor.getText().toString(),
-                    TextHarga.getText().toString(),
-                    TextDeskripsi.getText().toString(),
+            SimpanData(fotoUrl,
+                    TvPlatNomor.getText().toString(),
                     TextStatus.getText().toString(),
-                    fotoUrl);
+                    TvNamaMerk.getText().toString(),
+                    TvNamaMobil.getText().toString(),
+                    TvWarna.getText().toString(),
+                    TvJumlahKursi.getText().toString(),
+                    TextHarga.getText().toString());
             Toast.makeText(this, "Produk telah diubah", Toast.LENGTH_SHORT).show();
             finish();
         }
     }
 
     private void hapusData() {
+        String platnomor = TvPlatNomor.getText().toString();
         firebaseFirestore.collection("RentalMobil").document(produkId).delete();
         storageReference.child(produkId).delete();
+        firebaseDatabase = FirebaseDatabase.getInstance().getReference()
+                .child("Mobil").child(platnomor);
+        firebaseDatabase.removeValue();
         Toast.makeText(this, "Produk telah dihapus", Toast.LENGTH_SHORT).show();
         finish();
 

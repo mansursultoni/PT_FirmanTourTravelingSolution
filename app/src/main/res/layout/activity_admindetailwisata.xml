@@ -78,7 +78,7 @@
                 android:textSize="16sp" />
 
             <EditText
-                android:id="@+id/editTextNomor"
+                android:id="@+id/et_platnomor"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/txt1"
@@ -95,14 +95,14 @@
                 android:id="@+id/txt2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/editTextNomor"
+                android:layout_below="@id/et_platnomor"
                 android:layout_marginHorizontal="20dp"
                 android:text="Status"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
             <EditText
-                android:id="@+id/editTextStatus"
+                android:id="@+id/et_status"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/txt2"
@@ -120,21 +120,21 @@
                 android:layout_width="50dp"
                 android:layout_height="55dp"
                 android:layout_below="@id/txt2"
-                android:layout_alignEnd="@id/editTextStatus"
+                android:layout_alignEnd="@id/et_status"
                 android:backgroundTint="@color/black" />
 
             <TextView
                 android:id="@+id/txt3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/editTextStatus"
+                android:layout_below="@id/et_status"
                 android:layout_marginHorizontal="20dp"
                 android:text="Nama"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
             <EditText
-                android:id="@+id/editTextNama"
+                android:id="@+id/et_namamobil"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/txt3"
@@ -151,14 +151,14 @@
                 android:id="@+id/txt4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/editTextNama"
+                android:layout_below="@id/et_namamobil"
                 android:layout_marginHorizontal="20dp"
                 android:text="Harga"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
             <EditText
-                android:id="@+id/editTextHarga"
+                android:id="@+id/et_harga"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/txt4"
@@ -175,14 +175,14 @@
                 android:id="@+id/txt5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/editTextHarga"
+                android:layout_below="@id/et_harga"
                 android:layout_marginHorizontal="20dp"
                 android:text="Deskripsi"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
             <EditText
-                android:id="@+id/editTextWarna"
+                android:id="@+id/et_warna"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/txt5"
@@ -199,13 +199,13 @@
                 android:id="@+id/layoutButton"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:layout_below="@id/editTextWarna"
+                android:layout_below="@id/et_warna"
                 android:layout_marginTop="10dp"
                 android:orientation="horizontal"
                 android:paddingHorizontal="16dp">
 
                 <Button
-                    android:id="@+id/buttonDelete"
+                    android:id="@+id/bt_delete"
                     style="@style/Widget.AppCompat.Button.Borderless"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -221,7 +221,7 @@
                     tools:layout_editor_absoluteY="495dp" />
 
                 <Button
-                    android:id="@+id/buttonUpdate"
+                    android:id="@+id/bt_update"
                     style="@style/Widget.AppCompat.Button.Borderless"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

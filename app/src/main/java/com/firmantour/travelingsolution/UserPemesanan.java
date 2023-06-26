@@ -181,7 +181,8 @@ public class UserPemesanan extends AppCompatActivity {
                         }
                         int hargaAwal = Integer.parseInt(TvHarga.getText().toString());
                         int jumlahHari = Integer.parseInt(TvJumlahHari.getText().toString());
-                        int total = hargaAwal*jumlahHari;
+                        int plus = 1;
+                        int total = hargaAwal*(jumlahHari+1);
                         String id = id2+" "+id1+sDate+eDate;
                         String totalHarga = String.valueOf(total);
                         TvID.setText(id);
@@ -336,7 +337,7 @@ public class UserPemesanan extends AppCompatActivity {
 
     private void getMobil() {
         final String platnomor = TvPlatNomor.getText().toString().trim();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("JumlahMobil");
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Mobil");
         Query cekMobil = reference.orderByChild("platnomor").equalTo(platnomor);
         cekMobil.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

@@ -19,16 +19,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
@@ -36,22 +32,19 @@ import com.google.firebase.firestore.Query;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdminDataUser extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
-
-
+public class MenungguKonfirmasi extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private FirestoreRecyclerAdapter adapter;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private List<ModelUser> list = new ArrayList<>();
     DatabaseReference database = FirebaseDatabase.getInstance().getReference();
-    RecyclerView RecyclerView;
+    androidx.recyclerview.widget.RecyclerView RecyclerView;
     ImageView imageView;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admindatauser);
+        setContentView(R.layout.activity_menunggu_konfirmasi);
 
         Window window = this.getWindow();
         window.setStatusBarColor(this.getResources().getColor(R.color.blue));
@@ -79,44 +72,81 @@ public class AdminDataUser extends AppCompatActivity implements NavigationView.O
         RecyclerView.setHasFixedSize(true);
         RecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-//        TampilDataUser();
     }
+    private class ProdukHolder extends androidx.recyclerview.widget.RecyclerView.ViewHolder {
+        TextView nama, nomor, key, namamobil, platnomor;
 
-    private void TampilDataUser() {
-        database.child("Login").addValueEventListener(new ValueEventListener() {
+        public ProdukHolder(@NonNull View itemView) {
+            super(itemView);
+            nama = itemView.findViewById(R.id.textViewNama);
+            nomor = itemView.findViewById(R.id.textViewNomor);
+            key = itemView.findViewById(R.id.textViewKey);
+            namamobil = itemView.findViewById(R.id.textVieNamaMobil);
+            platnomor = itemView.findViewById(R.id.textViewPlat);
+        }
+    }
+    private void getData(){
+        Query query = db.collection("PesananBelumSelesai");
+        FirestoreRecyclerOptions<ModelPesanan> response = new FirestoreRecyclerOptions.Builder<ModelPesanan>()
+                .setQuery(query, ModelPesanan.class).build();
+        adapter = new FirestoreRecyclerAdapter<ModelPesanan, ProdukHolder>(response) {
+            @NonNull
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                /*listUser = new ArrayList<>();
-                for (DataSnapshot item : snapshot.getChildren()){
-                    ModelUser user = item.getValue(ModelUser.class);
-                    user.setNomor(item.getKey());
-                    listUser.add(user);
-                }
-                adapterUser = new AdapterUser(listUser, AdminDataUser.this);
-                RView.setAdapter(adapterUser);*/
-
-
-
+            public ProdukHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_pesanan, parent, false);
+                return new ProdukHolder(view);
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
+            protected void onBindViewHolder(@NonNull ProdukHolder holder, int position, @NonNull final ModelPesanan model) {
+                holder.nama.setText(model.getNama());
+                holder.nomor.setText(model.getNomor());
+                holder.key.setText(model.getKey());
+                holder.namamobil.setText(model.getNamamobil());
+                holder.platnomor.setText(model.getPlatnomor());
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(MenungguKonfirmasi.this, AdminDetailPesanan.class);
+                        intent.putExtra("key", model.getKey());
+                        startActivity(intent);
+                    }
+                });
             }
 
-        });
-
+            @Override
+            public void onError(@NonNull FirebaseFirestoreException e) {
+                Log.e("Ditemukan Error: ", e.getMessage());
+            }
+        };
+        adapter.notifyDataSetChanged();
+        RecyclerView.setAdapter(adapter);
+    }
+    protected void onStart() {
+        super.onStart();
+        getData();
+//        adapter.startListening();
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        adapter.startListening();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        adapter.stopListening();
+    }
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.dashboard:
-                startActivity(new Intent(AdminDataUser.this, AdminDashboard.class));
+                startActivity(new Intent(MenungguKonfirmasi.this, AdminDashboard.class));
                 finish();
                 return true;
             case R.id.rentalmobil:
-                startActivity(new Intent(AdminDataUser.this, AdminRentalMobil.class));
+                startActivity(new Intent(MenungguKonfirmasi.this, AdminRentalMobil.class));
                 finish();
                 return true;
             case R.id.mobildisewa:
@@ -143,7 +173,7 @@ public class AdminDataUser extends AppCompatActivity implements NavigationView.O
 //                finish();
                 return true;
             case R.id.logout:
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder(AdminDataUser.this);
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(MenungguKonfirmasi.this);
                 alertDialog.setTitle("Keluar");
                 alertDialog.setPositiveButton("Ya", new DialogInterface.OnClickListener() {
                     @Override
@@ -163,66 +193,5 @@ public class AdminDataUser extends AppCompatActivity implements NavigationView.O
             default:
                 return false;
         }
-    }
-    private void getData(){
-        Query query = db.collection("users");
-        FirestoreRecyclerOptions<ModelUser> response = new FirestoreRecyclerOptions.Builder<ModelUser>()
-                .setQuery(query, ModelUser.class).build();
-        adapter = new FirestoreRecyclerAdapter<ModelUser, ProdukHolder>(response) {
-            @NonNull
-            @Override
-            public ProdukHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_user, parent, false);
-                return new ProdukHolder(view);
-            }
-
-            @Override
-            protected void onBindViewHolder(@NonNull ProdukHolder holder, int position, @NonNull final ModelUser model) {
-                holder.nama.setText(model.getNama());
-                holder.nomor.setText(model.getNomor());
-                holder.itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(AdminDataUser.this, AdminDetailUser.class);
-                        intent.putExtra("nomor", model.getNomor());
-                        startActivity(intent);
-                    }
-                });
-            }
-
-            @Override
-            public void onError(@NonNull FirebaseFirestoreException e) {
-                Log.e("Ditemukan Error: ", e.getMessage());
-            }
-        };
-        adapter.notifyDataSetChanged();
-        RecyclerView.setAdapter(adapter);
-    }
-    private class ProdukHolder extends RecyclerView.ViewHolder {
-        TextView nama, nomor;
-
-        public ProdukHolder(@NonNull View itemView) {
-            super(itemView);
-            nama = itemView.findViewById(R.id.textViewNama);
-            nomor = itemView.findViewById(R.id.textViewNomor);
-        }
-    }
-    @Override
-    protected void onStart() {
-        super.onStart();
-        getData();
-//        adapter.startListening();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        adapter.startListening();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        adapter.stopListening();
     }
 }

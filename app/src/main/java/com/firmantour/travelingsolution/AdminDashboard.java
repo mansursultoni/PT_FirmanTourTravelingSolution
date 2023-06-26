@@ -1,11 +1,8 @@
 package com.firmantour.travelingsolution;
 
-import static android.content.ContentValues.TAG;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -32,7 +29,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class AdminDashboard extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
-    TextView JumlahMobil, JumlahUser, JumlahMobilSewa;
+    TextView JumlahMobil, JumlahUser, JumlahMobilSewa, PermintaanPesan;
     ImageView imageView;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
@@ -52,6 +49,7 @@ public class AdminDashboard extends AppCompatActivity implements NavigationView.
         JumlahMobil = findViewById(R.id.txt_jumlahMobil);
         JumlahUser = findViewById(R.id.txt_jumlahUser);
         JumlahMobilSewa = findViewById(R.id.txt_mobilDisewa);
+        PermintaanPesan = findViewById(R.id.txt_permintaanPesan);
         drawerLayout = findViewById(R.id.drawerLayout);
         navigationView = findViewById(R.id.nav_view);
 
@@ -70,6 +68,7 @@ public class AdminDashboard extends AppCompatActivity implements NavigationView.
 
         getJumlahMobil();
         getJumlahUser();
+        getJumlahPemesanan();
 
     }
     @Override
@@ -83,13 +82,12 @@ public class AdminDashboard extends AppCompatActivity implements NavigationView.
                 startActivity(new Intent(AdminDashboard.this, AdminRentalMobil.class));
                 finish();
                 return true;
-            case R.id.paketwisata:
-                startActivity(new Intent(AdminDashboard.this, AdminPaketWisata.class));
-                finish();
+            case R.id.mobildisewa:
+
                 return true;
             case R.id.menunggukonfirmasi:
-//                startActivity(new Intent(Dashboard.this, MenungguKonfirmasi.class));
-//                finish();
+                startActivity(new Intent(AdminDashboard.this, MenungguKonfirmasi.class));
+                finish();
                 return true;
             case R.id.dataadmin:
 //                startActivity(new Intent(Dashboard.this, DataAdmin.class));
@@ -143,9 +141,7 @@ public class AdminDashboard extends AppCompatActivity implements NavigationView.
                     // Count fetched successfully
                     AggregateQuerySnapshot snapshot = task.getResult();
                     JumlahMobil.setText(String.valueOf(snapshot.getCount()));
-                    Log.d(TAG, "Count: " + snapshot.getCount());
                 } else {
-                    Log.d(TAG, "Count failed: ", task.getException());
                 }
             }
         });
@@ -160,9 +156,23 @@ public class AdminDashboard extends AppCompatActivity implements NavigationView.
                     // Count fetched successfully
                     AggregateQuerySnapshot snapshot = task.getResult();
                     JumlahUser.setText(String.valueOf(snapshot.getCount()));
-                    Log.d(TAG, "Count: " + snapshot.getCount());
                 } else {
-                    Log.d(TAG, "Count failed: ", task.getException());
+
+                }
+            }
+        });
+    }
+    private void getJumlahPemesanan(){
+        CollectionReference query = firebaseFirestore.collection("PesananBelumSelesai");
+        AggregateQuery countQuery = query.count();
+        countQuery.get(AggregateSource.SERVER).addOnCompleteListener(new OnCompleteListener<AggregateQuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<AggregateQuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    // Count fetched successfully
+                    AggregateQuerySnapshot snapshot = task.getResult();
+                    PermintaanPesan.setText(String.valueOf(snapshot.getCount()));
+                } else {
                 }
             }
         });

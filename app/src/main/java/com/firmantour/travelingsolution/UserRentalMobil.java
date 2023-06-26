@@ -82,8 +82,7 @@ public class UserRentalMobil extends AppCompatActivity {
 //                finish();
                         return true;
                     case R.id.paketWisata:
-                        startActivity(new Intent(UserRentalMobil.this, UserPaketWisata.class));
-                        finish();
+
                         return true;
                     case R.id.menunggukonfirmasi:
 //                        startActivity(new Intent(UserRentalMobil.this, MenungguKonfirmasi.class));
@@ -145,14 +144,14 @@ public class UserRentalMobil extends AppCompatActivity {
                 } else {
                     Picasso.get().load(ic_user).fit().into(holder.fotoProduk);
                 }
-                holder.namaProduk.setText(model.getNama());
+                holder.namaProduk.setText(model.getNamamobil());
                 holder.hargaProduk.setText(model.getHarga());
                 holder.statusProduk.setText(model.getStatus());
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(UserRentalMobil.this, UserDetaillMobil.class);
-                        intent.putExtra("nomor", model.getNomor());
+                        intent.putExtra("nomor", model.getPlatnomor());
                         intent.putExtra("nomortelpon", input1);
                         startActivity(intent);
 //Snackbar.make(recyclerView, model.getNama()+", " +model.getTelepon(), Snackbar.LENGTH_LONG).setAction("Action", null).show();

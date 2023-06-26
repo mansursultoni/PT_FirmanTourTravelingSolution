@@ -123,14 +123,14 @@ public class AdminRentalMobil extends AppCompatActivity implements NavigationVie
                 } else {
                     Picasso.get().load(ic_user).fit().into(holder.fotoProduk);
                 }
-                holder.namaProduk.setText(model.getNama());
+                holder.namaProduk.setText(model.getNamamobil());
                 holder.hargaProduk.setText(model.getHarga());
                 holder.statusProduk.setText(model.getStatus());
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(AdminRentalMobil.this, AdminDetailMobil.class);
-                        intent.putExtra("nomor", model.getNomor());
+                        intent.putExtra("nomor", model.getPlatnomor());
                         startActivity(intent);
                     }
                 });
@@ -209,9 +209,8 @@ public class AdminRentalMobil extends AppCompatActivity implements NavigationVie
 //                startActivity(new Intent(AdminRentalMobil.this, AdminRentalMobil.class));
 //                finish();
                 return true;
-            case R.id.paketwisata:
-                startActivity(new Intent(AdminRentalMobil.this, AdminPaketWisata.class));
-                finish();
+            case R.id.mobildisewa:
+
                 return true;
             case R.id.menunggukonfirmasi:
 //                startActivity(new Intent(Dashboard.this, MenungguKonfirmasi.class));

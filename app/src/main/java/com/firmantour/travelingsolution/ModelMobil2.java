@@ -1,37 +1,19 @@
 package com.firmantour.travelingsolution;
 
-public class ModelMobil {
-    private String foto, platnomor, status, namamerk, namamobil, warna, jumlahkursi, harga;
+public class ModelMobil2 {
+    private String platnomor, namamerk, namamobil, warna, jumlahkursi, harga;
 
-    public ModelMobil(){
+    public ModelMobil2(){
 
     }
 
-    public ModelMobil(String foto, String platnomor, String status, String namamerk, String namamobil, String warna, String jumlahkursi, String harga) {
-        this.foto = foto;
+    public ModelMobil2(String platnomor, String namamerk, String namamobil, String warna, String jumlahkursi, String harga) {
         this.platnomor = platnomor;
-        this.status = status;
         this.namamerk = namamerk;
         this.namamobil = namamobil;
         this.warna = warna;
         this.jumlahkursi = jumlahkursi;
         this.harga = harga;
-    }
-
-    public String getFoto() {
-        return foto;
-    }
-
-    public void setFoto(String foto) {
-        this.foto = foto;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     public String getPlatnomor() {

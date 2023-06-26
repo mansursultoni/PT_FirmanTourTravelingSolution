@@ -53,13 +53,13 @@ public class UserDetaillMobil extends AppCompatActivity {
 
         //--Inisialisasi
         FotoProduk  = findViewById(R.id.imageView);
-        EtNomor = findViewById(R.id.editTextNomor);
-        EtStatus = findViewById(R.id.editTextStatus);
-        EtMerk = findViewById(R.id.editTextNamaMerk);
-        EtNama = findViewById(R.id.editTextNama);
-        EtWarna = findViewById(R.id.editTextWarna);
-        EtJumlahKursi = findViewById(R.id.editTextJumlahKursi);
-        EtHarga = findViewById(R.id.editTextHarga);
+        EtNomor = findViewById(R.id.et_platnomor);
+        EtStatus = findViewById(R.id.et_status);
+        EtMerk = findViewById(R.id.et_namamerk);
+        EtNama = findViewById(R.id.et_namamobil);
+        EtWarna = findViewById(R.id.et_warna);
+        EtJumlahKursi = findViewById(R.id.et_jumlahkursi);
+        EtHarga = findViewById(R.id.et_harga);
         TvNomorTelpon = findViewById(R.id.tv_nomorTelpon);
         IbKembali = findViewById(R.id.ib_back);
         progressBar = findViewById(R.id.progressBar);
@@ -127,16 +127,16 @@ public class UserDetaillMobil extends AppCompatActivity {
         TvNomorTelpon.setText(nomorTelpon);
     }
     private void readData() {
-        firebaseFirestore.collection("RentalMobil").whereEqualTo("nomor", produkId)
+        firebaseFirestore.collection("RentalMobil").whereEqualTo("platnomor", produkId)
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                EtNomor.setText(document.getString("nomor"));
+                                EtNomor.setText(document.getString("platnomor"));
                                 EtStatus.setText(document.getString("status"));
-                                EtMerk.setText(document.getString("merk"));
-                                EtNama.setText(document.getString("nama"));
+                                EtMerk.setText(document.getString("namamerk"));
+                                EtNama.setText(document.getString("namamobil"));
                                 EtWarna.setText(document.getString("warna"));
                                 EtJumlahKursi.setText(document.getString("kursi"));
                                 EtHarga.setText(document.getString("harga"));

@@ -80,15 +80,14 @@
                 <LinearLayout
                     android:id="@+id/linearLayout1"
                     android:layout_width="match_parent"
-                    android:paddingHorizontal="8dp"
-                    android:background="@drawable/rounded_corner_blue"
-                    android:layout_marginBottom="4dp"
                     android:layout_height="50dp"
                     android:layout_below="@id/imageView"
-                    android:orientation="horizontal">
+                    android:layout_marginBottom="4dp"
+                    android:background="@drawable/rounded_corner_blue"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="8dp">
 
                     <TextView
-                        android:id="@+id/txt1"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -98,16 +97,16 @@
                         android:textSize="18sp" />
 
                     <EditText
-                        android:id="@+id/editTextNomor"
+                        android:id="@+id/et_platnomor"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@color/transparant"
                         android:drawablePadding="8dp"
-                        android:editable="false"
+                        android:editable="true"
                         android:gravity="center"
+                        android:hint="Plat Nomor"
                         android:paddingHorizontal="16dp"
-                        android:text="123"
                         android:textColor="@color/black"
                         android:textColorHint="@color/grey" />
 
@@ -119,13 +118,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_below="@id/linearLayout1"
-                    android:paddingHorizontal="8dp"
-                    android:background="@drawable/rounded_corner_blue"
                     android:layout_marginBottom="4dp"
-                    android:orientation="horizontal">
+                    android:background="@drawable/rounded_corner_blue"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="8dp">
 
                     <TextView
-                        android:id="@+id/txt2"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -135,7 +133,7 @@
                         android:textSize="18sp" />
 
                     <EditText
-                        android:id="@+id/editTextStatus"
+                        android:id="@+id/et_status"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -143,8 +141,8 @@
                         android:drawablePadding="8dp"
                         android:editable="false"
                         android:gravity="left|center_vertical"
+                        android:hint="Tidak Tersedia"
                         android:paddingHorizontal="16dp"
-                        android:text="Tidak Tersedia"
                         android:textColor="@color/black"
                         android:textColorHint="@color/grey" />
 
@@ -155,24 +153,23 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_below="@id/linearLayout2"
-                    android:paddingHorizontal="8dp"
-                    android:background="@drawable/rounded_corner_blue"
                     android:layout_marginBottom="4dp"
-                    android:orientation="horizontal">
+                    android:background="@drawable/rounded_corner_blue"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="8dp">
 
                     <TextView
-                        android:id="@+id/txt3"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_below="@id/editTextStatus"
+                        android:layout_below="@id/et_status"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="Nama"
+                        android:text="Nama Merk"
                         android:textColor="@color/black"
                         android:textSize="18sp" />
 
                     <EditText
-                        android:id="@+id/editTextNama"
+                        android:id="@+id/et_namamerk"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -180,8 +177,8 @@
                         android:drawablePadding="8dp"
                         android:editable="true"
                         android:gravity="left|center_vertical"
+                        android:hint="Nama Merk"
                         android:paddingHorizontal="16dp"
-                        android:text="Nama Mobil"
                         android:textColor="@color/black"
                         android:textColorHint="@color/grey" />
 
@@ -193,24 +190,23 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_below="@id/linearLayout3"
-                    android:paddingHorizontal="8dp"
-                    android:background="@drawable/rounded_corner_blue"
                     android:layout_marginBottom="4dp"
-                    android:orientation="horizontal">
+                    android:background="@drawable/rounded_corner_blue"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="8dp">
 
                     <TextView
-                        android:id="@+id/txt4"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_below="@id/editTextStatus"
+                        android:layout_below="@id/et_status"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="Harga"
+                        android:text="Nama Mobil"
                         android:textColor="@color/black"
                         android:textSize="18sp" />
 
                     <EditText
-                        android:id="@+id/editTextHarga"
+                        android:id="@+id/et_namamobil"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -218,10 +214,11 @@
                         android:drawablePadding="8dp"
                         android:editable="true"
                         android:gravity="left|center_vertical"
+                        android:hint="Nama Mobil"
                         android:paddingHorizontal="16dp"
-                        android:text="Harga Sewa"
                         android:textColor="@color/black"
                         android:textColorHint="@color/grey" />
+
 
                 </LinearLayout>
 
@@ -230,24 +227,23 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_below="@id/linearLayout4"
-                    android:paddingHorizontal="8dp"
-                    android:background="@drawable/rounded_corner_blue"
                     android:layout_marginBottom="4dp"
-                    android:orientation="horizontal">
+                    android:background="@drawable/rounded_corner_blue"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="8dp">
 
                     <TextView
-                        android:id="@+id/txt5"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_below="@id/editTextStatus"
+                        android:layout_below="@id/et_status"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="Deskripsi"
+                        android:text="Warna"
                         android:textColor="@color/black"
                         android:textSize="18sp" />
 
                     <EditText
-                        android:id="@+id/editTextWarna"
+                        android:id="@+id/et_warna"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -255,14 +251,85 @@
                         android:drawablePadding="8dp"
                         android:editable="true"
                         android:gravity="left|center_vertical"
+                        android:hint="Warna Mobil"
                         android:inputType="textMultiLine"
                         android:paddingHorizontal="16dp"
-                        android:text="Deskripsi"
                         android:textColor="@color/black"
                         android:textColorHint="@color/grey" />
 
                 </LinearLayout>
 
+                <LinearLayout
+                    android:id="@+id/linearLayout6"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_below="@id/linearLayout5"
+                    android:layout_marginBottom="4dp"
+                    android:background="@drawable/rounded_corner_blue"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="8dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@id/et_status"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="Jumlah Kursi"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+
+                    <EditText
+                        android:id="@+id/et_jumlahkursi"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@color/transparant"
+                        android:drawablePadding="8dp"
+                        android:editable="true"
+                        android:gravity="left|center_vertical"
+                        android:hint="Jumlah Kursi"
+                        android:paddingHorizontal="16dp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/grey" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearLayout7"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_below="@id/linearLayout6"
+                    android:layout_marginBottom="4dp"
+                    android:background="@drawable/rounded_corner_blue"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="8dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@id/et_status"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="Harga / 24 Jam"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+
+                    <EditText
+                        android:id="@+id/et_harga"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@color/transparant"
+                        android:drawablePadding="8dp"
+                        android:editable="true"
+                        android:gravity="left|center_vertical"
+                        android:hint="Harga Sewa"
+                        android:paddingHorizontal="16dp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/grey" />
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -287,7 +354,7 @@
                 android:paddingHorizontal="16dp">
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/buttonDelete"
+                    android:id="@+id/bt_delete"
                     style="@style/Widget.AppCompat.Button.Borderless"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -303,7 +370,7 @@
                     tools:layout_editor_absoluteY="495dp" />
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/buttonUpdate"
+                    android:id="@+id/bt_update"
                     style="@style/Widget.AppCompat.Button.Borderless"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

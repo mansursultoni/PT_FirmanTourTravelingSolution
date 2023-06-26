@@ -77,7 +77,7 @@
                 android:textSize="16sp" />
 
             <EditText
-                android:id="@+id/editTextStatus"
+                android:id="@+id/et_status"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/txt2"
@@ -95,14 +95,14 @@
                 android:id="@+id/txt3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/editTextStatus"
+                android:layout_below="@id/et_status"
                 android:layout_marginHorizontal="20dp"
                 android:text="Nama"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
             <EditText
-                android:id="@+id/editTextNama"
+                android:id="@+id/et_namamobil"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/txt3"
@@ -120,14 +120,14 @@
                 android:id="@+id/txt4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/editTextNama"
+                android:layout_below="@id/et_namamobil"
                 android:layout_marginHorizontal="20dp"
                 android:text="Harga"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
             <EditText
-                android:id="@+id/editTextHarga"
+                android:id="@+id/et_harga"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/txt4"
@@ -145,14 +145,14 @@
                 android:id="@+id/txt5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/editTextHarga"
+                android:layout_below="@id/et_harga"
                 android:layout_marginHorizontal="20dp"
                 android:text="Deskripsi"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
             <EditText
-                android:id="@+id/editTextWarna"
+                android:id="@+id/et_warna"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/txt5"

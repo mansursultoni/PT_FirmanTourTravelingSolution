@@ -82,7 +82,6 @@ public class UserCheckout extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-
                 String id = TvID.getText().toString().trim();
                 String nama = TvNama.getText().toString().trim();
                 String nomor = TvTelpon.getText().toString().trim();

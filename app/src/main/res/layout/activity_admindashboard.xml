@@ -118,7 +118,7 @@
                     android:layout_gravity="center_vertical"/>
 
                 <TextView
-                    android:id="@+id/txt_jumlahMobil"
+                    android:id="@+id/tv_jumlahmobil"
                     android:layout_weight="2"
                     android:textColor="@color/white"
                     android:textStyle="bold"
@@ -163,7 +163,7 @@
                     android:layout_gravity="center_vertical"/>
 
                 <TextView
-                    android:id="@+id/txt_mobilDisewa"
+                    android:id="@+id/tv_mobildisewa"
                     android:layout_weight="2"
                     android:textColor="@color/white"
                     android:textStyle="bold"
@@ -253,7 +253,7 @@
                     android:layout_gravity="center_vertical"/>
 
                 <TextView
-                    android:id="@+id/txt_permintaanPesan"
+                    android:id="@+id/tv_permintaanpesan"
                     android:layout_weight="2"
                     android:textColor="@color/white"
                     android:textStyle="bold"
@@ -298,7 +298,7 @@
                     android:layout_gravity="center_vertical"/>
 
                 <TextView
-                    android:id="@+id/txt_jumlahUser"
+                    android:id="@+id/tv_jumlahuser"
                     android:layout_weight="2"
                     android:textColor="@color/white"
                     android:textStyle="bold"

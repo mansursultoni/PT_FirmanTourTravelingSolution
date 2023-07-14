@@ -33,16 +33,20 @@ import com.google.firebase.storage.StorageReference;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 public class UserDaftar extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     StorageReference storageReference;
-    TextInputEditText nama, nomor, tanggalLahir, jenisKelamin, alamat, password, password2;
-    TextView sebagai;
-    ImageButton kembali, editTanggal;
-    Button daftar;
+    TextInputEditText Nama, NomorTelepon, TanggalLahir, JenisKelamin, Alamat, Password, Password2;
+    TextView Sebagai;
+    ImageButton Kembali, Tanggal;
+    Button Daftar;
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+    String PASSWORD_PATTERN = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{6,}$";
+    Pattern pattern;
+
 
     int tahun, bulan, tanggal;
 
@@ -61,36 +65,36 @@ public class UserDaftar extends AppCompatActivity implements AdapterView.OnItemS
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
 
-        sebagai = findViewById(R.id.tv_user);
-        nama = findViewById(R.id.etNama);
-        nomor = findViewById(R.id.etNomor);
-        tanggalLahir = findViewById(R.id.etTanggalLahir);
-        jenisKelamin = findViewById(R.id.etJenisKelamin);
-        alamat = findViewById(R.id.etAlamat);
-        password = findViewById(R.id.etPassword);
-        password2 = findViewById(R.id.etPassword2);
-        editTanggal = findViewById(R.id.ibEditCalendar);
-        daftar = findViewById(R.id.btnDaftar);
-        kembali = findViewById(R.id.imgKembali);
+        Sebagai = findViewById(R.id.tv_user);
+        Nama = findViewById(R.id.etNama);
+        NomorTelepon = findViewById(R.id.etNomor);
+        TanggalLahir = findViewById(R.id.etTanggalLahir);
+        JenisKelamin = findViewById(R.id.etJenisKelamin);
+        Alamat = findViewById(R.id.etAlamat);
+        Password = findViewById(R.id.etPassword);
+        Password2 = findViewById(R.id.etPassword2);
+        Tanggal = findViewById(R.id.ibEditCalendar);
+        Daftar = findViewById(R.id.btnDaftar);
+        Kembali = findViewById(R.id.imgKembali);
 
         Intent intent = getIntent();
         if (intent!=null){
-            nama.setText(intent.getStringExtra("nama"));
-            nomor.setText(intent.getStringExtra("nomor"));
-            tanggalLahir.setText(intent.getStringExtra("tanggallahir"));
-            jenisKelamin.setText(intent.getStringExtra("jeniskelamin"));
-            alamat.setText(intent.getStringExtra("alamat"));
-            password.setText(intent.getStringExtra("password"));
+            Nama.setText(intent.getStringExtra("nama"));
+            NomorTelepon.setText(intent.getStringExtra("nomortelepon"));
+            TanggalLahir.setText(intent.getStringExtra("tanggallahir"));
+            JenisKelamin.setText(intent.getStringExtra("jeniskelamin"));
+            Alamat.setText(intent.getStringExtra("alamat"));
+            Password.setText(intent.getStringExtra("password"));
         }
 
-        kembali.setOnClickListener(new View.OnClickListener() {
+        Kembali.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(UserDaftar.this, ActivityLogin.class));
                 finish();
             }
         });
-        editTanggal.setOnClickListener(new View.OnClickListener() {
+        Tanggal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Calendar calendar = Calendar.getInstance();
@@ -106,75 +110,90 @@ public class UserDaftar extends AppCompatActivity implements AdapterView.OnItemS
                         bulan = month+1;
                         tanggal = dayOfMonth;
 
-                        tanggalLahir.setText(tanggal + " - " + bulan + " - " + tahun );
+                        TanggalLahir.setText(tanggal + " - " + bulan + " - " + tahun );
                     }
                 },tahun, bulan, tanggal);
                 dialog.show();
             }
         });
-        daftar.setOnClickListener(new View.OnClickListener() {
+
+        pattern = Pattern.compile(PASSWORD_PATTERN);
+
+        Daftar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String txtsebagai = sebagai.getText().toString();
-                String txtnama = nama.getText().toString();
-                String txtnomor = nomor.getText().toString();
-                String txttanggallahir = tanggalLahir.getText().toString();
-                String txtjeniskelamin = jenisKelamin.getText().toString();
-                String txtalamat = alamat.getText().toString();
-                String txtpassword = password.getText().toString();
-                String txtpassword2 = password2.getText().toString();
-
-                if (txtnama.isEmpty() || txtnomor.isEmpty() || txttanggallahir.isEmpty() || txtjeniskelamin.isEmpty() ||
-                        txtalamat.isEmpty() || txtpassword.isEmpty()){
-                    Toast.makeText(UserDaftar.this, "Data harus lengkap.", Toast.LENGTH_SHORT).show();
-                }else {
-                    databaseReference.child("Login").addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if (snapshot.hasChild(txtnomor)){
-                                Toast.makeText(UserDaftar.this, "Nomor telepon telah terdaftar.", Toast.LENGTH_SHORT).show();
-                            }else {
-                                if (!txtpassword2.equals(txtpassword)){
-                                    Toast.makeText(UserDaftar.this, "Masukkan ulang password.", Toast.LENGTH_SHORT).show();
-                                }else {
-                                    databaseReference.child("Login").child(txtnomor).setValue(new ModelUser(txtsebagai, txtnama, txtnomor, txttanggallahir, txtjeniskelamin, txtalamat, txtpassword)).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void unused) {
-                                            saveData(nama.getText().toString(),
-                                                    nomor.getText().toString(),
-                                                    tanggalLahir.getText().toString(),
-                                                    jenisKelamin.getText().toString(),
-                                                    alamat.getText().toString(),
-                                                    password.getText().toString());
-                                            Toast.makeText(UserDaftar.this, "Pendaftaran berhasil, silahkan login.", Toast.LENGTH_SHORT).show();
-                                        }
-                                    }).addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Toast.makeText(UserDaftar.this, "Gagal menyimpan data.", Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-                                }
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
-
-
-                }
+                String password = Password.getText().toString();
+                validatePassword(password);
             }
         });
 
 
     }
+
+    private void validatePassword(String password) {
+        if (pattern.matcher(password).matches()) {
+            // Password is valid
+            String txtsebagai = Sebagai.getText().toString();
+            String txtnama = Nama.getText().toString();
+            String txtnomor = NomorTelepon.getText().toString();
+            String txttanggallahir = TanggalLahir.getText().toString();
+            String txtjeniskelamin = JenisKelamin.getText().toString();
+            String txtalamat = Alamat.getText().toString();
+            String txtpassword = Password.getText().toString();
+            String txtpassword2 = Password2.getText().toString();
+
+            if (txtnama.isEmpty() || txtnomor.isEmpty() || txttanggallahir.isEmpty() || txtjeniskelamin.isEmpty() ||
+                    txtalamat.isEmpty() || txtpassword.isEmpty()){
+                Toast.makeText(UserDaftar.this, "Data harus lengkap.", Toast.LENGTH_SHORT).show();
+            }else {
+                databaseReference.child("Login").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.hasChild(txtnomor)){
+                            Toast.makeText(UserDaftar.this, "Nomor telepon telah terdaftar.", Toast.LENGTH_SHORT).show();
+                        }else {
+                            if (!txtpassword2.equals(txtpassword)){
+                                Toast.makeText(UserDaftar.this, "Masukkan ulang password.", Toast.LENGTH_SHORT).show();
+                            }else {
+                                databaseReference.child("Login").child(txtnomor).setValue(new ModelUser(txtsebagai, txtnama, txtnomor, txttanggallahir, txtjeniskelamin, txtalamat, txtpassword)).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        saveData(Nama.getText().toString(),
+                                                NomorTelepon.getText().toString(),
+                                                TanggalLahir.getText().toString(),
+                                                JenisKelamin.getText().toString(),
+                                                Alamat.getText().toString(),
+                                                Password.getText().toString());
+                                        Toast.makeText(UserDaftar.this, "Pendaftaran berhasil, silahkan login.", Toast.LENGTH_SHORT).show();
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(UserDaftar.this, "Gagal menyimpan data.", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+
+            }
+
+        } else {
+            // Password is invalid
+            Toast.makeText(this, "Password minimal 6 karakter dengan huruf besar, huruf kecil, dan angka.", Toast.LENGTH_LONG).show();
+        }
+    }
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String text = parent.getItemAtPosition(position).toString();
-        jenisKelamin.setText(text);
+        JenisKelamin.setText(text);
     }
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
@@ -183,7 +202,7 @@ public class UserDaftar extends AppCompatActivity implements AdapterView.OnItemS
     private void saveData(String nama, String nomor, String tanggallahir, String jeniskelamin, String alamat, String password){
         Map<String, Object> user = new HashMap<>();
         user.put("nama", nama);
-        user.put("nomor", nomor);
+        user.put("nomortelepon", nomor);
         user.put("tanggallahir", tanggallahir);
         user.put("jeniskelamin", jeniskelamin);
         user.put("alamat", alamat);

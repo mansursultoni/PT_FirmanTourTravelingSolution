@@ -46,10 +46,6 @@ public class UserRentalMobil extends AppCompatActivity {
     BottomNavigationView navigationView;
     TextView TvUser, TvNomorTelpon;
 
-
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

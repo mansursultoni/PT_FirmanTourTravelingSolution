@@ -46,10 +46,10 @@ public class AdminDashboard extends AppCompatActivity implements NavigationView.
 
 
         imageView = findViewById(R.id.ib_menuDrawer);
-        JumlahMobil = findViewById(R.id.txt_jumlahMobil);
-        JumlahUser = findViewById(R.id.txt_jumlahUser);
-        JumlahMobilSewa = findViewById(R.id.txt_mobilDisewa);
-        PermintaanPesan = findViewById(R.id.txt_permintaanPesan);
+        JumlahMobil = findViewById(R.id.tv_jumlahmobil);
+        JumlahUser = findViewById(R.id.tv_jumlahuser);
+        JumlahMobilSewa = findViewById(R.id.tv_mobildisewa);
+        PermintaanPesan = findViewById(R.id.tv_permintaanpesan);
         drawerLayout = findViewById(R.id.drawerLayout);
         navigationView = findViewById(R.id.nav_view);
 

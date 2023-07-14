@@ -28,6 +28,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.firmantour.travelingsolution.databinding.ActivityAdminrentalmobilBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
@@ -50,31 +51,35 @@ public class AdminRentalMobil extends AppCompatActivity implements NavigationVie
     DrawerLayout drawerLayout;
     NavigationView navigationView;
 
+    ActivityAdminrentalmobilBinding binding;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_adminrentalmobil);
+        binding = ActivityAdminrentalmobilBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
 
         Window window = this.getWindow();
         window.setStatusBarColor(this.getResources().getColor(R.color.blue));
 
-        imageView = findViewById(R.id.ib_menuDrawer);
+
         btnTambah = findViewById(R.id.btn_tambah);
         drawerLayout = findViewById(R.id.drawerLayout);
         navigationView = findViewById(R.id.nav_view);
         recyclerView = findViewById(R.id.recycler_view);
 
 
-        imageView.setOnClickListener(new View.OnClickListener() {
+        binding.ibMenuDrawer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // --- To open Drawer ---
                 drawerLayout.openDrawer(GravityCompat.START);
             }
         });
+
         btnTambah.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

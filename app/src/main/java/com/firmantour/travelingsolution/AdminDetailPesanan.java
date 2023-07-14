@@ -1,5 +1,7 @@
 package com.firmantour.travelingsolution;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -83,15 +85,12 @@ public class AdminDetailPesanan extends AppCompatActivity {
         BtHapus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String platnomor = TvPlatNomor.getText().toString();
-                firebaseFirestore.collection("RentalMobil").document(platnomor)
-                        .update("status","tersedia");
-
-                /*AlertDialog.Builder alertDialog = new AlertDialog.Builder(AdminDetailPesanan.this);
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(AdminDetailPesanan.this);
                 alertDialog.setTitle("Hapus Pesanan");
                 alertDialog.setPositiveButton("Ya", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+
                         hapusData();
                     }
                 });
@@ -101,7 +100,7 @@ public class AdminDetailPesanan extends AppCompatActivity {
                         dialog.dismiss();
                     }
                 });
-                alertDialog.show();*/
+                alertDialog.show();
             }
         });
         BtKonfirmasi.setOnClickListener(new View.OnClickListener() {
@@ -122,6 +121,8 @@ public class AdminDetailPesanan extends AppCompatActivity {
                 KirimData(id,nama,nomor,alamat,platnomor,namamerk,namamobil,warna,jumlahkursi,
                         tanggalsewa,tanggalkembali,totalharga);
 
+                firebaseFirestore.collection("RentalMobil").document(platnomor)
+                        .update("status","Tersedia");
                 kirimLaporan();
 
                 createPdf(TvNama.getText().toString(),

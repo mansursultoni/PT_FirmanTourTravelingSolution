@@ -27,8 +27,6 @@ public class LoginSesson {
         SharedPreferences.Editor editor = getSharedPreferences(context).edit();
         editor.putBoolean(DATA_LOGIN,status);
         editor.apply();
-
-        Log.d("FIREBASE", "Berhasil Login")
     }
 
     public static boolean getDataLogin(Context context){

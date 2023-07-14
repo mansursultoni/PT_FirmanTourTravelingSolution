@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "221229714457",
+    "project_id": "pt-firman-tour",
+    "storage_bucket": "pt-firman-tour.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:221229714457:android:5d314d74e265910d9d6e88",
+        "android_client_info": {
+          "package_name": "com.firmantour.travelingsolution"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "221229714457-6vfl1inv47aa6c25vvq3d38tahtdku29.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.firmantour.travelingsolution",
+            "certificate_hash": "8aa462477329ded4bb057b2ce1ef6db0d47eac12"
+          }
+        },
+        {
+          "client_id": "221229714457-86anelhlpot6e9lil6977nnov04n577v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCJ2OZTUvtRCv5ad_CEkRXOWpYTmhl5S0A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "221229714457-86anelhlpot6e9lil6977nnov04n577v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

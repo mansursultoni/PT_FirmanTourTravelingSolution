@@ -3,6 +3,7 @@ package com.firmantour.travelingsolution;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 public class LoginSesson {
     private static final String DATA_LOGIN = "status_login",
@@ -26,6 +27,8 @@ public class LoginSesson {
         SharedPreferences.Editor editor = getSharedPreferences(context).edit();
         editor.putBoolean(DATA_LOGIN,status);
         editor.apply();
+
+        Log.d("FIREBASE", "Berhasil Login")
     }
 
     public static boolean getDataLogin(Context context){

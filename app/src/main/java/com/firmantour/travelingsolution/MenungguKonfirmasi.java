@@ -156,10 +156,7 @@ public class MenungguKonfirmasi extends AppCompatActivity implements NavigationV
 //                startActivity(new Intent(Dashboard.this, MenungguKonfirmasi.class));
 //                finish();
                 return true;
-            case R.id.dataadmin:
-//                startActivity(new Intent(Dashboard.this, DataAdmin.class));
-//                finish();
-                return true;
+
             case R.id.datauser:
 //                startActivity(new Intent(DataUser.this, DataUser.class));
 //                finish();

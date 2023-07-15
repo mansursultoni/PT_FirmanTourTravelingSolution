@@ -5,14 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".AdminTambahWisata">
+    tools:context=".AdminDetailWisata">
 
     <LinearLayout
         android:id="@+id/relative2"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_alignParentTop="true"
-        android:background="@color/blue"
+        android:background="@drawable/gradient_blue3"
         android:orientation="horizontal"
         android:paddingHorizontal="16dp">
 
@@ -22,7 +22,7 @@
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_gravity="center_vertical"
-            android:background="@drawable/rounded_background_blue"
+            android:background="@color/transparant"
             android:src="@drawable/ic_back"
             android:textAllCaps="false"
             android:textColor="@color/white"
@@ -33,12 +33,13 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginHorizontal="8dp"
-            android:text="TAMBAH WISATA"
+            android:text="Detail Wisata"
             android:textAllCaps="true"
             android:textColor="@color/white"
             android:textSize="16sp"
             android:textStyle="bold"
             android:typeface="normal" />
+
 
 
     </LinearLayout>
@@ -63,6 +64,8 @@
                 android:background="@color/white"
                 android:cropToPadding="false"
                 android:scaleType="fitCenter"
+                android:scrollbarAlwaysDrawHorizontalTrack="true"
+                android:scrollbarAlwaysDrawVerticalTrack="false"
                 app:srcCompat="@drawable/ic_image" />
 
             <LinearLayout
@@ -145,6 +148,8 @@
 
                 </LinearLayout>
 
+
+
                 <LinearLayout
                     android:id="@+id/linearLayout7"
                     android:layout_width="match_parent"
@@ -174,7 +179,7 @@
                         android:drawablePadding="8dp"
                         android:editable="true"
                         android:gravity="left|center_vertical"
-                        android:hint="Harga"
+                        android:hint="Harga Wisata"
                         android:paddingHorizontal="16dp"
                         android:textColor="@color/black"
                         android:textColorHint="@color/grey" />
@@ -185,26 +190,42 @@
             <LinearLayout
                 android:id="@+id/layoutButton"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="60dp"
                 android:layout_below="@id/linearLayout"
-                android:layout_marginVertical="16dp"
+                android:layout_marginVertical="10dp"
                 android:orientation="horizontal"
                 android:paddingHorizontal="16dp">
 
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/bt_delete"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_background_red"
+                    android:text="Hapus"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    tools:layout_editor_absoluteX="70dp"
+                    tools:layout_editor_absoluteY="495dp" />
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/bt_update"
                     style="@style/Widget.AppCompat.Button.Borderless"
-                    android:layout_width="200dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="16dp"
+                    android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:background="@drawable/rounded_background_blue"
-                    android:text="Simpan"
+                    android:text="Simpan Perubahan"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    tools:layout_editor_absoluteX="70dp"
+                    tools:layout_editor_absoluteY="495dp" />
 
             </LinearLayout>
 

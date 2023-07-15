@@ -126,10 +126,7 @@ public class AdminDataUser extends AppCompatActivity implements NavigationView.O
 //                startActivity(new Intent(Dashboard.this, MenungguKonfirmasi.class));
 //                finish();
                 return true;
-            case R.id.dataadmin:
-//                startActivity(new Intent(Dashboard.this, DataAdmin.class));
-//                finish();
-                return true;
+
             case R.id.datauser:
 //                startActivity(new Intent(DataUser.this, DataUser.class));
 //                finish();

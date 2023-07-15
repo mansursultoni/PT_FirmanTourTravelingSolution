@@ -85,7 +85,7 @@
         android:layout_below="@id/relative2"
         android:background="@drawable/rounded_top_white"
         android:padding="16dp"
-        tools:listitem="@layout/item_produk" />
+        tools:listitem="@layout/item_mobil" />
 
     <ProgressBar
         android:id="@+id/progressBar"

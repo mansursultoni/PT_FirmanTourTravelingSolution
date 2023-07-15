@@ -128,7 +128,7 @@ public class UserRentalMobil extends AppCompatActivity {
             @NonNull
             @Override
             public ProdukHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_produk, parent, false);
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_mobil, parent, false);
                 return new ProdukHolder(view);
             }
 

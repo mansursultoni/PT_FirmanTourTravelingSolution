@@ -9,6 +9,10 @@
         android:icon="@drawable/ic_mobil"
         android:title="Rental Mobil"/>
     <item
+        android:id="@+id/paketwisata"
+        android:icon="@drawable/ic_mobil"
+        android:title="Paket Wisata"/>
+    <item
         android:id="@+id/mobildisewa"
         android:icon="@drawable/ic_wisata"
         android:title="Mobil Disewa" />
@@ -16,10 +20,6 @@
         android:id="@+id/menunggukonfirmasi"
         android:icon="@drawable/ic_konfirmasi"
         android:title="Menunggu Konfirmasi"/>
-    <item
-        android:id="@+id/dataadmin"
-        android:icon="@drawable/ic_person"
-        android:title="Data Admin"/>
     <item
         android:id="@+id/datauser"
         android:icon="@drawable/ic_users"

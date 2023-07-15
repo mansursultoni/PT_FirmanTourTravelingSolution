@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/gradient_blue"
     android:fitsSystemWindows="true"
-    tools:context=".AdminRentalMobil"
+    tools:context=".AdminPaketWisata"
     tools:openDrawer="start">
 
     <com.google.android.material.navigation.NavigationView
@@ -37,7 +37,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="25dp"
                 android:gravity="center_horizontal"
-                android:text="RENTAL MOBIL"
+                android:text="PAKET WISATA"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold" />

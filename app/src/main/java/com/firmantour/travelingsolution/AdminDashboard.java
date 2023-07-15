@@ -82,16 +82,16 @@ public class AdminDashboard extends AppCompatActivity implements NavigationView.
                 startActivity(new Intent(AdminDashboard.this, AdminRentalMobil.class));
                 finish();
                 return true;
+            case R.id.paketwisata:
+                startActivity(new Intent(AdminDashboard.this, AdminPaketWisata.class));
+                finish();
+                return true;
             case R.id.mobildisewa:
 
                 return true;
             case R.id.menunggukonfirmasi:
                 startActivity(new Intent(AdminDashboard.this, MenungguKonfirmasi.class));
                 finish();
-                return true;
-            case R.id.dataadmin:
-//                startActivity(new Intent(Dashboard.this, DataAdmin.class));
-//                finish();
                 return true;
             case R.id.datauser:
                 startActivity(new Intent(AdminDashboard.this, AdminDataUser.class));

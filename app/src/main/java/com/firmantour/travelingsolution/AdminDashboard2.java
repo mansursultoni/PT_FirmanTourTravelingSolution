@@ -20,7 +20,12 @@ import android.view.Window;
 import android.widget.Toast;
 
 import com.firmantour.travelingsolution.adminfragment.ADashboard;
+import com.firmantour.travelingsolution.adminfragment.ADataUser;
+import com.firmantour.travelingsolution.adminfragment.ALaporan;
+import com.firmantour.travelingsolution.adminfragment.AMenungguKonfirmasi;
+import com.firmantour.travelingsolution.adminfragment.AMobilDisewa;
 import com.firmantour.travelingsolution.adminfragment.APaketWisata;
+import com.firmantour.travelingsolution.adminfragment.APengaturan;
 import com.firmantour.travelingsolution.adminfragment.ARentalMobil;
 import com.firmantour.travelingsolution.databinding.ActivityAdminDashboard2Binding;
 import com.google.android.material.navigation.NavigationView;
@@ -76,27 +81,27 @@ public class AdminDashboard2 extends AppCompatActivity implements NavigationView
                 closeDrawer();
                 return true;
             case R.id.mobildisewa:
-                Fragment aMobilDisewa = new APaketWisata();
+                Fragment aMobilDisewa = new AMobilDisewa();
                 replaceFragment(aMobilDisewa);
                 closeDrawer();
                 return true;
             case R.id.menunggukonfirmasi:
-                Fragment aMenungguKonfirmasi = new APaketWisata();
+                Fragment aMenungguKonfirmasi = new AMenungguKonfirmasi();
                 replaceFragment(aMenungguKonfirmasi);
                 closeDrawer();
                 return true;
             case R.id.datauser:
-                Fragment aDatUser = new APaketWisata();
+                Fragment aDatUser = new ADataUser();
                 replaceFragment(aDatUser);
                 closeDrawer();
                 return true;
             case R.id.setting:
-                Fragment aPengaturan = new APaketWisata();
+                Fragment aPengaturan = new APengaturan();
                 replaceFragment(aPengaturan);
                 closeDrawer();
                 return true;
             case R.id.laporan:
-                Fragment aLaporan = new APaketWisata();
+                Fragment aLaporan = new ALaporan();
                 replaceFragment(aLaporan);
                 closeDrawer();
                 return true;

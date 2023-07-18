@@ -34,6 +34,7 @@
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold" />
+
         <TextView
             android:id="@+id/tv_nomorTelpon"
             android:layout_width="wrap_content"
@@ -43,7 +44,8 @@
             android:text="Nomor"
             android:textColor="@color/white"
             android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:visibility="invisible" />
 
 
         <TextView

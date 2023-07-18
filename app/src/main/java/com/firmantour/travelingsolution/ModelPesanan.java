@@ -1,16 +1,20 @@
 package com.firmantour.travelingsolution;
 
 public class ModelPesanan {
-    String key, nama, nomor, alamat, platnomor, namamerk, namamobil, warna, jumlahkursi, tanggalsewa, tanggalkembali, totalharga;
+    String key, nama, nomortelepon, alamat, platnomor, namamerk, namamobil, warna, jumlahkursi, tanggalsewa,
+            tanggalkembali, totalharga, foto , statuspesanan;
 
     public ModelPesanan(){
 
     }
 
-    public ModelPesanan(String key, String nama, String nomor, String alamat, String platnomor, String namamerk, String namamobil, String warna, String jumlahkursi, String tanggalsewa, String tanggalkembali, String totalharga) {
+    public ModelPesanan(String foto,  String key, String nama, String nomortelepon, String alamat, String platnomor, String namamerk,
+                        String namamobil, String warna, String jumlahkursi, String tanggalsewa, String tanggalkembali,
+                        String totalharga, String statuspesanan) {
+        this.foto = foto;
         this.key = key;
         this.nama = nama;
-        this.nomor = nomor;
+        this.nomortelepon = nomortelepon;
         this.alamat = alamat;
         this.platnomor = platnomor;
         this.namamerk = namamerk;
@@ -20,6 +24,7 @@ public class ModelPesanan {
         this.tanggalsewa = tanggalsewa;
         this.tanggalkembali = tanggalkembali;
         this.totalharga = totalharga;
+        this.statuspesanan = statuspesanan;
     }
 
     public String getKey() {
@@ -38,12 +43,12 @@ public class ModelPesanan {
         this.nama = nama;
     }
 
-    public String getNomor() {
-        return nomor;
+    public String getNomortelepon() {
+        return nomortelepon;
     }
 
-    public void setNomor(String nomor) {
-        this.nomor = nomor;
+    public void setNomortelepon(String nomortelepon) {
+        this.nomortelepon = nomortelepon;
     }
 
     public String getAlamat() {
@@ -116,5 +121,13 @@ public class ModelPesanan {
 
     public void setTotalharga(String totalharga) {
         this.totalharga = totalharga;
+    }
+
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
     }
 }

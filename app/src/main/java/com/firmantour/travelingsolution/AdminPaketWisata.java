@@ -6,7 +6,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -28,8 +27,6 @@ import android.widget.TextView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.firmantour.travelingsolution.databinding.ActivityAdminPaketWisataBinding;
-import com.firmantour.travelingsolution.databinding.ActivityAdminrentalmobilBinding;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -62,10 +59,10 @@ public class AdminPaketWisata extends AppCompatActivity  implements NavigationVi
         window.setStatusBarColor(this.getResources().getColor(R.color.blue));
 
 
-        IbMenu = findViewById(R.id.ib_menuDrawer);
+        IbMenu = findViewById(R.id.ibMenuDrawer);
         btnTambah = findViewById(R.id.btn_tambah);
         drawerLayout = findViewById(R.id.drawerLayout);
-        navigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.navigationDrawer);
         recyclerView = findViewById(R.id.recycler_view);
 
 

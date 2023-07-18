@@ -56,9 +56,9 @@ public class AdminDataUser extends AppCompatActivity implements NavigationView.O
         Window window = this.getWindow();
         window.setStatusBarColor(this.getResources().getColor(R.color.blue));
 
-        imageView = findViewById(R.id.ib_menuDrawer);
+        imageView = findViewById(R.id.ibMenuDrawer);
         drawerLayout = findViewById(R.id.drawerLayout);
-        navigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.navigationDrawer);
 
         navigationView.bringToFront();
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout,R.string.open,R.string.close);

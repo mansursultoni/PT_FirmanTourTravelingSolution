@@ -45,13 +45,13 @@ public class AdminDashboard extends AppCompatActivity implements NavigationView.
         window.setStatusBarColor(this.getResources().getColor(R.color.blue));
 
 
-        imageView = findViewById(R.id.ib_menuDrawer);
+        imageView = findViewById(R.id.ibMenuDrawer);
         JumlahMobil = findViewById(R.id.tv_jumlahmobil);
         JumlahUser = findViewById(R.id.tv_jumlahuser);
         JumlahMobilSewa = findViewById(R.id.tv_mobildisewa);
         PermintaanPesan = findViewById(R.id.tv_permintaanpesan);
         drawerLayout = findViewById(R.id.drawerLayout);
-        navigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.navigationDrawer);
 
         navigationView.bringToFront();
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout,R.string.open,R.string.close);

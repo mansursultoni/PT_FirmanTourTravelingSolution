@@ -138,7 +138,7 @@ public class UserDetaillMobil extends AppCompatActivity {
                                 EtMerk.setText(document.getString("namamerk"));
                                 EtNama.setText(document.getString("namamobil"));
                                 EtWarna.setText(document.getString("warna"));
-                                EtJumlahKursi.setText(document.getString("kursi"));
+                                EtJumlahKursi.setText(document.getString("jumlahkursi"));
                                 EtHarga.setText(document.getString("harga"));
                                 fotoUrl = document.getString("foto");
                                 if (fotoUrl != "") {

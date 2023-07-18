@@ -49,9 +49,9 @@ public class MenungguKonfirmasi extends AppCompatActivity implements NavigationV
         Window window = this.getWindow();
         window.setStatusBarColor(this.getResources().getColor(R.color.blue));
 
-        imageView = findViewById(R.id.ib_menuDrawer);
+        imageView = findViewById(R.id.ibMenuDrawer);
         drawerLayout = findViewById(R.id.drawerLayout);
-        navigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.navigationDrawer);
 
         navigationView.bringToFront();
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout,R.string.open,R.string.close);
@@ -86,7 +86,7 @@ public class MenungguKonfirmasi extends AppCompatActivity implements NavigationV
         }
     }
     private void getData(){
-        Query query = db.collection("PesananBelumSelesai");
+        Query query = db.collection("Pemesanan").whereEqualTo("statuspesanan","Belum Selesai");
         FirestoreRecyclerOptions<ModelPesanan> response = new FirestoreRecyclerOptions.Builder<ModelPesanan>()
                 .setQuery(query, ModelPesanan.class).build();
         adapter = new FirestoreRecyclerAdapter<ModelPesanan, ProdukHolder>(response) {
@@ -100,7 +100,7 @@ public class MenungguKonfirmasi extends AppCompatActivity implements NavigationV
             @Override
             protected void onBindViewHolder(@NonNull ProdukHolder holder, int position, @NonNull final ModelPesanan model) {
                 holder.nama.setText(model.getNama());
-                holder.nomor.setText(model.getNomor());
+                holder.nomor.setText(model.getNomortelepon());
                 holder.key.setText(model.getKey());
                 holder.namamobil.setText(model.getNamamobil());
                 holder.platnomor.setText(model.getPlatnomor());
@@ -147,6 +147,10 @@ public class MenungguKonfirmasi extends AppCompatActivity implements NavigationV
                 return true;
             case R.id.rentalmobil:
                 startActivity(new Intent(MenungguKonfirmasi.this, AdminRentalMobil.class));
+                finish();
+                return true;
+            case R.id.paketwisata:
+                startActivity(new Intent(MenungguKonfirmasi.this, AdminPaketWisata.class));
                 finish();
                 return true;
             case R.id.mobildisewa:

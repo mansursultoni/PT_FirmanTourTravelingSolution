@@ -29,6 +29,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.firmantour.travelingsolution.model.ModelMobil;
+import com.firmantour.travelingsolution.model.ModelUser;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
@@ -64,7 +66,7 @@ public class AdminRentalMobil extends AppCompatActivity implements NavigationVie
         window.setStatusBarColor(this.getResources().getColor(R.color.blue));
 
         IbMenu  = findViewById(R.id.ibMenuDrawer);
-        btnTambah = findViewById(R.id.btn_tambah);
+        btnTambah = findViewById(R.id.btnTambahMobil);
         drawerLayout = findViewById(R.id.drawerLayout);
         navigationView = findViewById(R.id.navigationDrawer);
         recyclerView = findViewById(R.id.recycler_view);

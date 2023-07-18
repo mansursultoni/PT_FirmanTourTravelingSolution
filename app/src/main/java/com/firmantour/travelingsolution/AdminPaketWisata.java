@@ -27,6 +27,8 @@ import android.widget.TextView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.firmantour.travelingsolution.model.ModelUser;
+import com.firmantour.travelingsolution.model.ModelWisata;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -60,7 +62,7 @@ public class AdminPaketWisata extends AppCompatActivity  implements NavigationVi
 
 
         IbMenu = findViewById(R.id.ibMenuDrawer);
-        btnTambah = findViewById(R.id.btn_tambah);
+        btnTambah = findViewById(R.id.btnTambahMobil);
         drawerLayout = findViewById(R.id.drawerLayout);
         navigationView = findViewById(R.id.navigationDrawer);
         recyclerView = findViewById(R.id.recycler_view);

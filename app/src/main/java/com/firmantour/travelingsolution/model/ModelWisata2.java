@@ -1,4 +1,4 @@
-package com.firmantour.travelingsolution;
+package com.firmantour.travelingsolution.model;
 
 public class ModelWisata2 {
     private String kodewisata, namawisata, harga;

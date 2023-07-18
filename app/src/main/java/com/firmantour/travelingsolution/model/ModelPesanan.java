@@ -1,4 +1,4 @@
-package com.firmantour.travelingsolution;
+package com.firmantour.travelingsolution.model;
 
 public class ModelPesanan {
     String key, nama, nomortelepon, alamat, platnomor, namamerk, namamobil, warna, jumlahkursi, tanggalsewa,

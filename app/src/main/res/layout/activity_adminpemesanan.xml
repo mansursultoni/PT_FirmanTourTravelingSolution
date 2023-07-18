@@ -70,7 +70,7 @@
                 android:textSize="20sp"
                 android:textStyle="bold" />
             <ImageButton
-                android:id="@+id/btn_tambah"
+                android:id="@+id/btnTambahMobil"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginRight="30dp"

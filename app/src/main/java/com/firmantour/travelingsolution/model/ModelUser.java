@@ -1,4 +1,4 @@
-package com.firmantour.travelingsolution;
+package com.firmantour.travelingsolution.model;
 
 public class ModelUser {
     private String sebagai, nama, nomor, tanggallahir, jeniskelamin, alamat, password;

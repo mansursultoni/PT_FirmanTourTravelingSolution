@@ -1,4 +1,4 @@
-package com.firmantour.travelingsolution;
+package com.firmantour.travelingsolution.model;
 
 public class ModelMobil2 {
     private String platnomor, namamerk, namamobil, warna, jumlahkursi, harga;

@@ -17,7 +17,7 @@
             android:background="@drawable/gradient_blue">
 
             <ImageButton
-                android:id="@+id/btn_tambah"
+                android:id="@+id/btnTambahMobil"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginRight="30dp"
@@ -39,12 +39,13 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="25dp"/>
+
             <ImageView
                 android:id="@+id/imageView"
-                android:src="@drawable/ic_logomobil"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_centerInParent="true"/>
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_logomobil" />
 
         </RelativeLayout>
 

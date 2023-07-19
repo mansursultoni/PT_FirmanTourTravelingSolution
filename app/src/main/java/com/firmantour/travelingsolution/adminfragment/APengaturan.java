@@ -3,7 +3,6 @@ package com.firmantour.travelingsolution.adminfragment;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -16,17 +15,27 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.firmantour.travelingsolution.Adapter;
+import com.firmantour.travelingsolution.AdminDetailMobil;
 import com.firmantour.travelingsolution.R;
 import com.firmantour.travelingsolution.databinding.FragmentAPengaturanBinding;
 import com.firmantour.travelingsolution.model.ModelAdmin;
+import com.firmantour.travelingsolution.model.ModelRekening;
 import com.firmantour.travelingsolution.model.ModelUser;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +43,7 @@ import java.util.List;
 public class APengaturan extends Fragment {
 
     private FragmentAPengaturanBinding binding;
-    private FirebaseFirestore firebaseFirestore;
+    private FirebaseFirestore db;
     private FirestoreRecyclerAdapter adapter;
     private Adapter adapterAdmin;
     private List<ModelUser> list = new ArrayList<>();
@@ -64,7 +73,7 @@ public class APengaturan extends Fragment {
         binding = FragmentAPengaturanBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-        firebaseFirestore = FirebaseFirestore.getInstance();
+        db = FirebaseFirestore.getInstance();
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         RecyclerView.ItemDecoration decoration = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
@@ -105,8 +114,25 @@ public class APengaturan extends Fragment {
         fragmentTransaction.replace(R.id.frame_layout, fragment);
         fragmentTransaction.commit();
     }
-    private void getData() {
-        Query query = firebaseFirestore.collection("Admin");
+    private void getDataRekening() {
+        db.collection("AkunBank")
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                binding.etNamaBank.setText(document.getString("namabank"));
+                                binding.etRekening.setText(document.getString("nomorrekening"));
+                                binding.etAtasNama.setText(document.getString("atasnama"));
+                            }
+                        } else {
+                            Toast.makeText(getContext(), "Gagal memuat data.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+    private void getDataAnggota() {
+        Query query = db.collection("Admin");
         FirestoreRecyclerOptions<ModelAdmin> response = new FirestoreRecyclerOptions.Builder<ModelAdmin>()
                 .setQuery(query, ModelAdmin.class).build();
         adapter = new FirestoreRecyclerAdapter<ModelAdmin, ProdukHolder>(response) {
@@ -145,7 +171,8 @@ public class APengaturan extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        getData();
+        getDataAnggota();
+        getDataRekening();
     }
 
     @Override

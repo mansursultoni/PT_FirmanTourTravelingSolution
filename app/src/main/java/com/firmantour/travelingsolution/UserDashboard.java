@@ -22,9 +22,15 @@ import com.firmantour.travelingsolution.adminfragment.APaketWisata;
 import com.firmantour.travelingsolution.adminfragment.APengaturan;
 import com.firmantour.travelingsolution.adminfragment.ARentalMobil;
 import com.firmantour.travelingsolution.databinding.ActivityUserDashboardBinding;
+import com.firmantour.travelingsolution.userfragment.UPaketWisata;
+import com.firmantour.travelingsolution.userfragment.UPemesanan;
+import com.firmantour.travelingsolution.userfragment.UPengaturan;
+import com.firmantour.travelingsolution.userfragment.URentalMobil;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
 
-public class UserDashboard extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class UserDashboard extends AppCompatActivity{
 
     private ActivityUserDashboardBinding binding;
 
@@ -37,31 +43,37 @@ public class UserDashboard extends AppCompatActivity implements NavigationView.O
         Window window = this.getWindow();
         window.setStatusBarColor(this.getResources().getColor(R.color.blue));
 
+        Fragment uRentalMobil = new URentalMobil();
+        replaceFragment(uRentalMobil);
+
+        binding.bottomNavigation.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id = item.getItemId();
+                switch (id){
+                    case R.id.rentalMobil:
+                        Fragment uRentalMobil = new URentalMobil();
+                        replaceFragment(uRentalMobil);
+                        return true;
+                    case R.id.paketWisata:
+                        Fragment uPaketWisata = new UPaketWisata();
+                        replaceFragment(uPaketWisata);
+                        return true;
+                    case R.id.pemesanan:
+                        Fragment uPemesanan = new UPemesanan();
+                        replaceFragment(uPemesanan);
+                        return true;
+                    case R.id.pengaturan:
+                        Fragment uPengaturan = new UPengaturan();
+                        replaceFragment(uPengaturan);
+                        return true;
+                }
+                return false;
+            }
+        });
+
     }
 
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
-        switch (id){
-            case R.id.rentalMobil:
-                Fragment aDashboard = new ADashboard();
-                replaceFragment(aDashboard);
-                return true;
-            case R.id.paketWisata:
-                Fragment aRentalMobil = new ARentalMobil();
-                replaceFragment(aRentalMobil);
-                return true;
-            case R.id.pemesanan:
-                Fragment aPaketWisata = new APaketWisata();
-                replaceFragment(aPaketWisata);
-                return true;
-            case R.id.pengaturan:
-                Fragment aMobilDisewa = new AMobilDisewa();
-                replaceFragment(aMobilDisewa);
-                return true;
-        }
-        return false;
-    }
     private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

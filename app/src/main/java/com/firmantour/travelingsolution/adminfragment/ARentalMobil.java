@@ -140,19 +140,19 @@ public class ARentalMobil extends Fragment {
         }
     }
     @Override
-    public void onStart() {
-        super.onStart();
-        getData();
-//        adapter.startListening();
-    }
-    @Override
-    public void onResume() {
-        super.onResume();
-        adapter.startListening();
-    }
-    @Override
-    public void onStop() {
-        super.onStop();
-        adapter.stopListening();
-    }
+        public void onStart() {
+            super.onStart();
+            getData();
+    //        adapter.startListening();
+        }
+        @Override
+        public void onResume() {
+            super.onResume();
+            adapter.startListening();
+        }
+        @Override
+        public void onStop() {
+            super.onStop();
+            adapter.stopListening();
+        }
 }

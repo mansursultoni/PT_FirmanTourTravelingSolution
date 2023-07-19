@@ -142,4 +142,10 @@ public class AdminDashboard2 extends AppCompatActivity implements NavigationView
     private void Logout(){
         LoginSesson.clearData(this);
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+    }
 }

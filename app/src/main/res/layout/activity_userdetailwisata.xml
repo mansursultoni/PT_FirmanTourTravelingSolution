@@ -9,7 +9,7 @@
 
 
     <LinearLayout
-        android:id="@+id/relative2"
+        android:id="@+id/linearLay1"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="@color/blue"
@@ -48,8 +48,8 @@
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/relative2"
-        app:layout_constraintTop_toBottomOf="@+id/relative2">
+        android:layout_below="@+id/linearLay1"
+        app:layout_constraintTop_toBottomOf="@+id/linearLay1">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -182,6 +182,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/relative2" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLay1" />
 
 </RelativeLayout>

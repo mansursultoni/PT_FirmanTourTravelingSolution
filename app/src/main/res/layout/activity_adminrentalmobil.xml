@@ -27,7 +27,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="250dp"
-            app:layout_constraintBottom_toTopOf="@+id/relative2"
+            app:layout_constraintBottom_toTopOf="@+id/linearLay1"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
@@ -88,7 +88,7 @@
 
 
         <RelativeLayout
-            android:id="@+id/relative2"
+            android:id="@+id/linearLay1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="250dp"

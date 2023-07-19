@@ -9,7 +9,7 @@
 
 
     <RelativeLayout
-        android:id="@+id/relative2"
+        android:id="@+id/linearLay1"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="@color/blue"
@@ -55,7 +55,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/relative2"
+        app:layout_constraintTop_toBottomOf="@+id/linearLay1"
         app:layout_constraintVertical_bias="0.0" />
 
     <ProgressBar

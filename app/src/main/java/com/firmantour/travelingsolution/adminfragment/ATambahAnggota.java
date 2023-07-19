@@ -124,6 +124,11 @@ public class ATambahAnggota extends Fragment {
                         }else{
                         }
                     }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getContext(), "Gagal Menyimpan data.", Toast.LENGTH_SHORT).show();
+                    }
                 });
     }
     private void validatePassword(String password){

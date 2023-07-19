@@ -2,20 +2,42 @@ package com.firmantour.travelingsolution.adminfragment;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.firmantour.travelingsolution.Adapter;
 import com.firmantour.travelingsolution.R;
 import com.firmantour.travelingsolution.databinding.FragmentAPengaturanBinding;
+import com.firmantour.travelingsolution.model.ModelAdmin;
+import com.firmantour.travelingsolution.model.ModelUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class APengaturan extends Fragment {
 
     private FragmentAPengaturanBinding binding;
+    private FirebaseFirestore firebaseFirestore;
+    private FirestoreRecyclerAdapter adapter;
+    private Adapter adapterAdmin;
+    private List<ModelUser> list = new ArrayList<>();
 
     public APengaturan() {
         // Required empty public constructor
@@ -41,6 +63,14 @@ public class APengaturan extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentAPengaturanBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+
+        firebaseFirestore = FirebaseFirestore.getInstance();
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        RecyclerView.ItemDecoration decoration = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
+        binding.recyclerView.setLayoutManager(layoutManager);
+        binding.recyclerView.addItemDecoration(decoration);
+        binding.recyclerView.setAdapter(adapterAdmin);
 
         binding.btnUbahAdmin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,5 +104,59 @@ public class APengaturan extends Fragment {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frame_layout, fragment);
         fragmentTransaction.commit();
+    }
+    private void getData() {
+        Query query = firebaseFirestore.collection("Admin");
+        FirestoreRecyclerOptions<ModelAdmin> response = new FirestoreRecyclerOptions.Builder<ModelAdmin>()
+                .setQuery(query, ModelAdmin.class).build();
+        adapter = new FirestoreRecyclerAdapter<ModelAdmin, ProdukHolder>(response) {
+            @NonNull
+            @Override
+            public ProdukHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_admin, parent, false);
+                return new ProdukHolder(view);
+            }
+
+            @Override
+            public void onError(@NonNull FirebaseFirestoreException e) {
+                Log.e("Ditemukan Error: ", e.getMessage());
+            }
+
+            @Override
+            protected void onBindViewHolder(@NonNull ProdukHolder holder, int position, @NonNull ModelAdmin model) {
+                holder.namaAdmin.setText(model.getNamaadmin());
+                holder.nomorTelepon.setText(model.getNomortelepon());
+            }
+
+
+        };
+        adapter.notifyDataSetChanged();
+        binding.recyclerView.setAdapter(adapter);
+    }
+    private class ProdukHolder extends RecyclerView.ViewHolder {
+        TextView namaAdmin, nomorTelepon;
+
+        public ProdukHolder(@NonNull View itemView) {
+            super(itemView);
+            namaAdmin = itemView.findViewById(R.id.textViewNama);
+            nomorTelepon = itemView.findViewById(R.id.textViewNomor);
+        }
+    }
+    @Override
+    public void onStart() {
+        super.onStart();
+        getData();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        adapter.startListening();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        adapter.stopListening();
     }
 }

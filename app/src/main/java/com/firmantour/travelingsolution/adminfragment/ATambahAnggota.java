@@ -154,6 +154,8 @@ public class ATambahAnggota extends Fragment {
                                                         binding.etNomorTelepon.getText().toString(),
                                                         binding.etPassword.getText().toString());
                                                 Toast.makeText(getContext(), "Anggota Admin Berhasil Ditambah..", Toast.LENGTH_SHORT).show();
+                                                Fragment aPengaturan = new APengaturan();
+                                                replaceFragment(aPengaturan);
                                             }
                                         }).addOnFailureListener(new OnFailureListener() {
                                             @Override

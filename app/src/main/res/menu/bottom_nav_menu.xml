@@ -3,21 +3,25 @@
     <item
         android:id="@+id/rentalMobil"
         android:icon="@drawable/ic_mobil"
+        android:iconTint="@color/blue"
         android:title="Rental Mobil"
         android:visible="true" />
     <item
         android:id="@+id/paketWisata"
         android:icon="@drawable/ic_wisata"
         android:title="Paket Wisata"
+        android:iconTint="@color/blue"
         android:visible="true" />
     <item
         android:id="@+id/pemesanan"
         android:icon="@drawable/ic_konfirmasi"
+        android:iconTint="@color/blue"
         android:title="Pemesanan"
         android:visible="true" />
     <item
         android:id="@+id/pengaturan"
         android:icon="@drawable/ic_pengaturan"
         android:title="Pengaturan"
+        android:iconTint="@color/blue"
         android:visible="true" />
 </menu>

@@ -16,6 +16,9 @@
         android:theme="@style/Theme.PTFIRMANTOURTRAVELINGSOLUTION"
         tools:targetApi="31">
         <activity
+            android:name=".AdminDashboard2"
+            android:exported="false" />
+        <activity
             android:name=".PengaturanAdmin"
             android:exported="false" />
         <activity
@@ -86,7 +89,7 @@
             android:name=".AdminRentalMobil"
             android:exported="false" />
         <activity
-            android:name=".AdminDashboard2"
+            android:name=".UserDashboard"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

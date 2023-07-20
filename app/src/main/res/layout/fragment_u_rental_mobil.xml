@@ -10,7 +10,7 @@
         android:layout_height="match_parent">
 
         <RelativeLayout
-            android:id="@+id/linearLay1"
+            android:id="@+id/relativeLay1"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:background="@drawable/background_blue_botcurved">
@@ -75,7 +75,7 @@
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/linearLay1"
+            android:layout_below="@id/relativeLay1"
             android:padding="16dp"
             tools:listitem="@layout/item_mobil" />
 

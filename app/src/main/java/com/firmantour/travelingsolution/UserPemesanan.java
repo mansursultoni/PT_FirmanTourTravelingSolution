@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -55,6 +56,9 @@ public class UserPemesanan extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_userpemesanan);
 
+        Window window = this.getWindow();
+        window.setStatusBarColor(this.getResources().getColor(R.color.blue));
+
         TvID = findViewById(R.id.tv_id);
         TvNama = findViewById(R.id.tv_nama);
         TvNomorTelpon = findViewById(R.id.tv_telepon);
@@ -78,21 +82,10 @@ public class UserPemesanan extends AppCompatActivity {
         Intent intent = getIntent();
 
         if (intent!=null){
-            String notelpon = intent.getStringExtra("notlep");
-            String pltnomor = intent.getStringExtra("pltnomor");
+            String notelpon = intent.getStringExtra("nomortelepon");
+            String pltnomor = intent.getStringExtra("platnomor");
             TvNomorTelpon.setText(notelpon);
             TvPlatNomor.setText(pltnomor);
-            /*TvNama.setText(intent.getStringExtra("nama"));
-            TvNomorTelpon.setText(intent.getStringExtra("nomor"));
-            TvAlamat.setText(intent.getStringExtra("alamat"));
-            TvPlatNomor.setText(intent.getStringExtra("platnomor"));
-            TvNamaMerk.setText(intent.getStringExtra("namamerk"));
-            TvNamaMobil.setText(intent.getStringExtra("namamobil"));
-            TvWarna.setText(intent.getStringExtra("warna"));
-            TvJumlahKursi.setText(intent.getStringExtra("jumlahkursi"));
-            EtTanggalSewa.setText(intent.getStringExtra("tanggalsewa"));
-            EtTanggalKembali.setText(intent.getStringExtra("tanggalkembali"));
-            TvHarga.setText(intent.getStringExtra("harga"));*/
         }
 
 

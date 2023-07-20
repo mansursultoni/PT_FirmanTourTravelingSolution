@@ -7,7 +7,7 @@
     tools:context=".PengaturanAdmin">
 
     <LinearLayout
-        android:id="@+id/linearLay1"
+        android:id="@+id/relativeLay1"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_alignParentTop="true"
@@ -44,7 +44,7 @@
 
     <FrameLayout
         android:id="@+id/frame_layout"
-        android:layout_below="@id/linearLay1"
+        android:layout_below="@id/relativeLay1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

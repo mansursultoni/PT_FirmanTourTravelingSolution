@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient_blue"
+    android:background="@color/white"
     tools:context=".UserPemesanan">
 
     <RelativeLayout
-        android:id="@+id/linearLay1"
+        android:id="@+id/relativeLay1"
         android:layout_width="match_parent"
         android:layout_height="200dp"
+        android:background="@drawable/background_blue_botcurved"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
@@ -50,17 +51,6 @@
                 android:textColor="@color/white"
                 android:textSize="18sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_toEndOf="@id/ib_back"
-                android:text="Kembali"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:typeface="normal" />
 
             <TextView
                 android:id="@+id/tv_jumlahHari"
@@ -100,7 +90,7 @@
         android:id="@+id/layoutTolbar2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/linearLay1"
+        android:layout_below="@id/relativeLay1"
         android:background="@drawable/background_white_topcurved">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -111,7 +101,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
-            android:background="@color/grey">
+            android:background="@drawable/rounded_corner_blue">
 
 
             <TextView
@@ -147,7 +137,8 @@
                 android:gravity="left"
                 android:text="total"
                 android:textColor="@color/black"
-                android:textSize="16sp"
+                android:textSize="20sp"
+                android:layout_marginVertical="8dp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -616,7 +607,7 @@
                 android:layout_height="50dp"
                 android:layout_gravity="center"
                 android:background="@drawable/rounded_background_blue"
-                android:text="Pesan Sekarang"
+                android:text="Checkout"
                 android:layout_marginVertical="8dp"
                 android:textAllCaps="false"
                 android:textColor="@color/white"

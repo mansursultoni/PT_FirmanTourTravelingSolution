@@ -4,12 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient_blue"
+    android:background="@color/white"
     tools:context=".UserCheckout">
 
     <RelativeLayout
-        android:id="@+id/linearLay1"
+        android:id="@+id/relativeLay1"
         android:layout_width="match_parent"
+        android:background="@drawable/background_blue_botcurved"
         android:layout_height="200dp"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -50,6 +51,7 @@
                 android:textColor="@color/white"
                 android:textSize="18sp" />
 
+
             <TextView
                 android:id="@+id/tv_id"
                 android:layout_width="wrap_content"
@@ -76,14 +78,8 @@
         android:id="@+id/layoutTolbar2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/linearLay1"
+        android:layout_below="@id/relativeLay1"
         android:background="@drawable/background_white_topcurved">
-
-        <ProgressBar
-            android:id="@+id/progresBar"
-            android:layout_centerInParent="true"
-            android:layout_width="50dp"
-            android:layout_height="50dp"/>
 
         <ScrollView
             android:layout_width="match_parent"
@@ -103,7 +99,7 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="16dp"
-                    android:background="@color/grey">
+                    android:background="@drawable/rounded_corner_blue">
 
 
                     <TextView
@@ -543,12 +539,13 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Nomor Rekening Admin"
+                        android:text="Infromasi Rekening :"
                         android:gravity="center_horizontal"
                         android:textSize="18sp"
                         android:textColor="@color/black"
                         />
                     <TextView
+                        android:id="@+id/tvNamaBank"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="BRI"
@@ -557,9 +554,19 @@
                         android:textColor="@color/black"
                         />
                     <TextView
+                        android:id="@+id/tvNomorRekening"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="0000000000"
+                        android:gravity="center_horizontal"
+                        android:textSize="18sp"
+                        android:textColor="@color/black"
+                        />
+                    <TextView
+                        android:id="@+id/idAtasNama"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Atas Nama"
                         android:gravity="center_horizontal"
                         android:textSize="18sp"
                         android:textColor="@color/black"
@@ -646,12 +653,6 @@
 
 
         </ScrollView>
-
-
-
-
-
-
 
     </RelativeLayout>
 

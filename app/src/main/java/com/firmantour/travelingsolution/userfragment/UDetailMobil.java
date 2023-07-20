@@ -1,5 +1,6 @@
 package com.firmantour.travelingsolution.userfragment;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -8,13 +9,17 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.firmantour.travelingsolution.AdminDetailMobil;
 import com.firmantour.travelingsolution.R;
 import com.firmantour.travelingsolution.UserDetaillMobil;
+import com.firmantour.travelingsolution.UserPemesanan;
 import com.firmantour.travelingsolution.adminfragment.ALaporan;
 import com.firmantour.travelingsolution.adminfragment.ARentalMobil;
 import com.firmantour.travelingsolution.databinding.FragmentUDetailMobilBinding;
@@ -61,20 +66,40 @@ public class UDetailMobil extends Fragment {
         binding = FragmentUDetailMobilBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
+        view.setFocusableInTouchMode(true);
+        view.requestFocus();
+        view.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+                    Fragment uRentalMobil = new URentalMobil();
+                    replaceFragment(uRentalMobil);
+                    return true;
+                }
+                return false;
+            }
+        });
+
         firebaseFirestore   = FirebaseFirestore.getInstance();
         storageReference    = FirebaseStorage.getInstance().getReference();
-        Bundle args = getArguments();
-        if (args != null) {
-            String getKey = args.getString("keyplatnomor");
-            produkId = getKey;
-        }
+
+
         readData();
 
         binding.ibBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment aRentalMobil = new ARentalMobil();
-                replaceFragment(aRentalMobil);
+                Fragment uRentalMobil = new URentalMobil();
+                replaceFragment(uRentalMobil);
+            }
+        });
+
+        binding.buttonPemesanan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), UserPemesanan.class);
+                intent.putExtra("platnomor", binding.etPlatnomor.getText().toString());
+                startActivity(intent);
             }
         });
 
@@ -83,6 +108,11 @@ public class UDetailMobil extends Fragment {
     }
 
     private void readData() {
+        Bundle args = getArguments();
+        if (args != null) {
+            String data = args.getString("dataKey");
+            produkId = data;
+        }
         binding.progressBar.setVisibility(View.VISIBLE);
         firebaseFirestore.collection("RentalMobil").whereEqualTo("platnomor", produkId)
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -116,5 +146,29 @@ public class UDetailMobil extends Fragment {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frame_layout, fragment);
         fragmentTransaction.commit();
+    }
+    private void keyPlatNomor(String data) {
+        UPemesanan uPemesanan = new UPemesanan();
+        Bundle args = new Bundle();
+        args.putString("keyplatnomor", data);
+        uPemesanan.setArguments(args);
+        getParentFragmentManager().beginTransaction()
+                .replace(R.id.frame_layout, uPemesanan)
+                .commit();
+    }
+    @Override
+    public void onStart() {
+        super.onStart();
+        readData();
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        readData();;
+    }
+    @Override
+    public void onStop() {
+        super.onStop();
+        readData();
     }
 }

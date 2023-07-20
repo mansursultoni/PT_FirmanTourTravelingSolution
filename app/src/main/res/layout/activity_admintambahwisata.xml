@@ -8,7 +8,7 @@
     tools:context=".AdminTambahWisata">
 
     <LinearLayout
-        android:id="@+id/linearLay1"
+        android:id="@+id/relativeLay1"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_alignParentTop="true"
@@ -47,8 +47,8 @@
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/linearLay1"
-        app:layout_constraintTop_toBottomOf="@+id/linearLay1">
+        android:layout_below="@+id/relativeLay1"
+        app:layout_constraintTop_toBottomOf="@+id/relativeLay1">
 
         <RelativeLayout
             android:layout_width="match_parent"

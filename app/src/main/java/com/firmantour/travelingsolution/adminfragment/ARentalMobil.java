@@ -138,7 +138,7 @@ public class ARentalMobil extends Fragment {
         }
     }
     @Override
-        public void onStart() {
+    public void onStart() {
             super.onStart();
             getData();
     //        adapter.startListening();

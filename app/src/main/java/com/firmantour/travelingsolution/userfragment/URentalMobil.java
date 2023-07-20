@@ -2,18 +2,19 @@ package com.firmantour.travelingsolution.userfragment;
 
 import static com.firmantour.travelingsolution.R.drawable.ic_user;
 
-import android.content.Intent;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,9 +24,7 @@ import android.widget.TextView;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.firmantour.travelingsolution.Adapter;
-import com.firmantour.travelingsolution.AdminDetailMobil;
 import com.firmantour.travelingsolution.R;
-import com.firmantour.travelingsolution.adminfragment.ARentalMobil;
 import com.firmantour.travelingsolution.databinding.FragmentURentalMobilBinding;
 import com.firmantour.travelingsolution.model.ModelMobil;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -39,6 +38,15 @@ public class URentalMobil extends Fragment {
     private FirestoreRecyclerAdapter adapter;
     private FirebaseFirestore db;
     private Adapter adapterMobil;
+    private String dataFragment;
+
+    private OnDataSendListener dataSendListener;
+
+    public interface OnDataSendListener {
+        String onDataReceived(String data);
+    }
+
+
 
     public URentalMobil() {
         // Required empty public constructor
@@ -65,6 +73,19 @@ public class URentalMobil extends Fragment {
         // Inflate the layout for this fragment
         binding = FragmentURentalMobilBinding.inflate(inflater, container, false);
         View view  = binding.getRoot();
+
+        view.setFocusableInTouchMode(true);
+        view.requestFocus();
+        view.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+                    getParentFragmentManager().popBackStackImmediate();
+                    return true;
+                }
+                return false;
+            }
+        });
 
         db = FirebaseFirestore.getInstance();
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
@@ -109,8 +130,12 @@ public class URentalMobil extends Fragment {
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                            String kirimDetail = model.getPlatnomor();
-                            kirimDetailMobil(kirimDetail);
+                        Fragment uDetailMobil = new UDetailMobil();
+                        replaceFragment(uDetailMobil);
+
+                        String key = model.getPlatnomor();
+                        dataFragment = key;
+                        sendDataToActivityOnClick();
                     }
                 });
             }
@@ -131,20 +156,13 @@ public class URentalMobil extends Fragment {
             statusProduk = itemView.findViewById(R.id.textStatus);
         }
     }
-    private void kirimDetailMobil(String data) {
+    private void keyPlatNomor(String data) {
         UDetailMobil uDetailMobil = new UDetailMobil();
-
-        // Create a Bundle to pass the data to Fragment B
         Bundle args = new Bundle();
         args.putString("keyplatnomor", data);
-
-        // Set the arguments on Fragment B
         uDetailMobil.setArguments(args);
-
-        // Perform Fragment transaction to show Fragment B
         getParentFragmentManager().beginTransaction()
                 .replace(R.id.frame_layout, uDetailMobil)
-                .addToBackStack(null)
                 .commit();
     }
     @Override
@@ -162,5 +180,28 @@ public class URentalMobil extends Fragment {
     public void onStop() {
         super.onStop();
         adapter.stopListening();
+    }
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if (context instanceof OnDataSendListener) {
+            dataSendListener = (OnDataSendListener) context;
+        } else {
+            throw new ClassCastException(context.toString() + " must implement OnDataSendListener");
+        }
+    }
+    private void sendDataToActivity(String data) {
+        if (dataSendListener != null) {
+            dataSendListener.onDataReceived(data);
+        }
+    }
+    private void sendDataToActivityOnClick() {
+        String data = dataFragment;
+        sendDataToActivity(data);
+    }
+    private void replaceFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frame_layout, fragment);
+        fragmentTransaction.commit();
     }
 }

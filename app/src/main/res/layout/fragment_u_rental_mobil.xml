@@ -16,41 +16,6 @@
             android:background="@drawable/background_blue_botcurved">
 
             <TextView
-                android:id="@+id/tv_hallo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginLeft="8dp"
-                android:text="Hallo, "
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tv_user"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_toEndOf="@id/tv_hallo"
-                android:text="User"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tv_nomorTelpon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tv_hallo"
-                android:layout_marginLeft="8dp"
-                android:text="Nomor"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:visibility="invisible" />
-
-
-            <TextView
                 android:id="@+id/tv_dataUser"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

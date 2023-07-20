@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.firmantour.travelingsolution.Adapter;
+import com.firmantour.travelingsolution.AdminDashboard2;
 import com.firmantour.travelingsolution.AdminDetailMobil;
 import com.firmantour.travelingsolution.R;
 import com.firmantour.travelingsolution.databinding.FragmentAPengaturanBinding;
@@ -35,6 +36,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
@@ -44,6 +46,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class APengaturan extends Fragment {
 
@@ -51,15 +54,13 @@ public class APengaturan extends Fragment {
     private FirebaseFirestore db;
     private FirestoreRecyclerAdapter adapter;
     private Adapter adapterAdmin;
-    private List<ModelUser> list = new ArrayList<>();
 
     public APengaturan() {
         // Required empty public constructor
     }
 
-    public static APengaturan newInstance(String param1, String param2) {
+    public static APengaturan newInstance(String data) {
         APengaturan fragment = new APengaturan();
-        Bundle args = new Bundle();
 
         return fragment;
     }
@@ -67,9 +68,7 @@ public class APengaturan extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
 
-        }
     }
 
     @Override
@@ -77,6 +76,10 @@ public class APengaturan extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentAPengaturanBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+
+        Bundle args = getArguments();
+        String receivedData = args.getString("FRAGMENT_DATA");
+        binding.etNomorTelepon.setText(receivedData);
 
         db = FirebaseFirestore.getInstance();
 
@@ -120,26 +123,27 @@ public class APengaturan extends Fragment {
         fragmentTransaction.commit();
     }
     private void getDataAdmin() {
-        final String nomortlep = binding.etNomorTelepon.getText().toString().trim();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Admin");
-        com.google.firebase.database.Query cekMobil = reference.orderByChild("nomortelepon").equalTo(nomortlep);
-        cekMobil.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()){
-                    String nama = dataSnapshot.child(nomortlep).child("namaadmin").getValue(String.class);
-                    String password = dataSnapshot.child(nomortlep).child("password").getValue(String.class);
-                    binding.etNamaAdmin.setText(nama);
-                    binding.etPassword.setText(password);
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getContext(), "Gagal memuat data.", Toast.LENGTH_SHORT).show();
-            }
-        });
+        String collection = "Admin";
+        String document = binding.etNomorTelepon.getText().toString();
+        db.collection(collection).document(document)
+                .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
+                                binding.etNamaAdmin.setText(document.getString("namaadmin"));
+                                binding.etPassword.setText(document.getString("password"));
+                            } else {
+                                // Document does not exist
+                                Log.d("GetDataActivity", "No such document");
+                            }
+                        } else {
+                            // An error occurred
+                            Log.e("GetDataActivity", "Error getting document", task.getException());
+                        }
+                    }
+                });
     }
     private void getDataRekening() {
         db.collection("AkunBank")

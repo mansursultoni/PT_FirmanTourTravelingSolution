@@ -33,6 +33,7 @@ import com.google.android.material.navigation.NavigationView;
 public class AdminDashboard2 extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     private ActivityAdminDashboard2Binding binding;
+    String ambildata;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,12 @@ public class AdminDashboard2 extends AppCompatActivity implements NavigationView
         Window window = this.getWindow();
         window.setStatusBarColor(this.getResources().getColor(R.color.blue));
 
+
+
+
+
+
+        // Open fragment ADashboard
         Fragment aDashboard = new ADashboard();
         replaceFragment(aDashboard);
 
@@ -96,8 +103,21 @@ public class AdminDashboard2 extends AppCompatActivity implements NavigationView
                 closeDrawer();
                 return true;
             case R.id.setting:
-                Fragment aPengaturan = new APengaturan();
-                replaceFragment(aPengaturan);
+                Intent intent = getIntent();
+                String ambildata = intent.getExtras().getString("nomortelepon");
+                // Create the Fragment instance
+                APengaturan fragment = new APengaturan();
+                // Pass the data as arguments to the Fragment
+                Bundle args = new Bundle();
+                args.putString("FRAGMENT_DATA", ambildata);
+                fragment.setArguments(args);
+                // Perform the Fragment transaction
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.frame_layout, fragment)
+                        .commit();
+
+
+
                 closeDrawer();
                 return true;
             case R.id.laporan:

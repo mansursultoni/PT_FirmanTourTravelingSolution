@@ -22,7 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 public class ActivityLogin extends AppCompatActivity {
 
     EditText EtNomor, EtPassword;
-    Button TombolMasuk, TombolDaftar, TombolTambah;
+    Button TombolMasuk, TombolDaftar;
     CheckBox checkBox;
 
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -98,14 +98,16 @@ public class ActivityLogin extends AppCompatActivity {
                                 LoginSesson.setDataLogin(ActivityLogin.this, true);
                                 LoginSesson.setDataAs(ActivityLogin.this, "admin");
                                 Toast.makeText(ActivityLogin.this, "Login Berhasil.", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(ActivityLogin.this, AdminDashboard2.class));
+                                Intent intent = new Intent(ActivityLogin.this, AdminDashboard2.class);
+                                intent.putExtra("nomortelepon", nomor);
+                                startActivity(intent);
                                 finish();
                             } else if (dataSnapshot.child(input1).child("sebagai").getValue(String.class).equals("user")){
                                 LoginSesson.setDataLogin(ActivityLogin.this, true);
                                 LoginSesson.setDataAs(ActivityLogin.this, "user");
                                 Toast.makeText(ActivityLogin.this, "Login Berhasil.", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(ActivityLogin.this, UserDashboard.class);
-                                intent.putExtra("nomortelpon", nomor);
+                                intent.putExtra("nomortelepon", nomor);
                                 startActivity(intent);
                                 finish();
                             }
@@ -113,14 +115,16 @@ public class ActivityLogin extends AppCompatActivity {
                             if (dataSnapshot.child(input1).child("sebagai").getValue(String.class).equals("admin")) {
                                 LoginSesson.setDataLogin(ActivityLogin.this, false);
                                 Toast.makeText(ActivityLogin.this, "Login Berhasil.", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(ActivityLogin.this, AdminDashboard2.class));
+                                Intent intent = new Intent(ActivityLogin.this, AdminDashboard2.class);
+                                intent.putExtra("nomortelepon", nomor);
+                                startActivity(intent);
                                 finish();
 
                             } else if (dataSnapshot.child(input1).child("sebagai").getValue(String.class).equals("user")){
                                 LoginSesson.setDataLogin(ActivityLogin.this, false);
                                 Toast.makeText(ActivityLogin.this, "Login Berhasil.", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(ActivityLogin.this, UserDashboard.class);
-                                intent.putExtra("nomortelpon", nomor);
+                                intent.putExtra("nomortelepon", nomor);
                                 startActivity(intent);
                                 finish();
                             }

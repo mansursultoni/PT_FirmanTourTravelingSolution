@@ -44,7 +44,6 @@ public class ARentalMobil extends Fragment {
     private FirebaseFirestore db;
     private Adapter adapterMobil;
 
-    private List<ModelUser> list = new ArrayList<>();
 
     public ARentalMobil() {
         // Required empty public constructor
@@ -65,7 +64,6 @@ public class ARentalMobil extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         binding = FragmentARentalMobilBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 

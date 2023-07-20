@@ -57,7 +57,7 @@ public class UserRentalMobil extends AppCompatActivity {
 
         TvUser = findViewById(R.id.tv_user);
         TvNomorTelpon = findViewById(R.id.tv_nomorTelpon);
-        recyclerView = findViewById(R.id.recycler_view);
+        recyclerView = findViewById(R.id.recyclerView);
         progressBar = findViewById(R.id.progressBar);
 
         firebaseFirestore = FirebaseFirestore.getInstance();

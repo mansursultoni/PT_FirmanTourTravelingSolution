@@ -69,7 +69,7 @@ public class AdminRentalMobil extends AppCompatActivity implements NavigationVie
         btnTambah = findViewById(R.id.btnTambahMobil);
         drawerLayout = findViewById(R.id.drawerLayout);
         navigationView = findViewById(R.id.navigationDrawer);
-        recyclerView = findViewById(R.id.recycler_view);
+        recyclerView = findViewById(R.id.recyclerView);
 
 
         IbMenu.setOnClickListener(new View.OnClickListener() {

@@ -70,7 +70,7 @@ public class MenungguKonfirmasi extends AppCompatActivity implements NavigationV
             }
         });
 
-        RecyclerView = findViewById(R.id.recycler_view);
+        RecyclerView = findViewById(R.id.recyclerView);
         RecyclerView.setHasFixedSize(true);
         RecyclerView.setLayoutManager(new LinearLayoutManager(this));
 

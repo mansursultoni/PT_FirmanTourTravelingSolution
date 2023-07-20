@@ -76,7 +76,7 @@ public class AdminDataUser extends AppCompatActivity implements NavigationView.O
             }
         });
 
-        RecyclerView = findViewById(R.id.recycler_view);
+        RecyclerView = findViewById(R.id.recyclerView);
         RecyclerView.setHasFixedSize(true);
         RecyclerView.setLayoutManager(new LinearLayoutManager(this));
 

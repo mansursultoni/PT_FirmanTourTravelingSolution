@@ -86,7 +86,7 @@ public class UserDetaillMobil extends AppCompatActivity {
         progressBar.setVisibility(INVISIBLE);
         firebaseFirestore   = FirebaseFirestore.getInstance();
         storageReference    = FirebaseStorage.getInstance().getReference();
-        produkId    = getIntent().getExtras().getString("nomor");
+
 
         readData();
 

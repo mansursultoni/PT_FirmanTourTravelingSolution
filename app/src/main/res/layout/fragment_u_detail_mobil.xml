@@ -5,10 +5,402 @@
     android:layout_height="match_parent"
     tools:context=".userfragment.UDetailMobil">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/linearLay1"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/gradient_blue3"
+            android:orientation="horizontal"
+            android:paddingHorizontal="16dp">
+
+            <ImageButton
+                android:id="@+id/ib_back"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_gravity="center_vertical"
+                android:background="@color/transparant"
+                android:src="@drawable/ic_back"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginHorizontal="8dp"
+                android:text="DETAIL PRODUK"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:typeface="normal" />
+
+            <TextView
+                android:id="@+id/tv_nomorTelpon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginHorizontal="8dp"
+                android:text="nomorTelpon"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:typeface="normal"
+                android:visibility="invisible" />
+
+
+
+        </LinearLayout>
+
+        <ScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/linearLay1">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:adjustViewBounds="true"
+                    android:background="@color/white"
+                    android:cropToPadding="false"
+                    android:scaleType="fitCenter"
+                    android:scrollbarAlwaysDrawHorizontalTrack="true"
+                    android:scrollbarAlwaysDrawVerticalTrack="false"
+                    android:src="@drawable/ic_image"/>
+
+                <LinearLayout
+                    android:id="@+id/linearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/imageView"
+                    android:layout_marginTop="20dp"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="16dp">
+
+                    <LinearLayout
+                        android:id="@+id/linearLayout1"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_below="@id/imageView"
+                        android:layout_marginBottom="4dp"
+                        android:background="@drawable/rounded_corner_blue"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="8dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:text="Plat Nomor"
+                            android:textColor="@color/black"
+                            android:textSize="18sp" />
+
+                        <EditText
+                            android:id="@+id/et_platnomor"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@color/transparant"
+                            android:drawablePadding="8dp"
+                            android:editable="false"
+                            android:hint="Plat Nomor"
+                            android:paddingHorizontal="16dp"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/grey" />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/linearLayout2"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_below="@id/linearLayout1"
+                        android:layout_marginBottom="4dp"
+                        android:background="@drawable/rounded_corner_blue"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="8dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:text="Status"
+                            android:textColor="@color/black"
+                            android:textSize="18sp" />
+
+                        <EditText
+                            android:id="@+id/et_status"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@color/transparant"
+                            android:drawablePadding="8dp"
+                            android:editable="false"
+                            android:gravity="left|center_vertical"
+                            android:hint="Tidak Tersedia"
+                            android:paddingHorizontal="16dp"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/grey" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linearLayout3"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_below="@id/linearLayout2"
+                        android:layout_marginBottom="4dp"
+                        android:background="@drawable/rounded_corner_blue"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="8dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_below="@id/et_status"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:text="Nama Merk"
+                            android:textColor="@color/black"
+                            android:textSize="18sp" />
+
+                        <EditText
+                            android:id="@+id/et_namamerk"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@color/transparant"
+                            android:drawablePadding="8dp"
+                            android:editable="false"
+                            android:gravity="left|center_vertical"
+                            android:hint="Nama Merk"
+                            android:paddingHorizontal="16dp"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/grey" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linearLayout4"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_below="@id/linearLayout3"
+                        android:layout_marginBottom="4dp"
+                        android:background="@drawable/rounded_corner_blue"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="8dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_below="@id/et_status"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:text="Nama Mobil"
+                            android:textColor="@color/black"
+                            android:textSize="18sp" />
+
+                        <EditText
+                            android:id="@+id/et_namamobil"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@color/transparant"
+                            android:drawablePadding="8dp"
+                            android:editable="false"
+                            android:gravity="left|center_vertical"
+                            android:hint="Nama Mobil"
+                            android:paddingHorizontal="16dp"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/grey" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linearLayout5"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_below="@id/linearLayout4"
+                        android:layout_marginBottom="4dp"
+                        android:background="@drawable/rounded_corner_blue"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="8dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_below="@id/et_status"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:text="Warna"
+                            android:textColor="@color/black"
+                            android:textSize="18sp" />
+
+                        <EditText
+                            android:id="@+id/et_warna"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@color/transparant"
+                            android:drawablePadding="8dp"
+                            android:editable="false"
+                            android:gravity="left|center_vertical"
+                            android:hint="Warna Mobil"
+                            android:inputType="textMultiLine"
+                            android:paddingHorizontal="16dp"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/grey" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linearLayout6"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_below="@id/linearLayout5"
+                        android:layout_marginBottom="4dp"
+                        android:background="@drawable/rounded_corner_blue"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="8dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_below="@id/et_status"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:text="Jumlah Kursi"
+                            android:textColor="@color/black"
+                            android:textSize="18sp" />
+
+                        <EditText
+                            android:id="@+id/et_jumlahkursi"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@color/transparant"
+                            android:drawablePadding="8dp"
+                            android:editable="false"
+                            android:gravity="left|center_vertical"
+                            android:hint="Jumlah Kursi"
+                            android:paddingHorizontal="16dp"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/grey" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linearLayout7"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_below="@id/linearLayout6"
+                        android:layout_marginBottom="4dp"
+                        android:background="@drawable/rounded_corner_blue"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="8dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_below="@id/et_status"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:text="Harga / 24 Jam"
+                            android:textColor="@color/black"
+                            android:textSize="18sp" />
+
+                        <EditText
+                            android:id="@+id/et_harga"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@color/transparant"
+                            android:drawablePadding="8dp"
+                            android:editable="false"
+                            android:gravity="left|center_vertical"
+                            android:hint="Harga Sewa"
+                            android:paddingHorizontal="16dp"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/grey" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/layoutButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/linearLayout"
+                    android:layout_marginVertical="10dp"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="16dp">
+
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/button_pemesanan"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="200dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/rounded_background_blue"
+                        android:text="Pesan Sekarang"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        tools:layout_editor_absoluteX="70dp"
+                        tools:layout_editor_absoluteY="495dp" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/button_hubungi"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="200dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/rounded_background_blue"
+                        android:text="Hubungi"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        tools:layout_editor_absoluteX="70dp"
+                        tools:layout_editor_absoluteY="495dp" />
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+
+        </ScrollView>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" />
+
+    </RelativeLayout>
 
 </FrameLayout>

@@ -62,7 +62,6 @@ public class UserCheckout extends AppCompatActivity {
         TvTanggalKembali = findViewById(R.id.tv_tanggalKembali);
         BtPesan = findViewById(R.id.bt_pesan);
         FotoPembayaran = findViewById(R.id.iv_buktipembayaran);
-        progressBar = findViewById(R.id.progresBar);
 
         String notlep = TvTelpon.getText().toString();
         String tglsewa = TvTanggalsewa.getText().toString();
@@ -176,8 +175,6 @@ public class UserCheckout extends AppCompatActivity {
                                             TvTanggalKembali.getText().toString(),
                                             TvTotalHarga.getText().toString(),
                                             statuspesan);
-                                    progressBar.setProgress(0);
-                                    progressBar.setVisibility(View.INVISIBLE);
                                     Toast.makeText(UserCheckout.this, "Pemesanan Telah Diproses.", Toast.LENGTH_SHORT).show();
                                     finish();
                                 }

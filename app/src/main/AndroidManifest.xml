@@ -22,7 +22,7 @@
             android:name=".PengaturanAdmin"
             android:exported="false" />
         <activity
-            android:name=".SplashScreen"
+            android:name=".UserDashboard"
             android:exported="false" />
         <activity
             android:name=".AdminDetailWisata"
@@ -89,7 +89,7 @@
             android:name=".AdminRentalMobil"
             android:exported="false" />
         <activity
-            android:name=".UserDashboard"
+            android:name=".SplashScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

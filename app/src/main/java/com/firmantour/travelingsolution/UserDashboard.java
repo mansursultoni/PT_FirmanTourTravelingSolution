@@ -1,11 +1,14 @@
 package com.firmantour.travelingsolution;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -81,7 +84,24 @@ public class UserDashboard extends AppCompatActivity implements URentalMobil.OnD
         Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.frame_layout);
 
         // Check if it's Fragment C
-        if (currentFragment instanceof UDetailMobil) {
+        if (currentFragment instanceof URentalMobil) {
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(UserDashboard.this);
+            alertDialog.setTitle("Keluar");
+            alertDialog.setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    finish();
+                }
+            });
+            alertDialog.setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            alertDialog.show();
+
+        } else if (currentFragment instanceof UDetailMobil) {
             // Navigate back to Fragment B
             Fragment uRentalMobil = new URentalMobil();
             replaceFragment(uRentalMobil);

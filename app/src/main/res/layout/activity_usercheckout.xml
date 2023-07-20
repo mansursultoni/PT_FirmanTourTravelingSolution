@@ -64,7 +64,7 @@
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:typeface="normal"
-                android:visibility="visible" />
+                android:visibility="invisible" />
 
 
         </LinearLayout>

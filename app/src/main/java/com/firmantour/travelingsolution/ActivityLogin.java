@@ -98,13 +98,13 @@ public class ActivityLogin extends AppCompatActivity {
                                 LoginSesson.setDataLogin(ActivityLogin.this, true);
                                 LoginSesson.setDataAs(ActivityLogin.this, "admin");
                                 Toast.makeText(ActivityLogin.this, "Login Berhasil.", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(ActivityLogin.this, AdminDashboard.class));
+                                startActivity(new Intent(ActivityLogin.this, AdminDashboard2.class));
                                 finish();
                             } else if (dataSnapshot.child(input1).child("sebagai").getValue(String.class).equals("user")){
                                 LoginSesson.setDataLogin(ActivityLogin.this, true);
                                 LoginSesson.setDataAs(ActivityLogin.this, "user");
                                 Toast.makeText(ActivityLogin.this, "Login Berhasil.", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(ActivityLogin.this, UserRentalMobil.class);
+                                Intent intent = new Intent(ActivityLogin.this, UserDashboard.class);
                                 intent.putExtra("nomortelpon", nomor);
                                 startActivity(intent);
                                 finish();
@@ -113,13 +113,13 @@ public class ActivityLogin extends AppCompatActivity {
                             if (dataSnapshot.child(input1).child("sebagai").getValue(String.class).equals("admin")) {
                                 LoginSesson.setDataLogin(ActivityLogin.this, false);
                                 Toast.makeText(ActivityLogin.this, "Login Berhasil.", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(ActivityLogin.this, AdminDashboard.class));
+                                startActivity(new Intent(ActivityLogin.this, AdminDashboard2.class));
                                 finish();
 
                             } else if (dataSnapshot.child(input1).child("sebagai").getValue(String.class).equals("user")){
                                 LoginSesson.setDataLogin(ActivityLogin.this, false);
                                 Toast.makeText(ActivityLogin.this, "Login Berhasil.", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(ActivityLogin.this, UserRentalMobil.class);
+                                Intent intent = new Intent(ActivityLogin.this, UserDashboard.class);
                                 intent.putExtra("nomortelpon", nomor);
                                 startActivity(intent);
                                 finish();

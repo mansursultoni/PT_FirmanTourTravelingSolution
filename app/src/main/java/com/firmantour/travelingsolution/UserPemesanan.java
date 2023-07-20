@@ -80,17 +80,10 @@ public class UserPemesanan extends AppCompatActivity {
         firebaseFirestore = FirebaseFirestore.getInstance();
 
         Intent intent = getIntent();
-
-        if (intent!=null){
-            String notelpon = intent.getStringExtra("nomortelepon");
-            String pltnomor = intent.getStringExtra("platnomor");
-            TvNomorTelpon.setText(notelpon);
-            TvPlatNomor.setText(pltnomor);
-        }
-
-
-
-
+        String notelpon = intent.getStringExtra("telepon");
+        String pltnomor = intent.getStringExtra("platnomor");
+        TvNomorTelpon.setText(notelpon);
+        TvPlatNomor.setText(pltnomor);
 
         getUser();
         getMobil();

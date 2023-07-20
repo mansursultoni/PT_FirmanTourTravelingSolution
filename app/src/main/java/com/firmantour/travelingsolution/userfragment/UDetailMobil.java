@@ -9,19 +9,15 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.firmantour.travelingsolution.AdminDetailMobil;
 import com.firmantour.travelingsolution.R;
-import com.firmantour.travelingsolution.UserDetaillMobil;
 import com.firmantour.travelingsolution.UserPemesanan;
-import com.firmantour.travelingsolution.adminfragment.ALaporan;
-import com.firmantour.travelingsolution.adminfragment.ARentalMobil;
+import com.firmantour.travelingsolution.adminfragment.APengaturan;
 import com.firmantour.travelingsolution.databinding.FragmentUDetailMobilBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -38,25 +34,29 @@ public class UDetailMobil extends Fragment {
     private FirebaseFirestore firebaseFirestore;
     private StorageReference storageReference;
     private Uri filePath;
-    private String fotoUrl, produkId;
-    private static final int IMAGE_REQUEST = 1;
+    private String fotoUrl, produkId, notlep;
+    private static final String ARG_PHONE_NUMBER = "phone_number";
+    private String phoneNumber;
 
     public UDetailMobil() {
         // Required empty public constructor
     }
 
-    public static UDetailMobil newInstance(String param1, String param2) {
+    public static UDetailMobil newInstance(String phoneNumber) {
         UDetailMobil fragment = new UDetailMobil();
         Bundle args = new Bundle();
-
+        args.putString(ARG_PHONE_NUMBER, phoneNumber);
+        fragment.setArguments(args);
         return fragment;
     }
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-
+            phoneNumber = getArguments().getString(ARG_PHONE_NUMBER);
         }
     }
 
@@ -65,6 +65,9 @@ public class UDetailMobil extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentUDetailMobilBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+
+
+        binding.tvNomorTelpon.setText(phoneNumber);
 
         view.setFocusableInTouchMode(true);
         view.requestFocus();
@@ -97,9 +100,12 @@ public class UDetailMobil extends Fragment {
         binding.buttonPemesanan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(getActivity(), UserPemesanan.class);
+
                 intent.putExtra("platnomor", binding.etPlatnomor.getText().toString());
                 startActivity(intent);
+
             }
         });
 

@@ -1,12 +1,10 @@
 package com.firmantour.travelingsolution;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -17,7 +15,6 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.widget.Toast;
 
 import com.firmantour.travelingsolution.adminfragment.ADashboard;
 import com.firmantour.travelingsolution.adminfragment.ADataUser;
@@ -30,10 +27,9 @@ import com.firmantour.travelingsolution.adminfragment.ARentalMobil;
 import com.firmantour.travelingsolution.databinding.ActivityAdminDashboard2Binding;
 import com.google.android.material.navigation.NavigationView;
 
-public class AdminDashboard2 extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class AdminDashboard2 extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private ActivityAdminDashboard2Binding binding;
-    String ambildata;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,11 +40,6 @@ public class AdminDashboard2 extends AppCompatActivity implements NavigationView
 
         Window window = this.getWindow();
         window.setStatusBarColor(this.getResources().getColor(R.color.blue));
-
-
-
-
-
 
         // Open fragment ADashboard
         Fragment aDashboard = new ADashboard();

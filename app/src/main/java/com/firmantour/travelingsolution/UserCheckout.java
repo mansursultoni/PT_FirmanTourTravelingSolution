@@ -182,14 +182,14 @@ public class UserCheckout extends AppCompatActivity {
                             uploadTask.addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                                 @Override
                                 public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
-                                    progressBar.setVisibility(View.VISIBLE);
+
                                     double progres = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot.getTotalByteCount());
-                                    progressBar.setProgress((int)progres);
+
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-                                    progressBar.setVisibility(View.INVISIBLE);
+
                                     Toast.makeText(UserCheckout.this, "Failed " + e.getMessage(), Toast.LENGTH_LONG).show();
                                 }
                             });

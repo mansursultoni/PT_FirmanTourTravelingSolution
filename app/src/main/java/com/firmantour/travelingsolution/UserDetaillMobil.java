@@ -117,17 +117,21 @@ public class UserDetaillMobil extends AppCompatActivity {
         String input1 = TvNomorTelpon.getText().toString();
         String input2 = EtNomor.getText().toString();
         Intent intent = new Intent(UserDetaillMobil.this, UserPemesanan.class);
-        intent.putExtra("pltnomor",input2);
-        intent.putExtra("notlep", input1);
+        intent.putExtra("telepon",input1);
+        intent.putExtra("platnomor", input2);
         startActivity(intent);
     }
     private void ambilDataIntent(){
         Intent intent = getIntent();
-        String nomorTelpon = intent.getStringExtra("nomortelpon");
+        String nomorTelpon = intent.getStringExtra("nomortelepon");
+        String platnomor = intent.getStringExtra("nomor");
         TvNomorTelpon.setText(nomorTelpon);
+        EtNomor.setText(platnomor);
+
     }
     private void readData() {
-        firebaseFirestore.collection("RentalMobil").whereEqualTo("platnomor", produkId)
+        String nomor = EtNomor.getText().toString();
+        firebaseFirestore.collection("RentalMobil").whereEqualTo("platnomor", nomor)
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -138,7 +142,7 @@ public class UserDetaillMobil extends AppCompatActivity {
                                 EtMerk.setText(document.getString("namamerk"));
                                 EtNama.setText(document.getString("namamobil"));
                                 EtWarna.setText(document.getString("warna"));
-                                EtJumlahKursi.setText(document.getString("jumlahkursi"));
+                                EtJumlahKursi.setText(document.getString("kursi"));
                                 EtHarga.setText(document.getString("harga"));
                                 fotoUrl = document.getString("foto");
                                 if (fotoUrl != "") {

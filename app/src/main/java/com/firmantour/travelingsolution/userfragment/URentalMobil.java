@@ -41,6 +41,8 @@ public class URentalMobil extends Fragment {
     private String dataFragment;
 
     private OnDataSendListener dataSendListener;
+    private static final String ARG_PHONE_NUMBER = "phone_number";
+    private String phoneNumber;
 
     public interface OnDataSendListener {
         String onDataReceived(String data);
@@ -52,10 +54,11 @@ public class URentalMobil extends Fragment {
         // Required empty public constructor
     }
 
-    public static URentalMobil newInstance(String param1, String param2) {
+    public static URentalMobil newInstance(String phoneNumber) {
         URentalMobil fragment = new URentalMobil();
         Bundle args = new Bundle();
-
+        args.putString(ARG_PHONE_NUMBER, phoneNumber);
+        fragment.setArguments(args);
         return fragment;
     }
 
@@ -63,7 +66,7 @@ public class URentalMobil extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-
+            phoneNumber = getArguments().getString(ARG_PHONE_NUMBER);
         }
     }
 
@@ -73,6 +76,9 @@ public class URentalMobil extends Fragment {
         // Inflate the layout for this fragment
         binding = FragmentURentalMobilBinding.inflate(inflater, container, false);
         View view  = binding.getRoot();
+
+
+        Log.e("Test: " , phoneNumber);
 
         view.setFocusableInTouchMode(true);
         view.requestFocus();
@@ -86,6 +92,7 @@ public class URentalMobil extends Fragment {
                 return false;
             }
         });
+
 
         db = FirebaseFirestore.getInstance();
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
@@ -130,11 +137,15 @@ public class URentalMobil extends Fragment {
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Fragment uDetailMobil = new UDetailMobil();
-                        replaceFragment(uDetailMobil);
+                        UDetailMobil fragmentB = UDetailMobil.newInstance(phoneNumber);
 
-                        String key = model.getPlatnomor();
-                        dataFragment = key;
+                        requireActivity().getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.frame_layout, fragmentB)
+                                .addToBackStack(null)
+                                .commit();
+
+                        String platnomor = model.getPlatnomor();
+                        dataFragment = platnomor;
                         sendDataToActivityOnClick();
                     }
                 });

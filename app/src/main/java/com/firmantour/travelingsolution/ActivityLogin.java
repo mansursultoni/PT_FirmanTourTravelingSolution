@@ -106,7 +106,7 @@ public class ActivityLogin extends AppCompatActivity {
                                 LoginSesson.setDataLogin(ActivityLogin.this, true);
                                 LoginSesson.setDataAs(ActivityLogin.this, "user");
                                 Toast.makeText(ActivityLogin.this, "Login Berhasil.", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(ActivityLogin.this, UserDashboard.class);
+                                Intent intent = new Intent(ActivityLogin.this, UserRentalMobil.class);
                                 intent.putExtra("nomortelepon", nomor);
                                 startActivity(intent);
                                 finish();
@@ -123,7 +123,7 @@ public class ActivityLogin extends AppCompatActivity {
                             } else if (dataSnapshot.child(input1).child("sebagai").getValue(String.class).equals("user")){
                                 LoginSesson.setDataLogin(ActivityLogin.this, false);
                                 Toast.makeText(ActivityLogin.this, "Login Berhasil.", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(ActivityLogin.this, UserDashboard.class);
+                                Intent intent = new Intent(ActivityLogin.this, UserRentalMobil.class);
                                 intent.putExtra("nomortelepon", nomor);
                                 startActivity(intent);
                                 finish();

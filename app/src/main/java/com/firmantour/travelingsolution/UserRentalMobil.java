@@ -45,7 +45,7 @@ public class UserRentalMobil extends AppCompatActivity {
     RecyclerView recyclerView;
     ProgressBar progressBar;
     BottomNavigationView navigationView;
-    TextView TvUser, TvNomorTelpon;
+    TextView TvNomorTelpon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +55,7 @@ public class UserRentalMobil extends AppCompatActivity {
         Window window = this.getWindow();
         window.setStatusBarColor(this.getResources().getColor(R.color.blue));
 
-        TvUser = findViewById(R.id.tv_user);
+
         TvNomorTelpon = findViewById(R.id.tv_nomorTelpon);
         recyclerView = findViewById(R.id.recyclerView);
         progressBar = findViewById(R.id.progressBar);
@@ -65,7 +65,7 @@ public class UserRentalMobil extends AppCompatActivity {
         recyclerView.setLayoutManager(new GridLayoutManager(this, 1));
 
         ambilDataIntent();
-        getUser();
+        //getUser();
         getData();
 
 
@@ -79,15 +79,16 @@ public class UserRentalMobil extends AppCompatActivity {
 //                finish();
                         return true;
                     case R.id.paketWisata:
-
+                        startActivity(new Intent(UserRentalMobil.this, UserPaketWisata.class));
+                        finish();
                         return true;
                     case R.id.menunggukonfirmasi:
-//                        startActivity(new Intent(UserRentalMobil.this, MenungguKonfirmasi.class));
-//                        finish();
+                        startActivity(new Intent(UserRentalMobil.this, MenungguKonfirmasi.class));
+                        finish();
                         return true;
                     case R.id.pengaturan:
-//                    startActivity(new Intent(UserRentalMobil.this, MenungguKonfirmasi.class));
-//                    finish();
+                        startActivity(new Intent(UserRentalMobil.this, UserPengaturan.class));
+                        finish();
                         return true;
                     default:
                         return false;
@@ -98,30 +99,13 @@ public class UserRentalMobil extends AppCompatActivity {
 
     private void ambilDataIntent(){
         Intent intent = getIntent();
-        String nomorTelpon = intent.getStringExtra("nomortelpon");
+        String nomorTelpon = intent.getStringExtra("nomortelepon");
         TvNomorTelpon.setText(nomorTelpon);
     }
-    private void getUser() {
-        String nomorTelepon = TvNomorTelpon.getText().toString();
-        database.child("Login").child(nomorTelepon).child("nama").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()){
-                    String user = dataSnapshot.getValue().toString();
-                    TvUser.setText(user);
-                }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
 
     private void getData() {
         String input1 = TvNomorTelpon.getText().toString();
-
         Query query = firebaseFirestore.collection("RentalMobil");
         FirestoreRecyclerOptions<ModelMobil> response = new FirestoreRecyclerOptions.Builder<ModelMobil>()
                 .setQuery(query, ModelMobil.class).build();
@@ -149,7 +133,7 @@ public class UserRentalMobil extends AppCompatActivity {
                     public void onClick(View v) {
                         Intent intent = new Intent(UserRentalMobil.this, UserDetaillMobil.class);
                         intent.putExtra("nomor", model.getPlatnomor());
-                        intent.putExtra("nomortelpon", input1);
+                        intent.putExtra("nomortelepon", input1);
                         startActivity(intent);
 //Snackbar.make(recyclerView, model.getNama()+", " +model.getTelepon(), Snackbar.LENGTH_LONG).setAction("Action", null).show();
                     }

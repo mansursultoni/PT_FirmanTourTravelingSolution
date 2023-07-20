@@ -20,33 +20,17 @@ import android.widget.Toast;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.firmantour.travelingsolution.Adapter;
-import com.firmantour.travelingsolution.AdminDashboard2;
-import com.firmantour.travelingsolution.AdminDetailMobil;
 import com.firmantour.travelingsolution.R;
 import com.firmantour.travelingsolution.databinding.FragmentAPengaturanBinding;
 import com.firmantour.travelingsolution.model.ModelAdmin;
-import com.firmantour.travelingsolution.model.ModelRekening;
-import com.firmantour.travelingsolution.model.ModelUser;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
 public class APengaturan extends Fragment {
 
@@ -218,4 +202,5 @@ public class APengaturan extends Fragment {
         super.onStop();
         adapter.stopListening();
     }
+
 }

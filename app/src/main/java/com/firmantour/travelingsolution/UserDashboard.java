@@ -13,7 +13,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.Window;
+import android.widget.Toast;
 
+import com.firmantour.travelingsolution.adminfragment.APengaturan;
 import com.firmantour.travelingsolution.databinding.ActivityUserDashboardBinding;
 import com.firmantour.travelingsolution.userfragment.UDetailMobil;
 import com.firmantour.travelingsolution.userfragment.UPaketWisata;
@@ -36,10 +38,12 @@ public class UserDashboard extends AppCompatActivity implements URentalMobil.OnD
         Window window = this.getWindow();
         window.setStatusBarColor(this.getResources().getColor(R.color.blue));
 
+        String phoneNumber = getIntent().getStringExtra("nomortelepon");
+
         if (savedInstanceState == null) {
-            URentalMobil uRentalMobil = new URentalMobil();
+            URentalMobil fragmentA = URentalMobil.newInstance(phoneNumber);
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.frame_layout, uRentalMobil)
+                    .replace(R.id.frame_layout, fragmentA)
                     .commit();
         }
 
@@ -50,6 +54,19 @@ public class UserDashboard extends AppCompatActivity implements URentalMobil.OnD
                 int id = item.getItemId();
                 switch (id){
                     case R.id.rentalMobil:
+                        Intent intent = getIntent();
+                        String ambildata = intent.getExtras().getString("nomortelepon");
+                        // Create the Fragment instance
+                        URentalMobil fragment = new URentalMobil();
+                        // Pass the data as arguments to the Fragment
+                        Bundle args = new Bundle();
+                        args.putString("FRAGMENT_DATA", ambildata);
+                        fragment.setArguments(args);
+                        // Perform the Fragment transaction
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.frame_layout, fragment)
+                                .commit();
+
                         Fragment uRentalMobil = new URentalMobil();
                         replaceFragment(uRentalMobil);
                         return true;
@@ -122,6 +139,7 @@ public class UserDashboard extends AppCompatActivity implements URentalMobil.OnD
                 .replace(R.id.frame_layout, uDetailMobil)
                 .addToBackStack(null)
                 .commit();
+
 
 
         return data;

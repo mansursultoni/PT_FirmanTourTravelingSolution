@@ -28,7 +28,7 @@
                 android:layout_alignParentRight="true"/>
 
             <TextView
-                android:id="@+id/tvRentalMobil"
+                android:id="@+id/tvPesananSaya"
                 android:text="PAKET WISATA"
                 android:textStyle="bold"
                 android:textColor="@color/white"

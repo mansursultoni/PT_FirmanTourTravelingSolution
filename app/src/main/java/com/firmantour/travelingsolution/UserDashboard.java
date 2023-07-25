@@ -67,8 +67,8 @@ public class UserDashboard extends AppCompatActivity implements URentalMobil.OnD
                                 .replace(R.id.frame_layout, fragment)
                                 .commit();
 
-                        Fragment uRentalMobil = new URentalMobil();
-                        replaceFragment(uRentalMobil);
+                        /*Fragment uRentalMobil = new URentalMobil();
+                        replaceFragment(uRentalMobil);*/
                         return true;
                     case R.id.paketWisata:
                         Fragment uPaketWisata = new UPaketWisata();

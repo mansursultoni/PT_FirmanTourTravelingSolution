@@ -1,17 +1,16 @@
 package com.firmantour.travelingsolution.model;
 
 public class ModelPesanan {
-    String key, nama, nomortelepon, alamat, platnomor, namamerk, namamobil, warna, jumlahkursi, tanggalsewa,
-            tanggalkembali, totalharga, foto , statuspesanan;
+    private String key, nama, nomortelepon, alamat, platnomor, namamerk,namamobil,warna, kursi,harga,
+            tanggalsewa,tanggalkembali;
 
-    public ModelPesanan(){
+    public ModelPesanan() {
 
     }
 
-    public ModelPesanan(String foto,  String key, String nama, String nomortelepon, String alamat, String platnomor, String namamerk,
-                        String namamobil, String warna, String jumlahkursi, String tanggalsewa, String tanggalkembali,
-                        String totalharga, String statuspesanan) {
-        this.foto = foto;
+    public ModelPesanan(String key, String nama, String nomortelepon, String alamat, String platnomor,
+                        String namamerk, String namamobil, String warna, String kursi,
+                        String harga, String tanggalsewa, String tanggalkembali) {
         this.key = key;
         this.nama = nama;
         this.nomortelepon = nomortelepon;
@@ -20,11 +19,10 @@ public class ModelPesanan {
         this.namamerk = namamerk;
         this.namamobil = namamobil;
         this.warna = warna;
-        this.jumlahkursi = jumlahkursi;
+        this.kursi = kursi;
+        this.harga = harga;
         this.tanggalsewa = tanggalsewa;
         this.tanggalkembali = tanggalkembali;
-        this.totalharga = totalharga;
-        this.statuspesanan = statuspesanan;
     }
 
     public String getKey() {
@@ -91,12 +89,20 @@ public class ModelPesanan {
         this.warna = warna;
     }
 
-    public String getJumlahkursi() {
-        return jumlahkursi;
+    public String getKursi() {
+        return kursi;
     }
 
-    public void setJumlahkursi(String jumlahkursi) {
-        this.jumlahkursi = jumlahkursi;
+    public void setKursi(String kursi) {
+        this.kursi = kursi;
+    }
+
+    public String getHarga() {
+        return harga;
+    }
+
+    public void setHarga(String harga) {
+        this.harga = harga;
     }
 
     public String getTanggalsewa() {
@@ -113,21 +119,5 @@ public class ModelPesanan {
 
     public void setTanggalkembali(String tanggalkembali) {
         this.tanggalkembali = tanggalkembali;
-    }
-
-    public String getTotalharga() {
-        return totalharga;
-    }
-
-    public void setTotalharga(String totalharga) {
-        this.totalharga = totalharga;
-    }
-
-    public String getFoto() {
-        return foto;
-    }
-
-    public void setFoto(String foto) {
-        this.foto = foto;
     }
 }

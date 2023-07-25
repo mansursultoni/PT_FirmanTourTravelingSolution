@@ -80,11 +80,8 @@ public class MenungguKonfirmasi extends AppCompatActivity implements NavigationV
 
         public ProdukHolder(@NonNull View itemView) {
             super(itemView);
-            nama = itemView.findViewById(R.id.textViewNama);
+            nama = itemView.findViewById(R.id.tvNama);
             nomor = itemView.findViewById(R.id.textViewNomor);
-            key = itemView.findViewById(R.id.textViewKey);
-            namamobil = itemView.findViewById(R.id.textVieNamaMobil);
-            platnomor = itemView.findViewById(R.id.textViewPlat);
         }
     }
     private void getData(){

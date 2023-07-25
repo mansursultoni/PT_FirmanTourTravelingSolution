@@ -22,8 +22,6 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.firmantour.travelingsolution.Adapter;
 import com.firmantour.travelingsolution.AdminDetailWisata;
-import com.firmantour.travelingsolution.AdminPaketWisata;
-import com.firmantour.travelingsolution.AdminTambahMobil;
 import com.firmantour.travelingsolution.AdminTambahWisata;
 import com.firmantour.travelingsolution.R;
 import com.firmantour.travelingsolution.databinding.FragmentAPaketWisataBinding;
@@ -137,7 +135,7 @@ public class APaketWisata extends Fragment {
         public ProdukHolder(@NonNull View itemView) {
             super(itemView);
             fotoProduk = itemView.findViewById(R.id.imageViewFoto);
-            namaProduk = itemView.findViewById(R.id.textViewNama);
+            namaProduk = itemView.findViewById(R.id.tvNama);
             hargaProduk = itemView.findViewById(R.id.textViewHarga);
         }
     }

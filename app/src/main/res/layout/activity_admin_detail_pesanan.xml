@@ -4,19 +4,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient_blue"
+    android:background="@color/white"
     tools:context=".AdminDetailPesanan">
     <RelativeLayout
         android:id="@+id/relativeLay1"
         android:layout_width="match_parent"
+        android:background="@drawable/background_blue_botcurved"
         android:layout_height="200dp"
         app:layout_constraintTop_toTopOf="parent">
 
+        <ImageButton
+            android:id="@+id/btnPrint"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="16dp"
+            android:background="@color/transparant"
+            android:backgroundTint="@color/white"
+            android:src="@drawable/ic_print"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"/>
+
         <TextView
-            android:id="@+id/tvRentalMobil"
+            android:id="@+id/tvPesananSaya"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
+            android:layout_marginEnd="0dp"
             android:layout_marginBottom="15dp"
             android:gravity="center_horizontal"
             android:text="Detail Pesanan"
@@ -70,6 +85,7 @@
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="16sp"
+                android:visibility="invisible"
                 android:textStyle="bold"
                 android:typeface="normal" />
 
@@ -94,7 +110,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
-            android:background="@color/grey">
+            android:background="@drawable/rounded_corner_blue">
 
 
             <TextView
@@ -535,7 +551,7 @@
             android:layout_below="@id/constrain1"/>
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/bt_hapus"
-            android:text="Hapus"
+            android:text="Batalkan"
             android:background="@drawable/rounded_background_red"
             android:textAllCaps="false"
             android:textSize="20sp"

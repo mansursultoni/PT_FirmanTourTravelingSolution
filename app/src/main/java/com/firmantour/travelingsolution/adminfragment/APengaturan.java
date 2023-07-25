@@ -179,7 +179,7 @@ public class APengaturan extends Fragment {
 
         public ProdukHolder(@NonNull View itemView) {
             super(itemView);
-            namaAdmin = itemView.findViewById(R.id.textViewNama);
+            namaAdmin = itemView.findViewById(R.id.tvNama);
             nomorTelepon = itemView.findViewById(R.id.textViewNomor);
         }
     }

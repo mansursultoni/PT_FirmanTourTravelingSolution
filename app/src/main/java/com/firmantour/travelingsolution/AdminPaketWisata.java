@@ -145,7 +145,7 @@ public class AdminPaketWisata extends AppCompatActivity  implements NavigationVi
         public ProdukHolder(@NonNull View itemView) {
             super(itemView);
             fotoProduk = itemView.findViewById(R.id.imageViewFoto);
-            namaProduk = itemView.findViewById(R.id.textViewNama);
+            namaProduk = itemView.findViewById(R.id.tvNama);
             hargaProduk = itemView.findViewById(R.id.textViewHarga);
         }
     }

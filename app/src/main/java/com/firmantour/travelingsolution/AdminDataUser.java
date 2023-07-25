@@ -201,7 +201,7 @@ public class AdminDataUser extends AppCompatActivity implements NavigationView.O
 
         public ProdukHolder(@NonNull View itemView) {
             super(itemView);
-            nama = itemView.findViewById(R.id.textViewNama);
+            nama = itemView.findViewById(R.id.tvNama);
             nomor = itemView.findViewById(R.id.textViewNomor);
         }
     }

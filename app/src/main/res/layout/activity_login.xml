@@ -111,6 +111,8 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <CheckBox
+            android:visibility="invisible"
+            android:enabled="false"
             android:id="@+id/ingatsaya"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -124,9 +126,9 @@
             android:id="@+id/btnLogin"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:layout_below="@id/ingatsaya"
+            android:layout_below="@id/textinputPassword"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:background="@drawable/rounded_background_blue"
             android:text="Masuk"
             android:textAllCaps="false"

@@ -54,7 +54,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            nama = itemView.findViewById(R.id.textViewNama);
+            nama = itemView.findViewById(R.id.tvNama);
             nomor = itemView.findViewById(R.id.textViewNomor);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

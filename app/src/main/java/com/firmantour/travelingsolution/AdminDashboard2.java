@@ -157,6 +157,20 @@ public class AdminDashboard2 extends AppCompatActivity implements NavigationView
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(AdminDashboard2.this);
+        alertDialog.setTitle("Keluar");
+        alertDialog.setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        });
+        alertDialog.setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        alertDialog.show();
     }
 }

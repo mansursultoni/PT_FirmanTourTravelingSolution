@@ -16,7 +16,7 @@
             android:background="@drawable/background_blue_botcurved">
 
             <TextView
-                android:id="@+id/tvRentalMobil"
+                android:id="@+id/tvPesananSaya"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"

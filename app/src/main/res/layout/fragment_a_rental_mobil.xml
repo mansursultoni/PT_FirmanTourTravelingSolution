@@ -29,7 +29,7 @@
                 android:layout_alignParentRight="true"/>
 
             <TextView
-                android:id="@+id/tvRentalMobil"
+                android:id="@+id/tvPesananSaya"
                 android:text="RENTAL MOBIL"
                 android:textStyle="bold"
                 android:textColor="@color/white"

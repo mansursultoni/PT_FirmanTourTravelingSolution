@@ -162,7 +162,7 @@ public class URentalMobil extends Fragment {
         public ProdukHolder(@NonNull View itemView) {
             super(itemView);
             fotoProduk = itemView.findViewById(R.id.imageViewFoto);
-            namaProduk = itemView.findViewById(R.id.textViewNama);
+            namaProduk = itemView.findViewById(R.id.tvNama);
             hargaProduk = itemView.findViewById(R.id.textViewHarga);
             statusProduk = itemView.findViewById(R.id.textStatus);
         }

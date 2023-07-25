@@ -27,11 +27,8 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.firmantour.travelingsolution.model.ModelMobil;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
@@ -73,26 +70,31 @@ public class UserRentalMobil extends AppCompatActivity {
         navigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                String telepon = TvNomorTelpon.getText().toString();
                 switch (item.getItemId()) {
-                    case R.id.rentalMobil:
-//                startActivity(new Intent(Dashboard.this, AdminRentalMobil.class));
-//                finish();
-                        return true;
-                    case R.id.paketWisata:
-                        startActivity(new Intent(UserRentalMobil.this, UserPaketWisata.class));
-                        finish();
-                        return true;
-                    case R.id.menunggukonfirmasi:
-                        startActivity(new Intent(UserRentalMobil.this, MenungguKonfirmasi.class));
-                        finish();
-                        return true;
-                    case R.id.pengaturan:
-                        startActivity(new Intent(UserRentalMobil.this, UserPengaturan.class));
-                        finish();
-                        return true;
-                    default:
-                        return false;
-                }
+                        case R.id.rentalMobil:
+                            /*Intent intent = new Intent(UserRentalMobil.this, UserRentalMobil.class);
+                            intent.putExtra("nomortelepon", telepon);
+                            startActivity(intent);*/
+                            return true;
+                        case R.id.paketWisata:
+                            Intent intent2 = new Intent(UserRentalMobil.this, UserPaketWisata.class);
+                            intent2.putExtra("nomortelepon", telepon);
+                            startActivity(intent2);
+                            return true;
+                        case R.id.pemesanan:
+                            Intent intent3 = new Intent(UserRentalMobil.this, UserPesananBelumSelesai.class);
+                            intent3.putExtra("nomortelepon", telepon);
+                            startActivity(intent3);
+                            return true;
+                        case R.id.pengaturan:
+                            Intent intent4 = new Intent(UserRentalMobil.this, UserPengaturan.class);
+                            intent4.putExtra("nomortelepon", telepon);
+                            startActivity(intent4);
+                            return true;
+                        default:
+                            return false;
+                    }
             }
         });
     }
@@ -102,8 +104,6 @@ public class UserRentalMobil extends AppCompatActivity {
         String nomorTelpon = intent.getStringExtra("nomortelepon");
         TvNomorTelpon.setText(nomorTelpon);
     }
-
-
     private void getData() {
         String input1 = TvNomorTelpon.getText().toString();
         Query query = firebaseFirestore.collection("RentalMobil");
@@ -151,8 +151,6 @@ public class UserRentalMobil extends AppCompatActivity {
     private void Logout(){
         LoginSesson.clearData(this);
     }
-
-
     public class ProdukHolder extends RecyclerView.ViewHolder {
         ImageView fotoProduk;
         TextView namaProduk, hargaProduk, statusProduk;
@@ -161,7 +159,7 @@ public class UserRentalMobil extends AppCompatActivity {
         public ProdukHolder(@NonNull View itemView) {
             super(itemView);
             fotoProduk = itemView.findViewById(R.id.imageViewFoto);
-            namaProduk = itemView.findViewById(R.id.textViewNama);
+            namaProduk = itemView.findViewById(R.id.tvNama);
             hargaProduk = itemView.findViewById(R.id.textViewHarga);
             statusProduk = itemView.findViewById(R.id.textStatus);
 //            constraintLayout = itemView.findViewById(R.id.constraintLayout);
@@ -194,13 +192,11 @@ public class UserRentalMobil extends AppCompatActivity {
         super.onStart();
         adapter.startListening();
     }
-
     @Override
     protected void onResume() {
         super.onResume();
         adapter.startListening();
     }
-
     @Override
     protected void onStop() {
         super.onStop();

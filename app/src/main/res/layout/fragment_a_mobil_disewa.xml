@@ -16,7 +16,7 @@
             android:background="@drawable/gradient_blue">
 
             <TextView
-                android:id="@+id/tvRentalMobil"
+                android:id="@+id/tvPesananSaya"
                 android:text="MOBIL DISEWA"
                 android:textStyle="bold"
                 android:textColor="@color/white"

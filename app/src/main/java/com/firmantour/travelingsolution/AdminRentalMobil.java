@@ -158,7 +158,7 @@ public class AdminRentalMobil extends AppCompatActivity implements NavigationVie
         public ProdukHolder(@NonNull View itemView) {
             super(itemView);
             fotoProduk = itemView.findViewById(R.id.imageViewFoto);
-            namaProduk = itemView.findViewById(R.id.textViewNama);
+            namaProduk = itemView.findViewById(R.id.tvNama);
             hargaProduk = itemView.findViewById(R.id.textViewHarga);
             statusProduk = itemView.findViewById(R.id.textStatus);
 //            constraintLayout = itemView.findViewById(R.id.constraintLayout);

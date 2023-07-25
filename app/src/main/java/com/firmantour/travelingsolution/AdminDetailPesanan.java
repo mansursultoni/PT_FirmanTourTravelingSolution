@@ -2,6 +2,7 @@ package com.firmantour.travelingsolution;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -20,9 +21,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.firmantour.travelingsolution.databinding.ActivityAdminDetailPesananBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -37,17 +40,15 @@ import java.util.Map;
 
 public class AdminDetailPesanan extends AppCompatActivity {
 
-    private static final int PERMISSION_REQUEST_CODE = 200;
+    private ActivityAdminDetailPesananBinding binding;
     private FirebaseFirestore firebaseFirestore;
     private StorageReference storageReference;
     String[] informationArray = new String[]{"Nama","Nomor Telpon","Alamat","Plat Nomor","Nama Merk","Nama Mobil",
             "Warna","Jumlah Kursi","Tanggal Sewa","Tanggal Kembali","Total Harga"};
-    ImageView FotoProduk;
     String produkId;
-    Spinner spinner;
     TextView TvID, TvNama, TvNomor, TvAlamat, TvPlatNomor, TvNamaMerk, TvNamaMobil, TvWarna, TvJumlahKursi, TvTanggalSewa, TvTanggalKembali, TvTotalHarga;
     Button BtKonfirmasi, BtHapus;
-    ImageView TombolKembali;
+    ImageView BtKembali, BtPrint;
     ProgressBar progressBar;
 
     int pageHeight = 1120;
@@ -74,6 +75,8 @@ public class AdminDetailPesanan extends AppCompatActivity {
         TvTotalHarga = findViewById(R.id.tv_totalHarga);
         BtHapus = findViewById(R.id.bt_hapus);
         BtKonfirmasi = findViewById(R.id.bt_konfirmasi);
+        BtPrint = findViewById(R.id.btnPrint);
+        BtKembali = findViewById(R.id.ib_back);
 
 
         firebaseFirestore   = FirebaseFirestore.getInstance();
@@ -82,6 +85,30 @@ public class AdminDetailPesanan extends AppCompatActivity {
 
         readData();
 
+
+        BtKembali.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        BtPrint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createPdf(TvNama.getText().toString(),
+                        TvNomor.getText().toString(),
+                        TvAlamat.getText().toString(),
+                        TvPlatNomor.getText().toString(),
+                        TvNamaMerk.getText().toString(),
+                        TvNamaMobil.getText().toString(),
+                        TvWarna.getText().toString(),
+                        TvJumlahKursi.getText().toString(),
+                        TvTanggalSewa.getText().toString(),
+                        TvTanggalKembali.getText().toString(),
+                        TvTotalHarga.getText().toString());
+            }
+        });
         BtHapus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,7 +133,10 @@ public class AdminDetailPesanan extends AppCompatActivity {
         BtKonfirmasi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String id = TvID.getText().toString().trim();
+                konfirmasiPesanan();
+
+
+                /*String id = TvID.getText().toString().trim();
                 String nama = TvNama.getText().toString().trim();
                 String nomor = TvNomor.getText().toString().trim();
                 String alamat = TvAlamat.getText().toString().trim();
@@ -135,10 +165,32 @@ public class AdminDetailPesanan extends AppCompatActivity {
                         TvJumlahKursi.getText().toString(),
                         TvTanggalSewa.getText().toString(),
                         TvTanggalKembali.getText().toString(),
-                        TvTotalHarga.getText().toString());
+                        TvTotalHarga.getText().toString());*/
             }
         });
 
+    }
+    private void konfirmasiPesanan(){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        String key = produkId;
+
+        Map<String, Object> updateStatus = new HashMap<>();
+        updateStatus.put("statuspesanan", "Sedang Disewa");
+        DocumentReference userRef = db.collection("Pemesanan").document(key);
+        userRef.update(updateStatus)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(AdminDetailPesanan.this, "Pemesanan Dikonfirmasi", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(AdminDetailPesanan.this, "Gagal.", Toast.LENGTH_SHORT).show();
+                            // Failed to update data
+                            // Handle the error
+                        }
+                    }
+                });
+        finish();
     }
     private void KirimData(String id, String nama, String nomor, String alamat, String platnomor, String namamerk,
                            String namamobil, String warna, String jumlahkursi, String tanggalsewa,
@@ -244,11 +296,11 @@ public class AdminDetailPesanan extends AppCompatActivity {
         if (!file.exists()) {
             file.mkdirs();
         }
-        String targetPdf = directory_path+"test-3.pdf";
+        String targetPdf = directory_path+produkId+".pdf";
         File filePath = new File(targetPdf);
         try {
             document.writeTo(new FileOutputStream(filePath));
-            Toast.makeText(this, "Done", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Laporan berhasil dibuat.", Toast.LENGTH_LONG).show();
         } catch (IOException e) {
             Toast.makeText(this, "Something wrong: " + e.toString(),  Toast.LENGTH_LONG).show();
         }
@@ -256,40 +308,76 @@ public class AdminDetailPesanan extends AppCompatActivity {
     }
 
     private void readData() {
-        firebaseFirestore.collection("PesananBelumSelesai").whereEqualTo("key", produkId)
-                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                TvID.setText(document.getString("key"));
-                                TvNama.setText(document.getString("nama"));
-                                TvNomor.setText(document.getString("nomor"));
-                                TvAlamat.setText(document.getString("alamat"));
-                                TvPlatNomor.setText(document.getString("platnomor"));
-                                TvNamaMerk.setText(document.getString("namamerk"));
-                                TvNamaMobil.setText(document.getString("namamobil"));
-                                TvWarna.setText(document.getString("warna"));
-                                TvJumlahKursi.setText(document.getString("jumlahkursi"));
-                                TvTanggalSewa.setText(document.getString("tanggalsewa"));
-                                TvTanggalKembali.setText(document.getString("tanggalkembali"));
-                                TvTotalHarga.setText(document.getString("totalharga"));
+        Intent intent = getIntent();
+        String statusPesanan = intent.getStringExtra("STATUS_PESANAN");
+
+        if (statusPesanan != null){
+            BtKonfirmasi.setVisibility(View.INVISIBLE);
+            BtHapus.setVisibility(View.INVISIBLE);
+            firebaseFirestore.collection("Pemesanan").whereEqualTo("key", produkId)
+                    .whereEqualTo("statuspesanan","Selesai")
+                    .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    TvID.setText(document.getString("key"));
+                                    TvNama.setText(document.getString("nama"));
+                                    TvNomor.setText(document.getString("nomortelepon"));
+                                    TvAlamat.setText(document.getString("alamat"));
+                                    TvPlatNomor.setText(document.getString("platnomor"));
+                                    TvNamaMerk.setText(document.getString("namamerk"));
+                                    TvNamaMobil.setText(document.getString("namamobil"));
+                                    TvWarna.setText(document.getString("warna"));
+                                    TvJumlahKursi.setText(document.getString("jumlahkursi"));
+                                    TvTanggalSewa.setText(document.getString("tanggalsewa"));
+                                    TvTanggalKembali.setText(document.getString("tanggalkembali"));
+                                    TvTotalHarga.setText(document.getString("harga"));
 
 
+                                }
+                            } else {
+                                Toast.makeText(AdminDetailPesanan.this, "Gagal Mengambil Document", Toast.LENGTH_SHORT).show();
+                                finish();
                             }
-                        } else {
-                            Toast.makeText(AdminDetailPesanan.this, "Gagal Mengambil Document", Toast.LENGTH_SHORT).show();
-                            finish();
                         }
-                    }
-                });
+                    });
+        }else {
+            firebaseFirestore.collection("Pemesanan").whereEqualTo("key", produkId)
+                    .whereEqualTo("statuspesanan","Belum Selesai")
+                    .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    TvID.setText(document.getString("key"));
+                                    TvNama.setText(document.getString("nama"));
+                                    TvNomor.setText(document.getString("nomortelepon"));
+                                    TvAlamat.setText(document.getString("alamat"));
+                                    TvPlatNomor.setText(document.getString("platnomor"));
+                                    TvNamaMerk.setText(document.getString("namamerk"));
+                                    TvNamaMobil.setText(document.getString("namamobil"));
+                                    TvWarna.setText(document.getString("warna"));
+                                    TvJumlahKursi.setText(document.getString("jumlahkursi"));
+                                    TvTanggalSewa.setText(document.getString("tanggalsewa"));
+                                    TvTanggalKembali.setText(document.getString("tanggalkembali"));
+                                    TvTotalHarga.setText(document.getString("harga"));
+
+
+                                }
+                            } else {
+                                Toast.makeText(AdminDetailPesanan.this, "Gagal Mengambil Document", Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
+                        }
+                    });
+        }
+
     }
     private void hapusData() {
         String nomor = TvNomor.getText().toString();
         String id = TvID.getText().toString();
-        firebaseFirestore.collection("ProdukBelumSelesai").document(id).delete();
-        storageReference.child(produkId).delete();
-        firebaseFirestore.collection("PesananUser").document(nomor).delete();
+        firebaseFirestore.collection("Pemesanan").document(id).delete();
         storageReference.child(produkId).delete();
         Toast.makeText(this, "Pesanan telah dihapus", Toast.LENGTH_SHORT).show();
         finish();

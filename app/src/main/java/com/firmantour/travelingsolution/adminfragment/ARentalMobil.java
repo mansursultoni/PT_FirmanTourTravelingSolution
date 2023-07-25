@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,19 +22,14 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.firmantour.travelingsolution.Adapter;
 import com.firmantour.travelingsolution.AdminDetailMobil;
-import com.firmantour.travelingsolution.AdminRentalMobil;
 import com.firmantour.travelingsolution.AdminTambahMobil;
 import com.firmantour.travelingsolution.R;
 import com.firmantour.travelingsolution.databinding.FragmentARentalMobilBinding;
 import com.firmantour.travelingsolution.model.ModelMobil;
-import com.firmantour.travelingsolution.model.ModelUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ARentalMobil extends Fragment {
 
@@ -132,7 +126,7 @@ public class ARentalMobil extends Fragment {
         public ProdukHolder(@NonNull View itemView) {
             super(itemView);
             fotoProduk = itemView.findViewById(R.id.imageViewFoto);
-            namaProduk = itemView.findViewById(R.id.textViewNama);
+            namaProduk = itemView.findViewById(R.id.tvNama);
             hargaProduk = itemView.findViewById(R.id.textViewHarga);
             statusProduk = itemView.findViewById(R.id.textStatus);
         }

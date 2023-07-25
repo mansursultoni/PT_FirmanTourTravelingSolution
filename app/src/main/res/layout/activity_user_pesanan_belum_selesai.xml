@@ -14,46 +14,26 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/tv_hallo"
-            android:layout_width="wrap_content"
+            android:id="@+id/tvNomorTelepon"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginLeft="8dp"
-            android:text="Hallo, "
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="15dp"
+            android:gravity="center_horizontal"
+            android:text="Pesanan Saya"
             android:textColor="@color/white"
-            android:textSize="20sp"
+            android:visibility="invisible"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/tv_user"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_toEndOf="@id/tv_hallo"
-            android:text="User"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-        <TextView
-            android:id="@+id/tv_nomorTelpon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tv_hallo"
-            android:layout_marginLeft="8dp"
-            android:text="Nomor"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-
-        <TextView
-            android:id="@+id/tvRentalMobil"
+            android:id="@+id/tvPesananSaya"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="15dp"
             android:gravity="center_horizontal"
-            android:text="Rental Mobil"
+            android:text="Pesanan Saya"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -67,15 +47,16 @@
 
     </RelativeLayout>
 
-    <LinearLayout
+    <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
-        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:orientation="horizontal">
-
-
-    </LinearLayout>
+        android:layout_height="55dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/gradient_blue"
+        app:itemIconTint="@color/white"
+        app:itemTextColor="@color/white"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/bottom_nav_menu" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -85,13 +66,6 @@
         android:layout_below="@id/relativeLay1"
         android:background="@drawable/rounded_top_white"
         android:padding="16dp"
-        tools:listitem="@layout/item_mobil" />
-
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="@style/Widget.AppCompat.ProgressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true" />
+        tools:listitem="@layout/item_pesanan" />
 
 </RelativeLayout>

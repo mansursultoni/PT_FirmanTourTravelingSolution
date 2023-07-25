@@ -16,10 +16,13 @@
         android:theme="@style/Theme.PTFIRMANTOURTRAVELINGSOLUTION"
         tools:targetApi="31">
         <activity
-            android:name=".UserPengaturan"
+            android:name=".UserDetailPesanan"
             android:exported="false" />
         <activity
             android:name=".UserPaketWisata"
+            android:exported="false" />
+        <activity
+            android:name=".UserPengaturan"
             android:exported="false" />
         <activity
             android:name=".AdminDashboard2"

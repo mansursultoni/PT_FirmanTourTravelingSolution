@@ -37,7 +37,7 @@ public class UserCheckout extends AppCompatActivity {
     TextView TvID, TvNama, TvTelpon, TvAlamat, TvPlatnomor, TvNamamerk, TvNamamobil, TvWarna,
             TvJumlahkursi, TvTotalHarga, TvTanggalsewa, TvTanggalKembali;
     Button BtPesan;
-    ProgressBar progressBar;
+
     ImageView FotoPembayaran, TombolKembali;
     private Uri filePath;
     private String fotoUrl;
@@ -137,6 +137,7 @@ public class UserCheckout extends AppCompatActivity {
                 .start();
     }
     private void uploadImage(){
+        String telepon = TvTelpon.getText().toString();
         if(filePath != null){
             String key = TvID.getText().toString();
             DocumentReference docRef = firebaseFirestore.collection("Pemesanan").document(key);
@@ -176,21 +177,9 @@ public class UserCheckout extends AppCompatActivity {
                                             TvTotalHarga.getText().toString(),
                                             statuspesan);
                                     Toast.makeText(UserCheckout.this, "Pemesanan Telah Diproses.", Toast.LENGTH_SHORT).show();
-                                    finish();
-                                }
-                            });
-                            uploadTask.addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                                @Override
-                                public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
-
-                                    double progres = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot.getTotalByteCount());
-
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-
-                                    Toast.makeText(UserCheckout.this, "Failed " + e.getMessage(), Toast.LENGTH_LONG).show();
+                                    Intent intent3 = new Intent(UserCheckout.this, UserPesananBelumSelesai.class);
+                                    intent3.putExtra("nomortelepon", telepon);
+                                    startActivity(intent3);
                                 }
                             });
                         }

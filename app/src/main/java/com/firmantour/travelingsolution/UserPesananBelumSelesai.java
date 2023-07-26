@@ -32,7 +32,7 @@ import com.squareup.picasso.Picasso;
 public class UserPesananBelumSelesai extends AppCompatActivity {
 
     private ActivityUserPesananBelumSelesaiBinding binding;
-    private FirebaseFirestore firebaseFirestore;
+    private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
     private FirestoreRecyclerAdapter adapter;
 
     @Override
@@ -43,8 +43,6 @@ public class UserPesananBelumSelesai extends AppCompatActivity {
 
         Window window = this.getWindow();
         window.setStatusBarColor(this.getResources().getColor(R.color.blue));
-
-        firebaseFirestore = FirebaseFirestore.getInstance();
 
         binding.recyclerView.setLayoutManager(new GridLayoutManager(this, 1));
 

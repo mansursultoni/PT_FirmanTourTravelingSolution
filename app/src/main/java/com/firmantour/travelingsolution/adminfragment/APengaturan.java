@@ -1,5 +1,6 @@
 package com.firmantour.travelingsolution.adminfragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -21,6 +22,7 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.firmantour.travelingsolution.Adapter;
 import com.firmantour.travelingsolution.R;
+import com.firmantour.travelingsolution.adminfragment.ActivityPengaturanAdmin.Admin_UbahDataAdmin;
 import com.firmantour.travelingsolution.databinding.FragmentAPengaturanBinding;
 import com.firmantour.travelingsolution.model.ModelAdmin;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -76,8 +78,10 @@ public class APengaturan extends Fragment {
         binding.btnUbahAdmin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment aUbahAdmin = new AUbahAdmin();
-                replaceFragment(aUbahAdmin);
+                String nomorAdmin = binding.etNomorTelepon.getText().toString();
+                Intent intent = new Intent(getActivity(), Admin_UbahDataAdmin.class);
+                intent.putExtra("NOMOR_TELEPON_ADMIN",nomorAdmin);
+                startActivity(intent);
             }
         });
 

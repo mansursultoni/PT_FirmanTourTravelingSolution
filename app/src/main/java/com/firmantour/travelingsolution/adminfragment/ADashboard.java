@@ -60,6 +60,7 @@ public class ADashboard extends Fragment {
         getJumlahPemesanan();
         getJumlahWisata();
         getMobilDisewa();
+
         return view;
     }
     private void getJumlahMobil(){

@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.firmantour.travelingsolution.Adapter;
+import com.firmantour.travelingsolution.AdminUbahAdmin;
 import com.firmantour.travelingsolution.R;
 import com.firmantour.travelingsolution.adminfragment.ActivityPengaturanAdmin.Admin_UbahDataAdmin;
 import com.firmantour.travelingsolution.databinding.FragmentAPengaturanBinding;
@@ -78,9 +79,13 @@ public class APengaturan extends Fragment {
         binding.btnUbahAdmin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String namaAdmin = binding.etNamaAdmin.getText().toString();
                 String nomorAdmin = binding.etNomorTelepon.getText().toString();
-                Intent intent = new Intent(getActivity(), Admin_UbahDataAdmin.class);
-                intent.putExtra("NOMOR_TELEPON_ADMIN",nomorAdmin);
+                String passwordAdmin = binding.etPassword.getText().toString();
+                Intent intent = new Intent(getActivity(), AdminUbahAdmin.class);
+                intent.putExtra("ADMIN_NAMA",namaAdmin);
+                intent.putExtra("ADMIN_NOMOR",nomorAdmin);
+                intent.putExtra("ADMIN_PASSWORD",passwordAdmin);
                 startActivity(intent);
             }
         });

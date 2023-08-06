@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.Toast;
 
 import com.firmantour.travelingsolution.adminfragment.ADashboard;
 import com.firmantour.travelingsolution.adminfragment.ADataUser;
@@ -156,21 +157,22 @@ public class AdminDashboard2 extends AppCompatActivity implements NavigationView
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(AdminDashboard2.this);
-        alertDialog.setTitle("Keluar");
-        alertDialog.setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Konfirmasi Keluar");
+        builder.setMessage("Apakah Anda yakin ingin keluar dari aplikasi?");
+        builder.setPositiveButton("Ya", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 finish();
             }
         });
-        alertDialog.setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
             }
         });
+        AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
 }

@@ -1,16 +1,16 @@
 package com.firmantour.travelingsolution.model;
 
 public class ModelUser {
-    private String sebagai, nama, nomor, tanggallahir, jeniskelamin, alamat, password;
+    private String sebagai, nama, nomortelepon, tanggallahir, jeniskelamin, alamat, password;
 
     public ModelUser(){
 
     }
 
-    public ModelUser(String sebagai, String nama, String nomor, String tanggallahir, String jeniskelamin, String alamat, String password) {
+    public ModelUser(String sebagai, String nama, String nomortelepon, String tanggallahir, String jeniskelamin, String alamat, String password) {
         this.sebagai = sebagai;
         this.nama = nama;
-        this.nomor = nomor;
+        this.nomortelepon = nomortelepon;
         this.tanggallahir = tanggallahir;
         this.jeniskelamin = jeniskelamin;
         this.alamat = alamat;
@@ -32,12 +32,12 @@ public class ModelUser {
         this.nama = nama;
     }
 
-    public String getNomor() {
-        return nomor;
+    public String getNomortelepon() {
+        return nomortelepon;
     }
 
-    public void setNomor(String nomor) {
-        this.nomor = nomor;
+    public void setNomortelepon(String nomortelepon) {
+        this.nomortelepon = nomortelepon;
     }
 
     public String getTanggallahir() {

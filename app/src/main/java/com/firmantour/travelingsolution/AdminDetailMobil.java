@@ -159,7 +159,7 @@ public class AdminDetailMobil extends AppCompatActivity implements AdapterView.O
                                 TvNamaMerk.setText(document.getString("namamerk"));
                                 TvNamaMobil.setText(document.getString("namamobil"));
                                 TvWarna.setText(document.getString("warna"));
-                                TvJumlahKursi.setText(document.getString("jumlahkursi"));
+                                TvJumlahKursi.setText(document.getString("kursi"));
                                 TextHarga.setText(document.getString("harga"));
                                 if (fotoUrl != "") {
                                     Picasso.get().load(fotoUrl).fit().into(FotoMobil);

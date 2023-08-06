@@ -177,12 +177,12 @@ public class AdminDataUser extends AppCompatActivity implements NavigationView.O
             @Override
             protected void onBindViewHolder(@NonNull ProdukHolder holder, int position, @NonNull final ModelUser model) {
                 holder.nama.setText(model.getNama());
-                holder.nomor.setText(model.getNomor());
+                holder.nomor.setText(model.getNomortelepon());
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(AdminDataUser.this, AdminDetailUser.class);
-                        intent.putExtra("nomor", model.getNomor());
+                        intent.putExtra("nomor", model.getNomortelepon());
                         startActivity(intent);
                     }
                 });

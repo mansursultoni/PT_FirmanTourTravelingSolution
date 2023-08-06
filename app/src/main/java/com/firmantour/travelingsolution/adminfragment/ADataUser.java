@@ -1,50 +1,51 @@
 package com.firmantour.travelingsolution.adminfragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.firmantour.travelingsolution.AdminDetailUser;
 import com.firmantour.travelingsolution.R;
+import com.firmantour.travelingsolution.databinding.FragmentADataUserBinding;
+import com.firmantour.travelingsolution.model.ModelUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ADataUser#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+import java.util.List;
+
 public class ADataUser extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private FragmentADataUserBinding binding;
+    private FirestoreRecyclerAdapter adapter;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private List<ModelUser> list = new ArrayList<>();
+    DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+    RecyclerView RecyclerView;
 
     public ADataUser() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ADataUser.
-     */
-    // TODO: Rename and change types and number of parameters
     public static ADataUser newInstance(String param1, String param2) {
         ADataUser fragment = new ADataUser();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
+
         return fragment;
     }
 
@@ -52,8 +53,7 @@ public class ADataUser extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+
         }
     }
 
@@ -61,6 +61,76 @@ public class ADataUser extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_a_data_user, container, false);
+        binding = FragmentADataUserBinding.inflate(inflater,container,false);
+        View view = binding.getRoot();
+
+        binding.recyclerView.setHasFixedSize(true);
+        binding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        getData();
+
+        return view;
     }
+
+    private void getData(){
+        Query query = db.collection("Users");
+        FirestoreRecyclerOptions<ModelUser> response = new FirestoreRecyclerOptions.Builder<ModelUser>()
+                .setQuery(query, ModelUser.class).build();
+        adapter = new FirestoreRecyclerAdapter<ModelUser, ProdukHolder>(response) {
+            @NonNull
+            @Override
+            public ProdukHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_user, parent, false);
+                return new ProdukHolder(view);
+            }
+
+            @Override
+            protected void onBindViewHolder(@NonNull ProdukHolder holder, int position, @NonNull final ModelUser model) {
+                holder.nama.setText(model.getNama());
+                holder.nomor.setText(model.getNomortelepon());
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(getActivity(), AdminDetailUser.class);
+                        intent.putExtra("nomor", model.getNomortelepon());
+                        startActivity(intent);
+                    }
+                });
+            }
+
+            @Override
+            public void onError(@NonNull FirebaseFirestoreException e) {
+                Log.e("Ditemukan Error: ", e.getMessage());
+            }
+        };
+        adapter.notifyDataSetChanged();
+        binding.recyclerView.setAdapter(adapter);
+    }
+    private class ProdukHolder extends RecyclerView.ViewHolder {
+        TextView nama, nomor;
+
+        public ProdukHolder(@NonNull View itemView) {
+            super(itemView);
+            nama = itemView.findViewById(R.id.tvNama);
+            nomor = itemView.findViewById(R.id.textViewNomor);
+        }
+    }
+    @Override
+    public void onStart() {
+        super.onStart();
+        adapter.startListening();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        adapter.startListening();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        adapter.stopListening();
+    }
+
 }

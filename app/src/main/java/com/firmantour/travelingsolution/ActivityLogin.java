@@ -36,8 +36,8 @@ public class ActivityLogin extends AppCompatActivity {
         window.setStatusBarColor(this.getResources().getColor(R.color.blue));
 
         //--Inisialisasi--
-        EtNomor = findViewById(R.id.etNomor);
-        EtPassword = findViewById(R.id.etPassword);
+        EtNomor = findViewById(R.id.etNomorRekening);
+        EtPassword = findViewById(R.id.etAN);
         checkBox = findViewById(R.id.ingatsaya);
 
         setCheckBox();

@@ -21,7 +21,9 @@ import android.widget.Toast;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.firmantour.travelingsolution.Adapter;
+import com.firmantour.travelingsolution.AdminTambahAnggota;
 import com.firmantour.travelingsolution.AdminUbahAdmin;
+import com.firmantour.travelingsolution.AdminUbahRekening;
 import com.firmantour.travelingsolution.R;
 import com.firmantour.travelingsolution.adminfragment.ActivityPengaturanAdmin.Admin_UbahDataAdmin;
 import com.firmantour.travelingsolution.databinding.FragmentAPengaturanBinding;
@@ -93,16 +95,23 @@ public class APengaturan extends Fragment {
         binding.btnUbahRekening.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment aUbahRekening = new AUbahRekening();
-                replaceFragment(aUbahRekening);
+                String namabank = binding.etNamaBank.getText().toString();
+                String nomorrekening = binding.etRekening.getText().toString();
+                String atasnama = binding.etAtasNama.getText().toString();
+                String teleponrekening = binding.etTeleponRekening.getText().toString();
+                Intent intent = new Intent(getActivity(), AdminUbahRekening.class);
+                intent.putExtra("REK_BANK",namabank);
+                intent.putExtra("REK_NO",nomorrekening);
+                intent.putExtra("REK_AN",atasnama);
+                intent.putExtra("REK_TELP",teleponrekening);
+                startActivity(intent);
             }
         });
 
         binding.btnTambahAnggota.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment aTambahAnggota = new ATambahAnggota();
-                replaceFragment(aTambahAnggota);
+                startActivity(new Intent(getActivity(), AdminTambahAnggota.class));
             }
         });
 
@@ -148,6 +157,7 @@ public class APengaturan extends Fragment {
                                 binding.etNamaBank.setText(document.getString("namabank"));
                                 binding.etRekening.setText(document.getString("nomorrekening"));
                                 binding.etAtasNama.setText(document.getString("atasnama"));
+                                binding.etTeleponRekening.setText(document.getString("teleponrekening"));
                             }
                         } else {
                             Toast.makeText(getContext(), "Gagal memuat data.", Toast.LENGTH_SHORT).show();

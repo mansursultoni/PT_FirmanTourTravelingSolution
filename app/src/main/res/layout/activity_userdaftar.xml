@@ -61,7 +61,7 @@
             android:layout_height="match_parent">
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textinputNama"
+                android:id="@+id/textinputNamaBank"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -77,7 +77,7 @@
                 app:startIconDrawable="@drawable/ic_person">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etNama"
+                    android:id="@+id/etBank"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
@@ -85,7 +85,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textinputNomor"
+                android:id="@+id/textinputNomorRekening"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -97,11 +97,11 @@
                 app:boxBackgroundMode="outline"
                 app:boxStrokeColor="@color/black"
                 app:hintTextColor="@color/black"
-                android:layout_below="@id/textinputNama"
+                android:layout_below="@id/textinputNamaBank"
                 app:startIconDrawable="@drawable/ic_call">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etNomor"
+                    android:id="@+id/etNomorRekening"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="number"
@@ -122,7 +122,7 @@
                 app:boxBackgroundMode="outline"
                 app:boxStrokeColor="@color/black"
                 app:hintTextColor="@color/black"
-                android:layout_below="@id/textinputNomor"
+                android:layout_below="@id/textinputNomorRekening"
                 app:startIconDrawable="@drawable/ic_calendar">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -205,7 +205,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textinputPassword"
+                android:id="@+id/textinputAN"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -222,7 +222,7 @@
                 app:startIconDrawable="@drawable/ic_password">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etPassword"
+                    android:id="@+id/etAN"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:enabled="true"
@@ -246,7 +246,7 @@
                 app:boxBackgroundMode="outline"
                 app:boxStrokeColor="@color/black"
                 app:hintTextColor="@color/black"
-                android:layout_below="@id/textinputPassword"
+                android:layout_below="@id/textinputAN"
                 app:startIconDrawable="@drawable/ic_password">
 
                 <com.google.android.material.textfield.TextInputEditText

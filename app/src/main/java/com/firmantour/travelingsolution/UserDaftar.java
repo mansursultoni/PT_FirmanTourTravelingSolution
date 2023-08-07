@@ -67,12 +67,12 @@ public class UserDaftar extends AppCompatActivity implements AdapterView.OnItemS
         spinner.setOnItemSelectedListener(this);
 
         Sebagai = findViewById(R.id.tv_user);
-        Nama = findViewById(R.id.etNama);
-        NomorTelepon = findViewById(R.id.etNomor);
+        Nama = findViewById(R.id.etBank);
+        NomorTelepon = findViewById(R.id.etNomorRekening);
         TanggalLahir = findViewById(R.id.etTanggalLahir);
         JenisKelamin = findViewById(R.id.etJenisKelamin);
         Alamat = findViewById(R.id.etAlamat);
-        Password = findViewById(R.id.etPassword);
+        Password = findViewById(R.id.etAN);
         Password2 = findViewById(R.id.etPassword2);
         Tanggal = findViewById(R.id.ibEditCalendar);
         Daftar = findViewById(R.id.btnDaftar);

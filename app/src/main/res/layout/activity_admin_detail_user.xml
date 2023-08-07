@@ -61,7 +61,7 @@
             android:layout_height="match_parent">
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textinputNama"
+                android:id="@+id/textinputNamaBank"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -85,7 +85,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textinputNomor"
+                android:id="@+id/textinputNomorRekening"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -97,7 +97,7 @@
                 app:boxBackgroundMode="outline"
                 app:boxStrokeColor="@color/black"
                 app:hintTextColor="@color/black"
-                android:layout_below="@id/textinputNama"
+                android:layout_below="@id/textinputNamaBank"
                 app:startIconDrawable="@drawable/ic_call">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -122,7 +122,7 @@
                 app:boxBackgroundMode="outline"
                 app:boxStrokeColor="@color/black"
                 app:hintTextColor="@color/black"
-                android:layout_below="@id/textinputNomor"
+                android:layout_below="@id/textinputNomorRekening"
                 app:startIconDrawable="@drawable/ic_calendar">
 
                 <com.google.android.material.textfield.TextInputEditText

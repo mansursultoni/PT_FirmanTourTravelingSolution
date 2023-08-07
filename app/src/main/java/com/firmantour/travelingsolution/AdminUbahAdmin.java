@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,6 +50,9 @@ public class AdminUbahAdmin extends AppCompatActivity {
         binding = ActivityAdminUbahAdminBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        Window window = this.getWindow();
+        window.setStatusBarColor(this.getResources().getColor(R.color.blue));
+
         readData();
 
         binding.imgKembali.setOnClickListener(new View.OnClickListener() {
@@ -60,36 +64,42 @@ public class AdminUbahAdmin extends AppCompatActivity {
         binding.btnSimpan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(AdminUbahAdmin.this);
-                builder.setTitle("Konfirmasi Perubahan");
-                builder.setMessage("Nama :" +
-                        "\n" + binding.etNama.getText().toString() +
-                        "\n\n" + "Nomor Telepon :" +
-                        "\n" + binding.etNomor.getText().toString() +
-                        "\n\n" + "Password :" +
-                        "\n" + binding.etPassword.getText().toString() +
-                        "\n\n" + "Login Kembali ?"
-                );
-                builder.setPositiveButton("Ya", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        hapusDataFireStore();
-                        hapusDataRealtime();
-                        simpanDataFirestore();
-                        simpanDataRealtime();
-                        Toast.makeText(AdminUbahAdmin.this, "Data Berhasil Diubah", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(AdminUbahAdmin.this, ActivityLogin.class));
-                        finish();
-                    }
-                });
-                builder.setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-                AlertDialog alertDialog = builder.create();
-                alertDialog.show();
+                if (binding.etNama.getText().toString().isEmpty() ||
+                        binding.etNomor.getText().toString().isEmpty() ||
+                        binding.etPassword.getText().toString().isEmpty()){
+                    Toast.makeText(AdminUbahAdmin.this, "Data harus lengkap.", Toast.LENGTH_SHORT).show();
+                }else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(AdminUbahAdmin.this);
+                    builder.setTitle("Konfirmasi Perubahan");
+                    builder.setMessage("Nama :" +
+                            "\n" + binding.etNama.getText().toString() +
+                            "\n\n" + "Nomor Telepon :" +
+                            "\n" + binding.etNomor.getText().toString() +
+                            "\n\n" + "Password :" +
+                            "\n" + binding.etPassword.getText().toString() +
+                            "\n\n" + "Login Kembali ?"
+                    );
+                    builder.setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            hapusDataFireStore();
+                            hapusDataRealtime();
+                            simpanDataFirestore();
+                            simpanDataRealtime();
+                            Toast.makeText(AdminUbahAdmin.this, "Data Berhasil Disimpan", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(AdminUbahAdmin.this, ActivityLogin.class));
+                            finish();
+                        }
+                    });
+                    builder.setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                }
 
             }
         });
@@ -107,157 +117,6 @@ public class AdminUbahAdmin extends AppCompatActivity {
             binding.etNomor.setText(nomorAdmin);
             binding.etPassword.setText(passwordAdmin);
         }
-    }
-
-    private void updateData() {
-        final String nomorTelepon = binding.etNomor.getText().toString();
-        final String nama = binding.etNama.getText().toString();
-        final String password = binding.etPassword.getText().toString();
-
-        // Jika nomor telepon tidak diubah
-        if (nomorTelepon == Nomor) {
-
-            // Update Data Firestore
-            DocumentReference userDocRef = firebaseFirestore.collection("Users").document(nomorTelepon);
-            userDocRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    if (task.isSuccessful()) {
-                        DocumentSnapshot document = task.getResult();
-                        if (document.exists()) {
-                            // Dokumen ditemukan, lakukan pembaruan
-                            userDocRef.update("nama", nama, "password", password)
-                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if (task.isSuccessful()) {
-                                                // Tindakan yang dijalankan jika pembaruan berhasil
-                                            } else {
-                                                // Tindakan yang dijalankan jika pembaruan gagal
-                                            }
-                                        }
-                                    });
-                        } else {
-                            Toast.makeText(AdminUbahAdmin.this, "", Toast.LENGTH_SHORT).show();
-                        }
-                    } else {
-                        // Tindakan yang dijalankan jika query gagal
-                    }
-                }
-            });
-            // Update Data Realtime
-            databaseRef = FirebaseDatabase.getInstance().getReference("Login");
-            DatabaseReference adminRef = databaseRef.child(nomorTelepon);
-            adminRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    if (dataSnapshot.exists()) {
-                        adminRef.child("nama").setValue(nama);
-                        adminRef.child("password").setValue(password)
-                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if (task.isSuccessful()) {
-                                            // Tindakan yang dijalankan jika pembaruan berhasil
-                                        } else {
-                                            // Tindakan yang dijalankan jika pembaruan gagal
-                                        }
-                                    }
-                                });
-                    } else {
-                        // Data dengan nomor telepon tersebut tidak ditemukan
-                        // Lakukan tindakan yang sesuai, misalnya, menampilkan pesan error
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                    // Tindakan yang dijalankan jika terjadi kesalahan dalam membaca data
-                }
-            });
-
-        } else { // Jika Nomor Telepon diubah
-
-            // Hapus data lama pada Firestore
-            DocumentReference docRef = firebaseFirestore.collection("Users").document(nomorTelepon);
-            docRef.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    if (task.isSuccessful()) {
-                        // Tindakan yang dijalankan jika penghapusan berhasil
-                    } else {
-                        // Tindakan yang dijalankan jika penghapusan gagal
-                    }
-                }
-            });
-
-
-            // Hapus data lama pada Realtime
-            DatabaseReference deleteAdmin = databaseRef.child(nomorTelepon);
-            deleteAdmin.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    if (dataSnapshot.exists()) {
-                        // Data dengan nomor telepon tersebut ditemukan, maka hapus data
-                        deleteAdmin.removeValue()
-                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if (task.isSuccessful()) {
-                                            // Tindakan yang dijalankan jika penghapusan berhasil
-                                        } else {
-                                            // Tindakan yang dijalankan jika penghapusan gagal
-                                        }
-                                    }
-                                });
-                    } else {
-                        // Data dengan nomor telepon tersebut tidak ditemukan
-                        // Lakukan tindakan yang sesuai, misalnya, menampilkan pesan error
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                    // Tindakan yang dijalankan jika terjadi kesalahan dalam membaca data
-                }
-            });
-
-
-            // Simpan data pada Firestore
-            firebaseFirestore.collection("Users").document(nomorTelepon).set(new Admin(nama, nomorTelepon, password))
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                // Tindakan yang dijalankan jika penyimpanan berhasil
-                            } else {
-                                // Tindakan yang dijalankan jika penyimpanan gagal
-                            }
-                        }
-                    });
-
-            // Simpan data pada Realtime
-            DatabaseReference saveAdmin = databaseRef.child(nomorTelepon);
-            String sebagai = "admin";
-            // Simpan data ke Firebase Realtime Database
-            saveAdmin.child("nama").setValue(nama);
-            saveAdmin.child("nomortelepon").setValue(nomorTelepon);
-            saveAdmin.child("password").setValue(password);
-            saveAdmin.child("sebagai").setValue(sebagai)
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                // Tindakan yang dijalankan jika penyimpanan berhasil
-                            } else {
-                                // Tindakan yang dijalankan jika penyimpanan gagal
-                            }
-                        }
-                    });
-
-        }
-
-
     }
 
     private void simpanDataFirestore() {

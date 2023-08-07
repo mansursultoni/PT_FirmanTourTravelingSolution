@@ -23,6 +23,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif"
             android:text="Pemesan"
+            android:layout_gravity="center_horizontal"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -58,7 +59,7 @@
                 android:layout_width="140dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif"
-                android:text="NomorTelepon"
+                android:text="Nomor Telepon"
                 android:textColor="@color/white"
                 android:textSize="16sp" />
             <TextView

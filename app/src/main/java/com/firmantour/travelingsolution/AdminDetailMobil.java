@@ -23,6 +23,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.firmantour.travelingsolution.databinding.ActivityAdmindetailmobilBinding;
+import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -42,6 +44,8 @@ import java.util.Map;
 
 public class AdminDetailMobil extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
+
+    private ActivityAdmindetailmobilBinding binding;
     private FirebaseFirestore firebaseFirestore;
     DatabaseReference firebaseDatabase;
     private StorageReference storageReference;
@@ -58,12 +62,13 @@ public class AdminDetailMobil extends AppCompatActivity implements AdapterView.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admindetailmobil);
+        binding = ActivityAdmindetailmobilBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         Window window = this.getWindow();
         window.setStatusBarColor(this.getResources().getColor(R.color.blue));
 
-        spinner     = findViewById(R.id.spinner2);
+        /*spinner     = findViewById(R.id.spinner2);
         FotoMobil = findViewById(R.id.imageView);
         TvPlatNomor = findViewById(R.id.et_platnomor);
         TextStatus  = findViewById(R.id.et_status);
@@ -74,28 +79,27 @@ public class AdminDetailMobil extends AppCompatActivity implements AdapterView.O
         TextHarga   = findViewById(R.id.et_harga);
         TombolHapus = findViewById(R.id.bt_delete);
         TombolEdit  = findViewById(R.id.bt_update);
-        TombolKembali = findViewById(R.id.ib_back);
-        progressBar = findViewById(R.id.progressBar);
+        TombolKembali = findViewById(R.id.ib_back);*/
 
-        progressBar.setVisibility(INVISIBLE);
+        binding.progressBar.setVisibility(INVISIBLE);
         firebaseFirestore   = FirebaseFirestore.getInstance();
         storageReference    = FirebaseStorage.getInstance().getReference();
         produkId    = getIntent().getExtras().getString("nomor");
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.status, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(this);
+        binding.spinner2.setAdapter(adapter);
+        binding.spinner2.setOnItemSelectedListener(this);
 
         readData();
 
-        FotoMobil.setOnClickListener(new View.OnClickListener() {
+        binding.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ambilGambar();
             }
         });
-        TombolEdit.setOnClickListener(new View.OnClickListener() {
+        binding.btUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(AdminDetailMobil.this);
@@ -116,7 +120,7 @@ public class AdminDetailMobil extends AppCompatActivity implements AdapterView.O
                 alertDialog.show();
             }
         });
-        TombolHapus.setOnClickListener(new View.OnClickListener() {
+        binding.btDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(AdminDetailMobil.this);
@@ -138,7 +142,7 @@ public class AdminDetailMobil extends AppCompatActivity implements AdapterView.O
 
             }
         });
-        TombolKembali.setOnClickListener(new View.OnClickListener() {
+        binding.ibBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
@@ -154,17 +158,17 @@ public class AdminDetailMobil extends AppCompatActivity implements AdapterView.O
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 fotoUrl = document.getString("foto");
-                                TvPlatNomor.setText(document.getString("platnomor"));
-                                TextStatus.setText(document.getString("status"));
-                                TvNamaMerk.setText(document.getString("namamerk"));
-                                TvNamaMobil.setText(document.getString("namamobil"));
-                                TvWarna.setText(document.getString("warna"));
-                                TvJumlahKursi.setText(document.getString("kursi"));
-                                TextHarga.setText(document.getString("harga"));
+                                binding.etPlatnomor.setText(document.getString("platnomor"));
+                                binding.etStatus.setText(document.getString("status"));
+                                binding.etNamamerk.setText(document.getString("namamerk"));
+                                binding.etNamamobil.setText(document.getString("namamobil"));
+                                binding.etWarna.setText(document.getString("warna"));
+                                binding.etJumlahkursi.setText(document.getString("kursi"));
+                                binding.etHarga.setText(document.getString("harga"));
                                 if (fotoUrl != "") {
-                                    Picasso.get().load(fotoUrl).fit().into(FotoMobil);
+                                    Picasso.get().load(fotoUrl).fit().into(binding.imageView);
                                 } else {
-                                    Picasso.get().load(R.drawable.ic_user).fit().into(FotoMobil);
+                                    Picasso.get().load(R.drawable.ic_user).fit().into(binding.imageView);
                                 }
                             }
                         } else {
@@ -183,16 +187,19 @@ public class AdminDetailMobil extends AppCompatActivity implements AdapterView.O
         data.put("namamerk", namamerk);
         data.put("namamobil", namamobil);
         data.put("warna", warna);
-        data.put("jumlahkursi", jumlahkursi);
+        data.put("kursi", jumlahkursi);
         data.put("harga", harga);
         firebaseFirestore.collection("RentalMobil").document(platnomor).set(data).isSuccessful();
     }
 
     private void ambilGambar() {
-        Intent intent = new Intent();
+        ImagePicker.with(AdminDetailMobil.this)
+                .crop(1f,1f)
+                .start();
+        /*Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Pilih Gambar"), IMAGE_REQUEST);
+        startActivityForResult(Intent.createChooser(intent, "Pilih Gambar"), IMAGE_REQUEST);*/
     }
 
     @Override
@@ -200,7 +207,7 @@ public class AdminDetailMobil extends AppCompatActivity implements AdapterView.O
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             filePath = data.getData();
-            Picasso.get().load(filePath).fit().into(FotoMobil);
+            Picasso.get().load(filePath).fit().into(binding.imageView);
         } else {
             Toast.makeText(this, "Tidak ada gambar dipilih", Toast.LENGTH_SHORT).show();
         }
@@ -208,7 +215,7 @@ public class AdminDetailMobil extends AppCompatActivity implements AdapterView.O
 
     private void uploadImage() {
         if (filePath != null) {
-            final StorageReference ref = storageReference.child(TvPlatNomor.getText().toString());
+            final StorageReference ref = storageReference.child(binding.etPlatnomor.getText().toString());
             UploadTask uploadTask = ref.putFile(filePath);
             Task<Uri> uriTask = uploadTask.continueWithTask(task -> {
                 return ref.getDownloadUrl();
@@ -218,15 +225,15 @@ public class AdminDetailMobil extends AppCompatActivity implements AdapterView.O
                     Uri imagePath = task.getResult();
                     fotoUrl = imagePath.toString();
                     SimpanData(fotoUrl,
-                            TvPlatNomor.getText().toString(),
-                            TextStatus.getText().toString(),
-                            TvNamaMerk.getText().toString(),
-                            TvNamaMobil.getText().toString(),
-                            TvWarna.getText().toString(),
-                            TvJumlahKursi.getText().toString(),
-                            TextHarga.getText().toString());
-                    progressBar.setProgress(0);
-                    progressBar.setVisibility(INVISIBLE);
+                            binding.etPlatnomor.getText().toString(),
+                            binding.etStatus.getText().toString(),
+                            binding.etNamamerk.getText().toString(),
+                            binding.etNamamobil.getText().toString(),
+                            binding.etWarna.getText().toString(),
+                            binding.etJumlahkursi.getText().toString(),
+                            binding.etHarga.getText().toString());
+                    binding.progressBar.setProgress(0);
+                    binding.progressBar.setVisibility(INVISIBLE);
                     Toast.makeText(AdminDetailMobil.this, "Data berhasil disimpan", Toast.LENGTH_SHORT).show();
                     finish();
                 }
@@ -234,33 +241,33 @@ public class AdminDetailMobil extends AppCompatActivity implements AdapterView.O
             uploadTask.addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
-                    progressBar.setVisibility(VISIBLE);
+                    binding.progressBar.setVisibility(VISIBLE);
                     double progres = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
-                    progressBar.setProgress((int) progres);
+                    binding.progressBar.setProgress((int) progres);
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    progressBar.setVisibility(INVISIBLE);
+                    binding.progressBar.setVisibility(INVISIBLE);
                     Toast.makeText(AdminDetailMobil.this, "Gagal " + e.getMessage(), Toast.LENGTH_LONG).show();
                 }
             });
         } else {
             SimpanData(fotoUrl,
-                    TvPlatNomor.getText().toString(),
-                    TextStatus.getText().toString(),
-                    TvNamaMerk.getText().toString(),
-                    TvNamaMobil.getText().toString(),
-                    TvWarna.getText().toString(),
-                    TvJumlahKursi.getText().toString(),
-                    TextHarga.getText().toString());
+                    binding.etPlatnomor.getText().toString(),
+                    binding.etStatus.getText().toString(),
+                    binding.etNamamerk.getText().toString(),
+                    binding.etNamamobil.getText().toString(),
+                    binding.etWarna.getText().toString(),
+                    binding.etJumlahkursi.getText().toString(),
+                    binding.etHarga.getText().toString());
             Toast.makeText(this, "Produk telah diubah", Toast.LENGTH_SHORT).show();
             finish();
         }
     }
 
     private void hapusData() {
-        String platnomor = TvPlatNomor.getText().toString();
+        String platnomor = binding.etPlatnomor.getText().toString();
         firebaseFirestore.collection("RentalMobil").document(produkId).delete();
         storageReference.child(produkId).delete();
         firebaseDatabase = FirebaseDatabase.getInstance().getReference()
@@ -273,7 +280,7 @@ public class AdminDetailMobil extends AppCompatActivity implements AdapterView.O
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String text = parent.getItemAtPosition(position).toString();
-        TextStatus.setText(text);
+        binding.etStatus.setText(text);
     }
 
     @Override

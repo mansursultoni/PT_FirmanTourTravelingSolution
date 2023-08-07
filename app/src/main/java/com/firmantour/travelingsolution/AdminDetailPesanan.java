@@ -11,6 +11,7 @@ import android.graphics.pdf.PdfDocument;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -47,7 +48,7 @@ public class AdminDetailPesanan extends AppCompatActivity {
             "Warna","Jumlah Kursi","Tanggal Sewa","Tanggal Kembali","Total Harga"};
     String produkId;
     TextView TvID, TvNama, TvNomor, TvAlamat, TvPlatNomor, TvNamaMerk, TvNamaMobil, TvWarna, TvJumlahKursi, TvTanggalSewa, TvTanggalKembali, TvTotalHarga;
-    Button BtKonfirmasi, BtHapus;
+    Button BtKonfirmasi, BtHapus, BtHapusSelesai;
     ImageView BtKembali, BtPrint;
     ProgressBar progressBar;
 
@@ -60,6 +61,9 @@ public class AdminDetailPesanan extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_detail_pesanan);
+
+        Window window = this.getWindow();
+        window.setStatusBarColor(this.getResources().getColor(R.color.blue));
 
         TvID = findViewById(R.id.tv_id);
         TvNama = findViewById(R.id.tv_nama);
@@ -77,6 +81,7 @@ public class AdminDetailPesanan extends AppCompatActivity {
         BtKonfirmasi = findViewById(R.id.bt_konfirmasi);
         BtPrint = findViewById(R.id.btnPrint);
         BtKembali = findViewById(R.id.ib_back);
+        BtHapusSelesai = findViewById(R.id.bt_hapusSelesai);
 
 
         firebaseFirestore   = FirebaseFirestore.getInstance();
@@ -169,11 +174,33 @@ public class AdminDetailPesanan extends AppCompatActivity {
             }
         });
 
+        BtHapusSelesai.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(AdminDetailPesanan.this);
+                alertDialog.setTitle("Hapus Pesanan");
+                alertDialog.setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        hapusData();
+                    }
+                });
+                alertDialog.setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                alertDialog.show();
+            }
+        });
+
     }
     private void konfirmasiPesanan(){
+        // Membuat Database Pemesanan
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         String key = produkId;
-
         Map<String, Object> updateStatus = new HashMap<>();
         updateStatus.put("statuspesanan", "Sedang Disewa");
         DocumentReference userRef = db.collection("Pemesanan").document(key);
@@ -187,6 +214,21 @@ public class AdminDetailPesanan extends AppCompatActivity {
                             Toast.makeText(AdminDetailPesanan.this, "Gagal.", Toast.LENGTH_SHORT).show();
                             // Failed to update data
                             // Handle the error
+                        }
+                    }
+                });
+
+        // Mengubah Status Mobil
+        String status = TvPlatNomor.getText().toString();
+        DocumentReference rentalRef = db.collection("RentalMobil").document(status);
+        rentalRef.update("status", "Sedang Disewa")
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            // Tindakan yang dijalankan jika pembaruan berhasil
+                        } else {
+                            // Tindakan yang dijalankan jika pembaruan gagal
                         }
                     }
                 });
@@ -314,6 +356,9 @@ public class AdminDetailPesanan extends AppCompatActivity {
         if (statusPesanan != null){
             BtKonfirmasi.setVisibility(View.INVISIBLE);
             BtHapus.setVisibility(View.INVISIBLE);
+            BtHapusSelesai.setVisibility(View.VISIBLE);
+            BtHapusSelesai.setEnabled(true);
+
             firebaseFirestore.collection("Pemesanan").whereEqualTo("key", produkId)
                     .whereEqualTo("statuspesanan","Selesai")
                     .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {

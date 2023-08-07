@@ -550,6 +550,19 @@
             android:layout_height="50dp"
             android:layout_below="@id/constrain1"/>
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_hapusSelesai"
+            android:text="Hapus"
+            android:enabled="false"
+            android:background="@drawable/rounded_background_red"
+            android:textAllCaps="false"
+            android:textSize="20sp"
+            android:visibility="invisible"
+            android:textColor="@color/white"
+            android:layout_centerHorizontal="true"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:layout_below="@id/constrain1"/>
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/bt_hapus"
             android:text="Batalkan"
             android:background="@drawable/rounded_background_red"

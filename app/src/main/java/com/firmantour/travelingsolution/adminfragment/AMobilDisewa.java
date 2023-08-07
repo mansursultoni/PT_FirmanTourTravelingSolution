@@ -42,6 +42,7 @@ public class AMobilDisewa extends Fragment {
     private FragmentAMobilDisewaBinding binding;
     private FirebaseFirestore firebaseFirestore;
     private FirestoreRecyclerAdapter adapter;
+    String platNomor;
     String produkId;
 
     public AMobilDisewa() {
@@ -107,6 +108,7 @@ public class AMobilDisewa extends Fragment {
                     @Override
                     public void onClick(View v) {
                         produkId = model.getKey();
+                        platNomor = model.getPlatnomor();
                         AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
                         alertDialog.setTitle("Selesaikan Pesanan?");
                         alertDialog.setPositiveButton("Ya", new DialogInterface.OnClickListener() {
@@ -160,6 +162,21 @@ public class AMobilDisewa extends Fragment {
                             Toast.makeText(getContext(), "Gagal.", Toast.LENGTH_SHORT).show();
                             // Failed to update data
                             // Handle the error
+                        }
+                    }
+                });
+
+        // Mengubah Status Mobil
+        String key2 = platNomor;
+        DocumentReference rentalRef = db.collection("RentalMobil").document(key2);
+        rentalRef.update("status", "Tersedia")
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            // Tindakan yang dijalankan jika pembaruan berhasil
+                        } else {
+                            // Tindakan yang dijalankan jika pembaruan gagal
                         }
                     }
                 });

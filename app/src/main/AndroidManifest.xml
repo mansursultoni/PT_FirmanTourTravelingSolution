@@ -16,6 +16,9 @@
         android:theme="@style/Theme.PTFIRMANTOURTRAVELINGSOLUTION"
         tools:targetApi="31">
         <activity
+            android:name=".ActivityFoto"
+            android:exported="false" />
+        <activity
             android:name=".AdminTambahAnggota"
             android:exported="false" />
         <activity

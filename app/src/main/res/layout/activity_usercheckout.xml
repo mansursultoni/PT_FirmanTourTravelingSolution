@@ -568,6 +568,15 @@
                         android:textSize="18sp"
                         android:textColor="@color/black"
                         />
+                    <TextView
+                        android:id="@+id/idTelepon"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Telepon"
+                        android:gravity="center_horizontal"
+                        android:textSize="18sp"
+                        android:textColor="@color/black"
+                        />
 
                     <LinearLayout
                         android:background="@drawable/rounded_background_grey"

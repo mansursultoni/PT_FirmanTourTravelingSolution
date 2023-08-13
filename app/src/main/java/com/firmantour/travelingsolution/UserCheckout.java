@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.firmantour.travelingsolution.databinding.ActivityUsercheckoutBinding;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -30,11 +31,15 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class UserCheckout extends AppCompatActivity {
 
+    private ActivityUsercheckoutBinding binding;
     private FirebaseFirestore firebaseFirestore;
     private StorageReference storageReference;
     TextView TvID, TvNama, TvTelpon, TvAlamat, TvPlatnomor, TvNamamerk, TvNamamobil, TvWarna,
@@ -50,7 +55,8 @@ public class UserCheckout extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_usercheckout);
+        binding = ActivityUsercheckoutBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         Window window = this.getWindow();
         window.setStatusBarColor(this.getResources().getColor(R.color.blue));
@@ -129,6 +135,7 @@ public class UserCheckout extends AppCompatActivity {
         BtPesan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setWaktu();
                 uploadImage();
             }
         });
@@ -142,7 +149,7 @@ public class UserCheckout extends AppCompatActivity {
     }
     private void SimpanData(String foto, String key, String nama, String nomortelepon, String alamat, String platnomor, String namamerk, String namamobil,
                             String warna, String jumlahkursi, String tanggalsewa, String tanggalkembali,
-                            String harga, String statuspesanan){
+                            String harga, String waktu, String statuspesanan ){
         Map<String, Object> data = new HashMap<>();
         data.put("foto", foto);
         data.put("key", key);
@@ -157,6 +164,7 @@ public class UserCheckout extends AppCompatActivity {
         data.put("tanggalsewa", tanggalsewa);
         data.put("tanggalkembali", tanggalkembali);
         data.put("harga", harga);
+        data.put("waktu", waktu);
         data.put("statuspesanan", statuspesanan);
         firebaseFirestore.collection("Pemesanan").document(key).set(data).isSuccessful();
     }
@@ -203,8 +211,10 @@ public class UserCheckout extends AppCompatActivity {
                                             TvTanggalsewa.getText().toString(),
                                             TvTanggalKembali.getText().toString(),
                                             TvTotalHarga.getText().toString(),
+                                            binding.tvWaktu.getText().toString(),
                                             statuspesan);
                                     Toast.makeText(UserCheckout.this, "Pemesanan Telah Diproses.", Toast.LENGTH_SHORT).show();
+                                    finish();
                                     Intent intent3 = new Intent(UserCheckout.this, UserPesananBelumSelesai.class);
                                     intent3.putExtra("nomortelepon", telepon);
                                     startActivity(intent3);
@@ -212,11 +222,17 @@ public class UserCheckout extends AppCompatActivity {
                             });
                         }
                     } else {
+                        Toast.makeText(UserCheckout.this, "Pemesanan Gagal.", Toast.LENGTH_SHORT).show();
                     }
                 }
             });
 
         }
+    }
+    private void setWaktu(){
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault());
+        String currentDateAndTime = sdf.format(new Date());
+        binding.tvWaktu.setText(currentDateAndTime);
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

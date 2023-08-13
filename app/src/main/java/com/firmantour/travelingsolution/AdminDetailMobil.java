@@ -47,6 +47,7 @@ public class AdminDetailMobil extends AppCompatActivity implements AdapterView.O
 
     private ActivityAdmindetailmobilBinding binding;
     private FirebaseFirestore firebaseFirestore;
+    private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();;
     DatabaseReference firebaseDatabase;
     private StorageReference storageReference;
     ImageView FotoMobil;
@@ -67,19 +68,6 @@ public class AdminDetailMobil extends AppCompatActivity implements AdapterView.O
 
         Window window = this.getWindow();
         window.setStatusBarColor(this.getResources().getColor(R.color.blue));
-
-        /*spinner     = findViewById(R.id.spinner2);
-        FotoMobil = findViewById(R.id.imageView);
-        TvPlatNomor = findViewById(R.id.et_platnomor);
-        TextStatus  = findViewById(R.id.et_status);
-        TvNamaMerk  = findViewById(R.id.et_namamerk);
-        TvNamaMobil = findViewById(R.id.et_namamobil);
-        TvWarna     = findViewById(R.id.et_warna);
-        TvJumlahKursi= findViewById(R.id.et_jumlahkursi);
-        TextHarga   = findViewById(R.id.et_harga);
-        TombolHapus = findViewById(R.id.bt_delete);
-        TombolEdit  = findViewById(R.id.bt_update);
-        TombolKembali = findViewById(R.id.ib_back);*/
 
         binding.progressBar.setVisibility(INVISIBLE);
         firebaseFirestore   = FirebaseFirestore.getInstance();
@@ -179,7 +167,7 @@ public class AdminDetailMobil extends AppCompatActivity implements AdapterView.O
                 });
     }
 
-    private void SimpanData(String foto, String platnomor, String status, String namamerk, String namamobil, String warna, String jumlahkursi, String harga) {
+    private void SimpanDataFirestore(String foto, String platnomor, String status, String namamerk, String namamobil, String warna, String jumlahkursi, String harga) {
         Map<String, Object> data = new HashMap<>();
         data.put("foto", foto);
         data.put("platnomor", platnomor);
@@ -190,6 +178,22 @@ public class AdminDetailMobil extends AppCompatActivity implements AdapterView.O
         data.put("kursi", jumlahkursi);
         data.put("harga", harga);
         firebaseFirestore.collection("RentalMobil").document(platnomor).set(data).isSuccessful();
+    }
+    private void SimpanDataRealtime(){
+        // Mendapatkan referensi ke lokasi data yang ingin diubah
+        String platnomor = binding.etPlatnomor.getText().toString();
+        DatabaseReference dataToUpdate = databaseReference.child("Mobil").child(platnomor);
+        String namamerk = binding.etNamamerk.getText().toString();
+        String namamobil = binding.etNamamobil.getText().toString();
+        String warna = binding.etWarna.getText().toString();
+        String kursi = binding.etJumlahkursi.getText().toString();
+        String harga = binding.etHarga.getText().toString();
+        // Mengubah data di lokasi yang dimaksud
+        dataToUpdate.child("namamerk").setValue(namamerk);
+        dataToUpdate.child("namamobil").setValue(namamobil);
+        dataToUpdate.child("warna").setValue(warna);
+        dataToUpdate.child("jumlahkursi").setValue(kursi);
+        dataToUpdate.child("harga").setValue(harga);
     }
 
     private void ambilGambar() {
@@ -224,7 +228,7 @@ public class AdminDetailMobil extends AppCompatActivity implements AdapterView.O
                 public void onComplete(@NonNull Task<Uri> task) {
                     Uri imagePath = task.getResult();
                     fotoUrl = imagePath.toString();
-                    SimpanData(fotoUrl,
+                    SimpanDataFirestore(fotoUrl,
                             binding.etPlatnomor.getText().toString(),
                             binding.etStatus.getText().toString(),
                             binding.etNamamerk.getText().toString(),
@@ -234,6 +238,7 @@ public class AdminDetailMobil extends AppCompatActivity implements AdapterView.O
                             binding.etHarga.getText().toString());
                     binding.progressBar.setProgress(0);
                     binding.progressBar.setVisibility(INVISIBLE);
+                    SimpanDataRealtime();
                     Toast.makeText(AdminDetailMobil.this, "Data berhasil disimpan", Toast.LENGTH_SHORT).show();
                     finish();
                 }
@@ -253,7 +258,7 @@ public class AdminDetailMobil extends AppCompatActivity implements AdapterView.O
                 }
             });
         } else {
-            SimpanData(fotoUrl,
+            SimpanDataFirestore(fotoUrl,
                     binding.etPlatnomor.getText().toString(),
                     binding.etStatus.getText().toString(),
                     binding.etNamamerk.getText().toString(),
@@ -261,6 +266,7 @@ public class AdminDetailMobil extends AppCompatActivity implements AdapterView.O
                     binding.etWarna.getText().toString(),
                     binding.etJumlahkursi.getText().toString(),
                     binding.etHarga.getText().toString());
+            SimpanDataRealtime();
             Toast.makeText(this, "Produk telah diubah", Toast.LENGTH_SHORT).show();
             finish();
         }

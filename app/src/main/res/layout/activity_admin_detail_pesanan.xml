@@ -4,26 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     tools:context=".AdminDetailPesanan">
+
     <RelativeLayout
         android:id="@+id/relativeLay1"
         android:layout_width="match_parent"
-        android:background="@drawable/background_blue_botcurved"
         android:layout_height="200dp"
+        android:background="@drawable/background_blue_botcurved"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageButton
             android:id="@+id/btnPrint"
             android:layout_width="30dp"
             android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
             android:layout_marginRight="30dp"
             android:layout_marginBottom="16dp"
             android:background="@color/transparant"
             android:backgroundTint="@color/white"
-            android:src="@drawable/ic_print"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"/>
+            android:src="@drawable/ic_print" />
 
         <TextView
             android:id="@+id/tvPesananSaya"
@@ -49,6 +49,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
             android:orientation="horizontal">
 
             <ImageButton
@@ -64,17 +65,7 @@
                 android:textColor="@color/white"
                 android:textSize="18sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_toEndOf="@id/ib_back"
-                android:text="Kembali"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:typeface="normal" />
+
             <TextView
                 android:id="@+id/tv_id"
                 android:layout_width="wrap_content"
@@ -85,9 +76,10 @@
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="16sp"
-                android:visibility="invisible"
                 android:textStyle="bold"
-                android:typeface="normal" />
+                android:typeface="normal"
+                android:visibility="invisible" />
+
             <TextView
                 android:id="@+id/tv_teleponrekening"
                 android:layout_width="wrap_content"
@@ -98,10 +90,9 @@
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="16sp"
-                android:visibility="invisible"
                 android:textStyle="bold"
-                android:typeface="normal" />
-
+                android:typeface="normal"
+                android:visibility="invisible" />
 
         </LinearLayout>
 
@@ -124,8 +115,6 @@
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
             android:background="@drawable/rounded_corner_blue">
-
-
 
 
             <TextView
@@ -155,19 +144,40 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_tanggalKembali" />
 
-            <TextView
-                android:id="@+id/tv_totalHarga"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/layoutHarga"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:gravity="left"
-                android:text="total"
-                android:textColor="@color/black"
-                android:textSize="16sp"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView25" />
+                app:layout_constraintTop_toBottomOf="@+id/textView25">
+
+                <TextView
+                    android:id="@+id/tvRp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="8dp"
+                    android:gravity="left"
+                    android:text="Rp. "
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_totalHarga"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="8dp"
+                    android:gravity="left"
+                    android:text="total"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/textView9"
@@ -555,76 +565,101 @@
 
         <LinearLayout
             android:id="@+id/layoutPembayaran"
-            android:background="@drawable/rounded_background_grey"
-            android:orientation="horizontal"
-            android:layout_marginHorizontal="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
             android:layout_below="@id/constrain1"
+            android:layout_marginHorizontal="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="16dp"
-            android:layout_width="match_parent"
-            android:layout_height="50dp">
+            android:background="@drawable/rounded_background_grey"
+            android:orientation="horizontal">
+
             <TextView
-                android:textSize="16sp"
-                android:text="Kirim Bukti Pembayaran : "
-                android:gravity="center_vertical"
-                android:layout_marginStart="16dp"
                 android:layout_width="wrap_content"
-                android:textColor="@color/black"
+                android:layout_height="match_parent"
+                android:layout_marginStart="16dp"
                 android:layout_weight="1"
-                android:layout_height="match_parent"/>
+                android:gravity="center_vertical"
+                android:text="Kirim Bukti Pembayaran : "
+                android:textColor="@color/black"
+                android:textSize="16sp" />
 
             <ImageView
                 android:id="@+id/iv_buktipembayaran"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:gravity="center_vertical"
                 android:layout_weight="1"
+                android:gravity="center_vertical"
                 android:src="@drawable/ic_image" />
 
         </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/bt_konfirmasi"
-            android:text="Konfirmasi"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:layout_below="@id/layoutPembayaran"
+            android:layout_centerHorizontal="true"
             android:background="@drawable/rounded_background_blue"
+            android:text="Konfirmasi"
             android:textAllCaps="false"
-            android:textSize="20sp"
             android:textColor="@color/white"
-            android:layout_centerHorizontal="true"
-            android:layout_width="200dp"
-            android:layout_height="50dp"
-            android:layout_below="@id/layoutPembayaran"/>
+            android:textSize="20sp" />
 
 
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/bt_hapusSelesai"
-            android:text="Hapus"
-            android:enabled="false"
-            android:background="@drawable/rounded_background_red"
-            android:textAllCaps="false"
-            android:textSize="20sp"
-            android:visibility="invisible"
-            android:textColor="@color/white"
-            android:layout_centerHorizontal="true"
-            android:layout_width="200dp"
-            android:layout_height="50dp"
-            android:layout_below="@id/constrain1"/>
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/bt_hapus"
-            android:text="Batalkan"
-            android:background="@drawable/rounded_background_red"
-            android:textAllCaps="false"
-            android:textSize="20sp"
-            android:textColor="@color/white"
-            android:layout_marginTop="8dp"
-            android:layout_centerHorizontal="true"
             android:layout_width="200dp"
             android:layout_height="50dp"
-            android:layout_below="@id/bt_konfirmasi"/>
+            android:layout_below="@id/bt_konfirmasi"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/rounded_background_red"
+            android:text="Batalkan"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textCatatan"
+            android:visibility="invisible"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/layoutPembayaran"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:hint="Catatan"
+            android:textColorHint="@color/black"
+            app:boxBackgroundMode="outline"
+            app:boxStrokeColor="@color/black"
+            app:hintTextColor="@color/black">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etCatatan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btKonfirmasiHapus"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:visibility="invisible"
+            android:layout_below="@id/textCatatan"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/rounded_background_red"
+            android:text="Batalkan"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
 
     </RelativeLayout>
-
 
 
 </RelativeLayout>

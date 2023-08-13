@@ -58,7 +58,6 @@ public class ADashboard extends Fragment {
         getJumlahMobil();
         getJumlahUser();
         getJumlahPemesanan();
-        getJumlahWisata();
         getMobilDisewa();
 
         return view;
@@ -114,22 +113,6 @@ public class ADashboard extends Fragment {
                     // Jika query gagal, tampilkan pesan kesalahan
                     binding.tvPermintaanpesan.setText("0");
                     Log.d("TAG", "Error getting documents: ", task.getException());
-                }
-            }
-        });
-    }
-    private void getJumlahWisata(){
-        CollectionReference query = firebaseFirestore.collection("PaketWisata");
-        AggregateQuery countQuery = query.count();
-        countQuery.get(AggregateSource.SERVER).addOnCompleteListener(new OnCompleteListener<AggregateQuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<AggregateQuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    // Count fetched successfully
-                    AggregateQuerySnapshot snapshot = task.getResult();
-                    binding.txtJumlahWisata.setText(String.valueOf(snapshot.getCount()));
-                } else {
-                    binding.txtJumlahWisata.setText("0");
                 }
             }
         });

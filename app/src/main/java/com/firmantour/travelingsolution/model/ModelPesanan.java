@@ -2,7 +2,7 @@ package com.firmantour.travelingsolution.model;
 
 public class ModelPesanan {
     private String key, nama, nomortelepon, alamat, platnomor, namamerk,namamobil,warna, kursi,harga,
-            tanggalsewa,tanggalkembali;
+            tanggalsewa,tanggalkembali,waktu;
 
     public ModelPesanan() {
 
@@ -10,7 +10,7 @@ public class ModelPesanan {
 
     public ModelPesanan(String key, String nama, String nomortelepon, String alamat, String platnomor,
                         String namamerk, String namamobil, String warna, String kursi,
-                        String harga, String tanggalsewa, String tanggalkembali) {
+                        String harga, String tanggalsewa, String tanggalkembali, String waktu) {
         this.key = key;
         this.nama = nama;
         this.nomortelepon = nomortelepon;
@@ -23,6 +23,7 @@ public class ModelPesanan {
         this.harga = harga;
         this.tanggalsewa = tanggalsewa;
         this.tanggalkembali = tanggalkembali;
+        this.waktu = waktu;
     }
 
     public String getKey() {
@@ -119,5 +120,13 @@ public class ModelPesanan {
 
     public void setTanggalkembali(String tanggalkembali) {
         this.tanggalkembali = tanggalkembali;
+    }
+
+    public String getWaktu() {
+        return waktu;
+    }
+
+    public void setWaktu(String waktu) {
+        this.waktu = waktu;
     }
 }

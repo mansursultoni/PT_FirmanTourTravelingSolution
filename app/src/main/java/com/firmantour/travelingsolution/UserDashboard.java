@@ -13,12 +13,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.Window;
-import android.widget.Toast;
 
-import com.firmantour.travelingsolution.adminfragment.APengaturan;
 import com.firmantour.travelingsolution.databinding.ActivityUserDashboardBinding;
 import com.firmantour.travelingsolution.userfragment.UDetailMobil;
-import com.firmantour.travelingsolution.userfragment.UPaketWisata;
 import com.firmantour.travelingsolution.userfragment.UPemesanan;
 import com.firmantour.travelingsolution.userfragment.UPengaturan;
 import com.firmantour.travelingsolution.userfragment.URentalMobil;
@@ -69,10 +66,6 @@ public class UserDashboard extends AppCompatActivity implements URentalMobil.OnD
 
                         /*Fragment uRentalMobil = new URentalMobil();
                         replaceFragment(uRentalMobil);*/
-                        return true;
-                    case R.id.paketWisata:
-                        Fragment uPaketWisata = new UPaketWisata();
-                        replaceFragment(uPaketWisata);
                         return true;
                     case R.id.pemesanan:
                         Fragment uPemesanan = new UPemesanan();

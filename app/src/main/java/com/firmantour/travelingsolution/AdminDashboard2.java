@@ -15,14 +15,12 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.widget.Toast;
 
 import com.firmantour.travelingsolution.adminfragment.ADashboard;
 import com.firmantour.travelingsolution.adminfragment.ADataUser;
 import com.firmantour.travelingsolution.adminfragment.ALaporan;
 import com.firmantour.travelingsolution.adminfragment.AMenungguKonfirmasi;
 import com.firmantour.travelingsolution.adminfragment.AMobilDisewa;
-import com.firmantour.travelingsolution.adminfragment.APaketWisata;
 import com.firmantour.travelingsolution.adminfragment.APengaturan;
 import com.firmantour.travelingsolution.adminfragment.ARentalMobil;
 import com.firmantour.travelingsolution.databinding.ActivityAdminDashboard2Binding;
@@ -74,11 +72,6 @@ public class AdminDashboard2 extends AppCompatActivity implements NavigationView
                 replaceFragment(aRentalMobil);
                 closeDrawer();
                 return true;
-            case R.id.paketwisata:
-                Fragment aPaketWisata = new APaketWisata();
-                replaceFragment(aPaketWisata);
-                closeDrawer();
-                return true;
             case R.id.mobildisewa:
                 Fragment aMobilDisewa = new AMobilDisewa();
                 replaceFragment(aMobilDisewa);
@@ -107,9 +100,6 @@ public class AdminDashboard2 extends AppCompatActivity implements NavigationView
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.frame_layout, fragment)
                         .commit();
-
-
-
                 closeDrawer();
                 return true;
             case R.id.laporan:

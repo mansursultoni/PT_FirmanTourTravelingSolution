@@ -6,12 +6,7 @@
         android:iconTint="@color/blue"
         android:title="Rental Mobil"
         android:visible="true" />
-    <item
-        android:id="@+id/paketWisata"
-        android:icon="@drawable/ic_wisata"
-        android:title="Paket Wisata"
-        android:iconTint="@color/blue"
-        android:visible="true" />
+
     <item
         android:id="@+id/pemesanan"
         android:icon="@drawable/ic_konfirmasi"

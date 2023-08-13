@@ -37,9 +37,6 @@
             android:name=".UserDetailPesanan"
             android:exported="false" />
         <activity
-            android:name=".UserPaketWisata"
-            android:exported="false" />
-        <activity
             android:name=".UserPengaturan"
             android:exported="false" />
         <activity
@@ -52,12 +49,6 @@
             android:name=".UserDashboard"
             android:exported="false" />
         <activity
-            android:name=".AdminDetailWisata"
-            android:exported="false" />
-        <activity
-            android:name=".AdminPaketWisata"
-            android:exported="false" />
-        <activity
             android:name=".AdminMobilDisewa"
             android:exported="false" />
         <activity
@@ -65,9 +56,6 @@
             android:exported="false" />
         <activity
             android:name=".AdminDetailPesanan"
-            android:exported="false" />
-        <activity
-            android:name=".MenungguKonfirmasi"
             android:exported="false" />
         <activity
             android:name=".AdminDetailUser"
@@ -80,12 +68,6 @@
             android:exported="false" />
         <activity
             android:name=".UserPemesanan"
-            android:exported="false" />
-        <activity
-            android:name=".AdminDataUser"
-            android:exported="false" />
-        <activity
-            android:name=".AdminDashboard"
             android:exported="false" />
         <activity
             android:name=".ActivityLogin"
@@ -104,16 +86,10 @@
             android:name=".AdminDetailMobil"
             android:exported="false" />
         <activity
-            android:name=".AdminTambahWisata"
-            android:exported="false" />
-        <activity
             android:name=".AdminTambahMobil"
             android:exported="false" />
         <activity
             android:name=".UserRentalMobil"
-            android:exported="false" />
-        <activity
-            android:name=".AdminRentalMobil"
             android:exported="false" />
         <activity
             android:name=".SplashScreen"

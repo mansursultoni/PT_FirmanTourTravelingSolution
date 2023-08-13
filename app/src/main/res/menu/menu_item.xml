@@ -9,10 +9,6 @@
         android:icon="@drawable/ic_mobil"
         android:title="Rental Mobil"/>
     <item
-        android:id="@+id/paketwisata"
-        android:icon="@drawable/ic_mobil"
-        android:title="Paket Wisata"/>
-    <item
         android:id="@+id/mobildisewa"
         android:icon="@drawable/ic_wisata"
         android:title="Mobil Disewa" />

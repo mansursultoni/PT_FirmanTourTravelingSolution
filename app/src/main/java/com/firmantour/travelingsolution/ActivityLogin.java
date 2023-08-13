@@ -149,7 +149,7 @@ public class ActivityLogin extends AppCompatActivity {
         super.onStart();
         if (LoginSesson.getDataLogin(this)) {
             if (LoginSesson.getDataAs(this).equals("admin")) {
-                startActivity(new Intent(this, AdminDashboard.class));
+                startActivity(new Intent(this, AdminDashboard2.class));
                 finish();
             } else {
                 startActivity(new Intent(this, UserRentalMobil.class));

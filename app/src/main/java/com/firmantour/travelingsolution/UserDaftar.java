@@ -67,12 +67,12 @@ public class UserDaftar extends AppCompatActivity implements AdapterView.OnItemS
         spinner.setOnItemSelectedListener(this);
 
         Sebagai = findViewById(R.id.tv_user);
-        Nama = findViewById(R.id.etBank);
-        NomorTelepon = findViewById(R.id.etNomorRekening);
+        Nama = findViewById(R.id.etNama);
+        NomorTelepon = findViewById(R.id.etNomorTelepon);
         TanggalLahir = findViewById(R.id.etTanggalLahir);
         JenisKelamin = findViewById(R.id.etJenisKelamin);
         Alamat = findViewById(R.id.etAlamat);
-        Password = findViewById(R.id.etAN);
+        Password = findViewById(R.id.etPassword);
         Password2 = findViewById(R.id.etPassword2);
         Tanggal = findViewById(R.id.ibEditCalendar);
         Daftar = findViewById(R.id.btnDaftar);
@@ -173,6 +173,7 @@ public class UserDaftar extends AppCompatActivity implements AdapterView.OnItemS
                                         Toast.makeText(UserDaftar.this, "Gagal menyimpan data.", Toast.LENGTH_SHORT).show();
                                     }
                                 });
+                                finish();
                             }
                         }
                     }

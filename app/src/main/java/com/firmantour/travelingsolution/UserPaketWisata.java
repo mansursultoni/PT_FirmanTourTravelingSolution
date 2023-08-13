@@ -61,6 +61,7 @@ public class UserPaketWisata extends AppCompatActivity {
                             Intent intent = new Intent(UserPaketWisata.this, UserRentalMobil.class);
                             intent.putExtra("nomortelepon", telepon);
                             startActivity(intent);
+                            finish();
                         return true;
                     case R.id.paketWisata:
                         /*Intent intent2 = new Intent(UserPaketWisata.this, UserPaketWisata.class);
@@ -71,6 +72,7 @@ public class UserPaketWisata extends AppCompatActivity {
                         Intent intent3 = new Intent(UserPaketWisata.this, UserPesananBelumSelesai.class);
                         intent3.putExtra("nomortelepon", telepon);
                         startActivity(intent3);
+                        finish();
                         return true;
                     case R.id.pengaturan:
                         Intent intent4 = new Intent(UserPaketWisata.this, UserPengaturan.class);

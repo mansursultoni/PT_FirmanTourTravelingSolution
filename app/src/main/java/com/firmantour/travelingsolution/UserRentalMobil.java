@@ -81,11 +81,13 @@ public class UserRentalMobil extends AppCompatActivity {
                             Intent intent2 = new Intent(UserRentalMobil.this, UserPaketWisata.class);
                             intent2.putExtra("nomortelepon", telepon);
                             startActivity(intent2);
+                            finish();
                             return true;
                         case R.id.pemesanan:
                             Intent intent3 = new Intent(UserRentalMobil.this, UserPesananBelumSelesai.class);
                             intent3.putExtra("nomortelepon", telepon);
                             startActivity(intent3);
+                            finish();
                             return true;
                         case R.id.pengaturan:
                             Intent intent4 = new Intent(UserRentalMobil.this, UserPengaturan.class);
@@ -103,6 +105,9 @@ public class UserRentalMobil extends AppCompatActivity {
         Intent intent = getIntent();
         String nomorTelpon = intent.getStringExtra("nomortelepon");
         TvNomorTelpon.setText(nomorTelpon);
+    }
+    private void Logout(){
+        LoginSesson.clearData(this);
     }
     private void getData() {
         String input1 = TvNomorTelpon.getText().toString();
@@ -148,9 +153,7 @@ public class UserRentalMobil extends AppCompatActivity {
         adapter.notifyDataSetChanged();
         recyclerView.setAdapter(adapter);
     }
-    private void Logout(){
-        LoginSesson.clearData(this);
-    }
+
     public class ProdukHolder extends RecyclerView.ViewHolder {
         ImageView fotoProduk;
         TextView namaProduk, hargaProduk, statusProduk;

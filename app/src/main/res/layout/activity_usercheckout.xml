@@ -560,7 +560,7 @@
                         android:textColor="@color/black"
                         />
                     <TextView
-                        android:id="@+id/idAtasNama"
+                        android:id="@+id/tvAtasNama"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Atas Nama"
@@ -569,7 +569,7 @@
                         android:textColor="@color/black"
                         />
                     <TextView
-                        android:id="@+id/idTelepon"
+                        android:id="@+id/tvTeleponRekening"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Telepon"

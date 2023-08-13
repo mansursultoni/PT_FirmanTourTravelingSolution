@@ -173,38 +173,6 @@ public class AdminDetailPesanan extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 konfirmasiPesanan();
-
-
-                /*String id = TvID.getText().toString().trim();
-                String nama = TvNama.getText().toString().trim();
-                String nomor = TvNomor.getText().toString().trim();
-                String alamat = TvAlamat.getText().toString().trim();
-                String platnomor = TvPlatNomor.getText().toString().trim();
-                String namamerk = TvNamaMerk.getText().toString().trim();
-                String namamobil = TvNamaMobil.getText().toString().trim();
-                String warna = TvWarna.getText().toString().trim();
-                String jumlahkursi = TvJumlahKursi.getText().toString().trim();
-                String tanggalsewa = TvTanggalSewa.getText().toString().trim();
-                String tanggalkembali = TvTanggalKembali.getText().toString().trim();
-                String totalharga = TvTotalHarga.getText().toString().trim();
-                KirimData(id,nama,nomor,alamat,platnomor,namamerk,namamobil,warna,jumlahkursi,
-                        tanggalsewa,tanggalkembali,totalharga);
-
-                firebaseFirestore.collection("RentalMobil").document(platnomor)
-                        .update("status","Tersedia");
-                kirimLaporan();
-
-                createPdf(TvNama.getText().toString(),
-                        TvNomor.getText().toString(),
-                        TvAlamat.getText().toString(),
-                        TvPlatNomor.getText().toString(),
-                        TvNamaMerk.getText().toString(),
-                        TvNamaMobil.getText().toString(),
-                        TvWarna.getText().toString(),
-                        TvJumlahKursi.getText().toString(),
-                        TvTanggalSewa.getText().toString(),
-                        TvTanggalKembali.getText().toString(),
-                        TvTotalHarga.getText().toString());*/
             }
         });
         BtHapusSelesai.setOnClickListener(new View.OnClickListener() {

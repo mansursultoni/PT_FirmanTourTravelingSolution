@@ -23,6 +23,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -36,7 +38,8 @@ public class UserCheckout extends AppCompatActivity {
     private FirebaseFirestore firebaseFirestore;
     private StorageReference storageReference;
     TextView TvID, TvNama, TvTelpon, TvAlamat, TvPlatnomor, TvNamamerk, TvNamamobil, TvWarna,
-            TvJumlahkursi, TvTotalHarga, TvTanggalsewa, TvTanggalKembali;
+            TvJumlahkursi, TvTotalHarga, TvTanggalsewa, TvTanggalKembali
+            , TvNamaBank, TvNomorRekening, TvAtasNama, TvTeleponRekening;
     Button BtPesan;
 
     ImageView FotoPembayaran, TombolKembali;
@@ -66,6 +69,10 @@ public class UserCheckout extends AppCompatActivity {
         TvTanggalKembali = findViewById(R.id.tv_tanggalKembali);
         BtPesan = findViewById(R.id.bt_pesan);
         FotoPembayaran = findViewById(R.id.iv_buktipembayaran);
+        TvNamaBank = findViewById(R.id.tvNamaBank);
+        TvNomorRekening = findViewById(R.id.tvNomorRekening);
+        TvAtasNama = findViewById(R.id.tvAtasNama);
+        TvTeleponRekening = findViewById(R.id.tvTeleponRekening);
 
         String notlep = TvTelpon.getText().toString();
         String tglsewa = TvTanggalsewa.getText().toString();
@@ -101,6 +108,23 @@ public class UserCheckout extends AppCompatActivity {
         TvTotalHarga.setText(totalharga);
         TvTanggalsewa.setText(sewa);
         TvTanggalKembali.setText(kembali);
+
+        firebaseFirestore.collection("AkunBank")
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                TvNamaBank.setText(document.getString("namabank"));
+                                TvNomorRekening.setText(document.getString("nomorrekening"));
+                                TvAtasNama.setText(document.getString("atasnama"));
+                                TvTeleponRekening.setText(document.getString("teleponrekening"));
+                            }
+                        } else {
+                            Toast.makeText(UserCheckout.this, "Gagal Mengambil Document", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
 
         BtPesan.setOnClickListener(new View.OnClickListener() {
             @Override

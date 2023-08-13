@@ -356,7 +356,7 @@ public class UserPemesanan extends AppCompatActivity {
     private void getUser() {
         final String nomortlep = TvNomorTelpon.getText().toString().trim();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Login");
-        Query cekMobil = reference.orderByChild("nomor").equalTo(nomortlep);
+        Query cekMobil = reference.orderByChild("nomortelepon").equalTo(nomortlep);
         cekMobil.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

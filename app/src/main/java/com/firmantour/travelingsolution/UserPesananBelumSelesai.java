@@ -58,11 +58,13 @@ public class UserPesananBelumSelesai extends AppCompatActivity {
                         Intent intent = new Intent(UserPesananBelumSelesai.this, UserRentalMobil.class);
                         intent.putExtra("nomortelepon", telepon);
                         startActivity(intent);
+                        finish();
                         return true;
                     case R.id.paketWisata:
                         Intent intent2 = new Intent(UserPesananBelumSelesai.this, UserPaketWisata.class);
                         intent2.putExtra("nomortelepon", telepon);
                         startActivity(intent2);
+                        finish();
                         return true;
                     case R.id.pemesanan:
                         /*Intent intent3 = new Intent(UserPesananBelumSelesai.this, UserPesananBelumSelesai.class);
